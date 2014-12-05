@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +34,13 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	private CharSequence mTitle;
 
+	final String[] fragments = new String[] {
+			"com.mircobox.airshow.HomeFragment",
+			"com.mircobox.airshow.InfoFragment",
+			"com.mircobox.airshow.ExhibitionFragment",
+			"com.mircobox.airshow.MessageFragment",
+			"com.mircobox.airshow.AboutusFragment"};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,10 +59,13 @@ public class MainActivity extends ActionBarActivity implements
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+//		fragmentManager
+//				.beginTransaction()
+//				.replace(R.id.container,
+//						PlaceholderFragment.newInstance(position + 1)).commit();
+		FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.container, Fragment.instantiate(MainActivity.this, fragments[position]));
+        tx.commit();
 	}
 
 	public void onSectionAttached(int number) {

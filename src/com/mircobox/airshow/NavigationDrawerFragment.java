@@ -1,5 +1,8 @@
 package com.mircobox.airshow;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -60,6 +63,8 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
+	private List<DrawerListItem> mData = new ArrayList<DrawerListItem>();
+
 	public NavigationDrawerFragment() {
 	}
 
@@ -105,15 +110,26 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(), android.R.layout.simple_list_item_1,
-				android.R.id.text1, new String[] {
-						getString(R.string.title_section1),
-						getString(R.string.title_section2),
-						getString(R.string.title_section3), }));
+
+		String[] itemTitle = getResources().getStringArray(R.array.item_title);
+		int[] itemIconRes = new int[] { R.drawable.ic_sidebar_homepage,
+				R.drawable.ic_sidebar_news, R.drawable.ic_sidebar_exhibition,
+				R.drawable.ic_sidebar_message, R.drawable.ic_sidebar_about_us };
+
+		for (int i = 0; i < itemTitle.length; i++) {
+			DrawerListItem item = new DrawerListItem(getResources()
+					.getDrawable(itemIconRes[i]), itemTitle[i]);
+			mData.add(item);
+		}
+		//selectItem(mCurrentSelectedPosition);
+		DrawerListAdapter adapter = new DrawerListAdapter(getActivity(), mData);
+
+		mDrawerListView.setAdapter(adapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
+
+
 
 	public boolean isDrawerOpen() {
 		return mDrawerLayout != null
@@ -222,6 +238,22 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 	}
 
+//    private void selectItem(int position) {
+//        mCurrentSelectedPosition = position;
+//        if (mDrawerListView != null) {
+//            mDrawerListView.setItemChecked(position, true);
+//        }
+//        if (mDrawerLayout != null) {
+//            mDrawerLayout.closeDrawer(mFragmentContainerView);
+//        }
+//        if (mCallbacks != null) {
+//        	if(mCurrentSelectedPosition == 0) {
+//        		mCallbacks.onNavigationDrawerItemSelected(getString(R.string.app_name));
+//        		return;
+//        	}
+//            mCallbacks.onNavigationDrawerItemSelected(mData.get(position - 1).getTitle());
+//        }
+//    }
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
