@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:gravity="center_vertical"
+    android:background="#fafafa"
     >
     
     <ImageView 
@@ -20,7 +21,6 @@
 	    android:textAppearance="?android:attr/textAppearanceListItemSmall"
 	    android:textColor="#000000"
 	    android:gravity="center_vertical"
-	    android:textSize="14sp"
 	/>
 
 

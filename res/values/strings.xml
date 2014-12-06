@@ -9,5 +9,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
-
+	<string name="exit_again">再按一次退出</string>
+	<string name="test_name">用户ABC</string>
+	<string name="test_msg_content">第十届中国国际航空航天博览会11月16日顺利闭幕，从战斗机到无人机</string>
 </resources>

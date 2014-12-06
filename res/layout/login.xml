@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="113dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/pic_logo" />
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp" >
+
+        <EditText
+            android:id="@+id/etUserID"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="14dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="60dp"
+            android:hint="请在此输入您的账号 "
+            android:textSize="14sp"
+            android:inputType="text"
+            android:textColor="#ffffff"
+            android:alpha="0.85"
+            android:textCursorDrawable="@drawable/ic_input_box_cursor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="23dp"
+            android:text="账号" 
+            android:textColor="#ffffff"
+            android:alpha="0.6"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" >
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="14dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="60dp"
+            android:hint="请在此输入您的密码"
+            android:inputType="textPassword"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:alpha="0.85"
+            android:textCursorDrawable="@drawable/ic_input_box_cursor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="23dp"
+            android:text="密码" 
+            android:textColor="#ffffff"
+            android:alpha="0.6"
+            android:textSize="16sp"/>
+        
+        <ToggleButton
+            android:id="@+id/tgbtnShowPwd"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/ic_input_box_invisible" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="27dp"
+        android:layout_marginTop="28dp"
+        android:orientation="horizontal" >
+
+        <ToggleButton
+            android:id="@+id/tgbtnSavePwd"
+            android:layout_width="27dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="55dp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/ic_checked_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:text="下次自动登陆"
+            android:textColor="#ffffff"
+            android:alpha="0.6"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:text="登陆"
+        android:textColor="#ffffff"
+        android:alpha="0.85"
+        android:textSize="18sp"/>
+</LinearLayout>

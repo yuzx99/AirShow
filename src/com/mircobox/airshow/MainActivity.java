@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -40,6 +41,8 @@ public class MainActivity extends ActionBarActivity implements
 			"com.mircobox.airshow.ExhibitionFragment",
 			"com.mircobox.airshow.MessageFragment",
 			"com.mircobox.airshow.AboutusFragment"};
+	private long waitTime = 3000;
+	private long touchTime = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,19 @@ public class MainActivity extends ActionBarActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onBackPressed() {
+		long currentTime = System.currentTimeMillis();
+		if ((currentTime - touchTime) >= waitTime) {
+			Toast.makeText(this, this.getString(R.string.exit_again),
+					Toast.LENGTH_SHORT).show();
+			touchTime = currentTime;
+		} else {
+			finish();
+			System.exit(0);
+		}
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fafafa"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_banner" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="撰写留言"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="326dp"
+        android:layout_height="161dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:alpha="0.85"
+        android:background="@drawable/text_input_box"
+        android:gravity="top"
+        android:padding="18dp"
+        android:textColor="#000000"
+        android:textCursorDrawable="@drawable/ic_input_box_cursor" />
+
+    <Button
+        android:id="@+id/btnSubmitMsg"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="22dp"
+        android:alpha="0.85"
+        android:text="提交"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+</LinearLayout>
