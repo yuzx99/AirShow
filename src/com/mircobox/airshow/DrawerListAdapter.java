@@ -41,7 +41,7 @@ public class DrawerListAdapter extends BaseAdapter {
 		TextView itemTitle = null;
 		ImageView itemIcon = null;
 		if(convertView == null){
-			convertView = mInflater.inflate(R.layout.drawer_list_item, null);
+			convertView = mInflater.inflate(R.layout.list_item, null);
 		}
 		itemTitle = (TextView) convertView.findViewById(R.id.item_title); 
 		itemIcon = (ImageView) convertView.findViewById(R.id.item_icon);
