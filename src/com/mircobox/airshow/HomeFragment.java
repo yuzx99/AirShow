@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,6 +21,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
@@ -43,6 +45,8 @@ public class HomeFragment extends Fragment {
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle" };
 	private int[] itemMapping = new int[] { R.id.catePicItem, R.id.cateTitle };
 
+	private HomeCallbacks  mCallbacks;
+	
     public static Fragment newInstance(Context context) {
     	HomeFragment f = new HomeFragment();
  
@@ -57,10 +61,37 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
     	super.onActivityCreated(savedInstanceState);
+    	initViewCompoents();
     	initViewPager();
     	initInfoList();
     	
     }
+    public void initViewCompoents(){
+    	ImageView drawer = (ImageView)getView().findViewById(R.id.homeDrawer);
+    	drawer.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mCallbacks.openDrawer();
+			}
+		});
+    }
+    public static interface HomeCallbacks{
+    	public void openDrawer();
+    }
+    
+    @Override
+    public void onAttach(Activity activity){
+    	super.onAttach(activity);
+    	try{
+    		mCallbacks = (HomeCallbacks)activity;
+    	}catch(ClassCastException e){
+    		throw new ClassCastException(
+					"Activity must implement HomeCallbacks.");
+    	}
+    }
+    
     public void initViewPager() {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
 		ViewGroup vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);

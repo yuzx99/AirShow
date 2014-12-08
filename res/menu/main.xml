@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mircobox.airshow.MainActivity" >
 
+    <!--
+        <item
+        android:id="@+id/action_example"
+        android:title="@string/action_example"
+        android:icon="@drawable/ic_action_notify"
+        app:showAsAction="always"/>
+        -->
     <item
         android:id="@+id/action_example"
         android:title="@string/action_example"

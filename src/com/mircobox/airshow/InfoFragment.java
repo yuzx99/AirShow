@@ -3,14 +3,18 @@ package com.mircobox.airshow;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.mircobox.airshow.HomeFragment.HomeCallbacks;
 import com.mircobox.util.Utility;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -21,6 +25,7 @@ public class InfoFragment extends Fragment {
 	private int[] itemMapping = new int[] { R.id.infoPicItem,
 			R.id.infoTitleItem, R.id.infoDateItem };
 	
+	private InfoCallbacks mCallbacks;
 	public static Fragment newInstance(Context context) {
 		InfoFragment f = new InfoFragment();
 
@@ -38,7 +43,35 @@ public class InfoFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		initViewCompoents();
 		initInfo();
+	}
+	
+	private void initViewCompoents(){
+		ImageView drawer = (ImageView)getView().findViewById(R.id.infoDrawer);
+		drawer.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mCallbacks.openDrawerInfo();
+			}
+		});
+	}
+	
+	public static interface InfoCallbacks{
+		public void openDrawerInfo();
+	}
+	
+	@Override
+	public void onAttach(Activity activity){
+		super.onAttach(activity);
+    	try{
+    		mCallbacks = (InfoCallbacks)activity;
+    	}catch(ClassCastException e){
+    		throw new ClassCastException(
+					"Activity must implement InfoCallbacks.");
+    	}
 	}
 	
 	private void initInfo() {
@@ -46,7 +79,6 @@ public class InfoFragment extends Fragment {
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), getDate(),
 				R.layout.info_item, infoMapping, itemMapping);
 		infoList.setAdapter(adapter);
-		Utility.setListViewHeightBasedOnChildren(infoList);
 	}
 
 	private ArrayList<HashMap<String, Object>> getDate() {

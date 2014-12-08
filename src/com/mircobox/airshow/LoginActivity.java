@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	private boolean isValid() {
+	private boolean isValid() {  
 		return true;
 	}
 	

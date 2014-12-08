@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.mircobox.util.Utility;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -26,6 +28,9 @@ public class MessageFragment extends Fragment {
 			R.id.msgContentItem };
 	private String[] msgMapping = new String[] { "user_photo", "user_name",
 			"msg_content" };
+	
+	private MsgCallbacks mCallbacks;
+	
     public static Fragment newInstance(Context context) {
     	MessageFragment f = new MessageFragment();
  
@@ -41,9 +46,36 @@ public class MessageFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
     	super.onActivityCreated(savedInstanceState);
+    	initViewCompoent();
     	initLeaveMessage();
     }
     
+    private void initViewCompoent(){
+    	ImageView drawer = (ImageView)getView().findViewById(R.id.msgDrawer);
+    	drawer.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				mCallbacks.openDrawerMsg();
+			}
+		});
+    }
+    
+    public static interface MsgCallbacks{
+    	public void openDrawerMsg();
+    }
+    
+    @Override
+    public void onAttach(Activity activity){
+    	super.onAttach(activity);
+    	try{
+    		mCallbacks = (MsgCallbacks)activity;
+    	}catch(ClassCastException e){
+    		throw new ClassCastException(
+					"Activity must implement MsgCallbacks.");
+    	}
+    }
     private void initLeaveMessage() {
 		todayMsgList = (ListView) getView().findViewById(R.id.todayMsgList);
 		ytdMsgList = (ListView) getView().findViewById(R.id.ytdMsgList);

@@ -21,7 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+		NavigationDrawerFragment.NavigationDrawerCallbacks,
+		HomeFragment.HomeCallbacks,
+		InfoFragment.InfoCallbacks,
+		ExhibitionFragment.ExhiCallbacks,
+		MessageFragment.MsgCallbacks,
+		AboutusFragment.AboutCallbacks{
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -40,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements
 			"com.mircobox.airshow.InfoFragment",
 			"com.mircobox.airshow.ExhibitionFragment",
 			"com.mircobox.airshow.MessageFragment",
-			"com.mircobox.airshow.AboutusFragment"};
+			"com.mircobox.airshow.AboutusFragment" };
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
@@ -56,31 +61,48 @@ public class MainActivity extends ActionBarActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		getActionBar().hide();
+
+		TextView tv = (TextView) findViewById(R.id.userName);
+		if (tv != null) {
+			tv.setText(mTitle);
+		}
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
-//		fragmentManager
-//				.beginTransaction()
-//				.replace(R.id.container,
-//						PlaceholderFragment.newInstance(position + 1)).commit();
+		// FragmentManager fragmentManager = getSupportFragmentManager();
+		// fragmentManager
+		// .beginTransaction()
+		// .replace(R.id.container,
+		// PlaceholderFragment.newInstance(position + 1)).commit();
+
 		FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.container, Fragment.instantiate(MainActivity.this, fragments[position]));
-        tx.commit();
+		tx.replace(R.id.container,
+				Fragment.instantiate(MainActivity.this, fragments[position]));
+		tx.commit();
+		onSectionAttached(position+1);
+
 	}
 
 	public void onSectionAttached(int number) {
 		switch (number) {
 		case 1:
-			mTitle = getString(R.string.title_section1);
+			mTitle = getString(R.string.title_home);
 			break;
 		case 2:
-			mTitle = getString(R.string.title_section2);
+			mTitle = getString(R.string.title_info);
 			break;
 		case 3:
-			mTitle = getString(R.string.title_section3);
+			mTitle = getString(R.string.title_exhi);
+			break;
+		case 4:
+			mTitle = getString(R.string.title_msg);
+			break;
+		case 5:
+			mTitle = getString(R.string.title_about);
 			break;
 		}
 	}
@@ -129,7 +151,7 @@ public class MainActivity extends ActionBarActivity implements
 			System.exit(0);
 		}
 	}
-	
+
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -168,6 +190,36 @@ public class MainActivity extends ActionBarActivity implements
 			((MainActivity) activity).onSectionAttached(getArguments().getInt(
 					ARG_SECTION_NUMBER));
 		}
+	}
+
+	@Override
+	public void openDrawer() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
+	}
+
+	@Override
+	public void openDrawerInfo() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
+	}
+
+	@Override
+	public void openDrawerExhi() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
+	}
+
+	@Override
+	public void openDrawerMsg() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
+	}
+
+	@Override
+	public void openDrawerAbout() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
 	}
 
 }
