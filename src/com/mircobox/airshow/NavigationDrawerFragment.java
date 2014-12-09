@@ -88,7 +88,8 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 
 		// Select either the default item (0) or the last selected item.
-		selectItem(mCurrentSelectedPosition);
+		//selectItem(mCurrentSelectedPosition);
+		selectItem(1);
 	}
 
 	@Override
@@ -104,8 +105,8 @@ public class NavigationDrawerFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mDrawerListView = (ListView) inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
-//		View headerView = inflater.inflate(R.layout.header, null);
-//		mDrawerListView.addHeaderView(headerView);
+		View headerView = inflater.inflate(R.layout.header, null);
+		mDrawerListView.addHeaderView(headerView);
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override

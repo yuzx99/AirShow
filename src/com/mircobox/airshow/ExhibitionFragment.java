@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mircobox.airshow.HomeFragment.HomeCallbacks;
+import com.mircobox.exhibition.AgendaFragment;
+import com.mircobox.exhibition.ExhibitionLayoutFragment;
 import com.mircobox.exhibition.IntroductionFragment;
+import com.mircobox.exhibition.ReportFragment;
+import com.mircobox.exhibition.TransportationFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -77,14 +81,16 @@ public class ExhibitionFragment extends Fragment {
 		ViewPager vp = (ViewPager) getView().findViewById(R.id.exhiPager);
 		fragmentList = new ArrayList<Fragment>();
 		fragmentList.add(new IntroductionFragment());
-		fragmentList.add(new IntroductionFragment());
-		fragmentList.add(new IntroductionFragment());
-		fragmentList.add(new IntroductionFragment());
+		fragmentList.add(new TransportationFragment());
+		fragmentList.add(new AgendaFragment());
+		fragmentList.add(new ExhibitionLayoutFragment());
+		fragmentList.add(new ReportFragment());
+	
 		titleList = new ArrayList<String>();
-		titleList.add("会展介绍");
-		titleList.add("交通住宿");
-		titleList.add("会展介绍1");
-		titleList.add("交通住宿2");
+		String[] titles = getResources().getStringArray(R.array.exhi_pager_title);
+		for(int i=0;i<titles.length;i++){
+			titleList.add(titles[i]);
+		}
 		vp.setAdapter(new SectionPagerAdapter(getFragmentManager(),
 				fragmentList, titleList));
 	}

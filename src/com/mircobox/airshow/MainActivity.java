@@ -26,7 +26,8 @@ public class MainActivity extends ActionBarActivity implements
 		InfoFragment.InfoCallbacks,
 		ExhibitionFragment.ExhiCallbacks,
 		MessageFragment.MsgCallbacks,
-		AboutusFragment.AboutCallbacks{
+		AboutusFragment.AboutCallbacks,
+		UserFragment.UserCallbacks{
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity implements
 	private CharSequence mTitle;
 
 	final String[] fragments = new String[] {
+			"com.mircobox.airshow.UserFragment",
 			"com.mircobox.airshow.HomeFragment",
 			"com.mircobox.airshow.InfoFragment",
 			"com.mircobox.airshow.ExhibitionFragment",
@@ -83,7 +85,7 @@ public class MainActivity extends ActionBarActivity implements
 		tx.replace(R.id.container,
 				Fragment.instantiate(MainActivity.this, fragments[position]));
 		tx.commit();
-		onSectionAttached(position+1);
+		onSectionAttached(position);
 
 	}
 
@@ -218,6 +220,12 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void openDrawerAbout() {
+		// TODO Auto-generated method stub
+		mNavigationDrawerFragment.openDrawer();
+	}
+
+	@Override
+	public void openDrawerUser() {
 		// TODO Auto-generated method stub
 		mNavigationDrawerFragment.openDrawer();
 	}

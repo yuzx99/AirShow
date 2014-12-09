@@ -6,7 +6,14 @@
         <item>资讯</item>
         <item>会展</item>
         <item>留言</item>
-        <item>关于我们</item>     
+        <item>关于我们</item>
+    </string-array>
+    <string-array name="exhi_pager_title">
+        <item>会议介绍</item>
+        <item>交通住宿</item>
+        <item>会议日程</item>
+        <item>会场布局</item>
+        <item>历届会展报告</item>
     </string-array>
 
 </resources>

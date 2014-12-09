@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lidroid.xutils.BitmapUtils;
-import com.mircobox.model.*;
 
 public class SplashActivity extends Activity {
 
