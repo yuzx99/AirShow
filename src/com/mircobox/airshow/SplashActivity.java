@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.mircobox.config.ApiUrlConfig;
 
 public class SplashActivity extends Activity {
 
@@ -28,7 +29,6 @@ public class SplashActivity extends Activity {
 	private long waitTime = 3000;
 	private long touchTime = 0;
 	private String iamgeName = "mockimage.jpeg";
-	private String urlMockimage = "http://10.60.43.10:5000/news/mockimage";
 	private LinearLayout llbg = null;
 
 	// Handler handlerBackground = new Handler() {
@@ -55,7 +55,7 @@ public class SplashActivity extends Activity {
 
 		llbg = (LinearLayout) findViewById(R.id.splash);
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
-		bitmapUtils.display(llbg, "http://10.60.43.10:5000/news/mockimage");
+		bitmapUtils.display(llbg, ApiUrlConfig.URL_ADVERTISING_IMAGE);
 		// Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 		// BitmapDrawable bDrawable = new BitmapDrawable(bitmap);
 		// llbg.setBackgroundDrawable(bDrawable);

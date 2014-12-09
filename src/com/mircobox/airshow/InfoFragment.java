@@ -24,8 +24,9 @@ public class InfoFragment extends Fragment {
 			"infoDate" };
 	private int[] itemMapping = new int[] { R.id.infoPicItem,
 			R.id.infoTitleItem, R.id.infoDateItem };
-	
+
 	private InfoCallbacks mCallbacks;
+
 	public static Fragment newInstance(Context context) {
 		InfoFragment f = new InfoFragment();
 
@@ -46,11 +47,11 @@ public class InfoFragment extends Fragment {
 		initViewCompoents();
 		initInfo();
 	}
-	
-	private void initViewCompoents(){
-		ImageView drawer = (ImageView)getView().findViewById(R.id.infoDrawer);
+
+	private void initViewCompoents() {
+		ImageView drawer = (ImageView) getView().findViewById(R.id.infoDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -58,22 +59,22 @@ public class InfoFragment extends Fragment {
 			}
 		});
 	}
-	
-	public static interface InfoCallbacks{
+
+	public static interface InfoCallbacks {
 		public void openDrawerInfo();
 	}
-	
+
 	@Override
-	public void onAttach(Activity activity){
+	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-    	try{
-    		mCallbacks = (InfoCallbacks)activity;
-    	}catch(ClassCastException e){
-    		throw new ClassCastException(
+		try {
+			mCallbacks = (InfoCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(
 					"Activity must implement InfoCallbacks.");
-    	}
+		}
 	}
-	
+
 	private void initInfo() {
 		infoList = (ListView) getView().findViewById(R.id.infoPageList);
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), getDate(),
@@ -89,10 +90,9 @@ public class InfoFragment extends Fragment {
 				R.drawable.test_pic, R.drawable.test_pic, R.drawable.test_pic,
 				R.drawable.test_pic, R.drawable.test_pic, R.drawable.test_pic,
 				R.drawable.test_pic, R.drawable.test_pic };
-		String[] titles = new String[] { "µÚ1½ìÖĞ¹úº½¿Õº½Ìì²©ÀÀ»á³É¹¦ÂäÄ»", "µÚ2½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í",
-				"µÚ3½ìÖĞ¹úº½¿Õº½Ìì²©ÀÀ»á³É¹¦ÂäÄ»", "µÚ4½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í", "µÚ5½ìÖĞ¹úº½¿Õº½Ìì²©ÀÀ»á³É¹¦ÂäÄ»",
-				"µÚ6½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í", "µÚ7½ìÖĞ¹úº½¿Õº½Ìì²©ÀÀ»á³É¹¦ÂäÄ»", "µÚ8½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í",
-				"µÚ9½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í", "µÚ10½ìÖĞ¹úº½Õ¹·ÉĞĞ±íÑİÊ±¿Ì±í" };
+		String[] titles = new String[] { "ç¬¬1å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬2å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š",
+				"ç¬¬3å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬4å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬5å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬6å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š",
+				"ç¬¬7å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬8å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬9å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š", "ç¬¬10å±Šä¸­å›½èˆªç©ºèˆªå¤©åšè§ˆä¼š"};
 		String[] dates = new String[] { "2014-11-9", "2014-11-8", "2014-11-9",
 				"2014-11-8", "2014-11-9", "2014-11-8", "2014-11-9",
 				"2014-11-8", "2014-11-8", "2014-11-8" };

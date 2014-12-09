@@ -34,7 +34,7 @@ import android.widget.SimpleAdapter;
 public class HomeFragment extends Fragment {
 
 	private ViewPager vPager = null;
-	// ×°µãµãµÄImageViewÊı×é
+	// ×°ï¿½ï¿½ï¿½ï¿½ImageViewï¿½ï¿½ï¿½ï¿½
 	private ImageView[] imageViews = null;
 	private ImageView imageView = null;
 	private AtomicInteger what = new AtomicInteger(0);
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
 		ViewGroup vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
 
-		// ´æ·ÅViewPagerÍ¼Æ¬
+		// ï¿½ï¿½ï¿½ViewPagerÍ¼Æ¬
 		List<View> lPics = new ArrayList<View>();
 
 		Resources res = getResources();
@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
 		// img4.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_4)));
 		lPics.add(img4);
 
-		// ¶ÔimageViews½øĞĞÌî³ä
+		// ï¿½ï¿½imageViewsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		imageViews = new ImageView[lPics.size()];
 		for (int i = 0; i < lPics.size(); i++) {
 			imageView = new ImageView(getActivity());
@@ -303,8 +303,8 @@ public class HomeFragment extends Fragment {
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
 		Integer[] imgIDs = new Integer[] { R.drawable.test_pho,
 				R.drawable.test_pho, R.drawable.test_pho };
-		String[] itemTitle = new String[] { "ÖĞ¹úèÉÁúÕ½»ú²«»÷³¤¿Õ", "ÖĞ¹ú°ËÒ»ÌøÉ¡¶Ó¼ò½é",
-				"ÖĞ¹ú´ó·É»úµÍ¿ÕµÍËÙ³©Í¨" };
+		String[] itemTitle = new String[] { "ä¸­å›½æ­é¾™æˆ˜æœºæå‡»é•¿ç©º", "ä¸­å›½å…«ä¸€è·³ä¼é˜Ÿ",
+				"ä¸­å›½å¤§å‹é£æœºä½ç©ºé£è¡Œ"};
 
 		for (int i = 0; i < imgIDs.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
