@@ -1,15 +1,29 @@
 package com.mircobox.airshow;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.lidroid.xutils.BitmapUtils;
+import com.mircobox.config.ApiUrlConfig;
+import com.mircobox.util.MBHttpUtils;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,18 +41,84 @@ public class ProfileActivity extends Activity {
 	private EditText etUserName;
 	private Button btnCancel;
 	private Button btnOK;
+	private SharedPreferences spData;
+	private SharedPreferences spUserInfo;
 
 	private long waitTime = 3000;
 	private long touchTime = 0;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.profile);
-		initUI();
+		spUserInfo = this
+				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+		// åˆ¤æ–­æ˜¯å¦å·²ç»ä¿®æ”¹è¿‡ä¿¡æ¯
+		if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+			Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		} else {
+			spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+			String result = spData.getString("RESULT", "");
+			try {
+				initUI(result);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 	}
 
-	private void initUI() {
+	Handler handlerUpdate = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			if (result != null) {
+				try {
+					JSONObject jsonObject = new JSONObject(result);
+					String name = jsonObject.getString("name");
+					String nickName = jsonObject.getString("nickname");
+					Toast.makeText(ProfileActivity.this,
+							"çœŸå®å§“åï¼š" + name + "/næ˜µç§°:" + nickName,
+							Toast.LENGTH_SHORT).show();
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// è®°å½•å·²ç»ä¿®æ”¹
+				spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+				Intent intent = new Intent(ProfileActivity.this,
+						MainActivity.class);
+				startActivity(intent);
+				finish();
+			} else {
+				Toast.makeText(ProfileActivity.this, "ä¿¡æ¯ä¿®æ”¹å¤±è´¥",
+						Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
+
+	private void initUI(String result) throws JSONException {
+
+		JSONObject jsonObject = null;
+		String urlHeaderSmall = null;
+		final String name;
+		final String nickName;
+		final String id;
+		final String token;
+		jsonObject = new JSONObject(result);
+		urlHeaderSmall = jsonObject.getString("header_small");
+		name = jsonObject.getString("name");
+		nickName = jsonObject.getString("nickname");
+		id = jsonObject.getString("id");
+		token = jsonObject.getString("token");
+
 		ibtnUploadPhoto = (ImageButton) findViewById(R.id.ibtnUploadPhoto);
 		ibtnUploadPhoto.setOnClickListener(new OnClickListener() {
 
@@ -46,17 +126,22 @@ public class ProfileActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
-				// ¿ªÆôPictures»­ÃæTypeÉè¶¨Îªimage
+				// ï¿½ï¿½ï¿½ï¿½Picturesï¿½ï¿½ï¿½ï¿½Typeï¿½è¶¨Îªimage
 				intent.setType("image/*");
-				// Ê¹ÓÃIntent.ACTION_GET_CONTENTÕâ¸öAction
+				// Ê¹ï¿½ï¿½Intent.ACTION_GET_CONTENTï¿½ï¿½ï¿½Action
 				intent.setAction(Intent.ACTION_GET_CONTENT);
-				// È¡µÃÏàÆ¬ºó·µ»Ø±¾»­Ãæ
+				// È¡ï¿½ï¿½ï¿½ï¿½Æ¬ï¿½ó·µ»Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
 				startActivityForResult(intent, 1);
 			}
 		});
 		ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
+		// æ˜¾ç¤ºå¤´åƒ
+		BitmapUtils bitmapUtils = new BitmapUtils(this);
+		bitmapUtils.display(ivPhoto, urlHeaderSmall);
 		etRealName = (EditText) findViewById(R.id.etRealName);
+		etRealName.setText(name);
 		etUserName = (EditText) findViewById(R.id.etUserName);
+		etUserName.setText(nickName);
 		btnCancel = (Button) findViewById(R.id.btnProfCancel);
 		btnCancel.setOnClickListener(new OnClickListener() {
 
@@ -72,10 +157,40 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(ProfileActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							String nameUpdate = etRealName.getText().toString();
+							String nikeNameUpdate = etUserName.getText()
+									.toString();
+							String urlTemp = ApiUrlConfig.URL_UPDATE_NAME_BASE
+									+ id + ApiUrlConfig.URL_UPDATE_NAME_POSTFIX;
+							MBHttpUtils ru = new MBHttpUtils();
+							JSONObject param = new JSONObject();
+							param.put("name", nameUpdate);
+							param.put("nickname", nikeNameUpdate);
+							param.put("token", token);
+							String result = ru.restHttpPostJson(urlTemp, param);
+							Message msg = new Message();
+							Bundle data = new Bundle();
+							data.putString("result", result);
+							msg.setData(data);
+							handlerUpdate.sendMessage(msg);
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClientProtocolException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				}).start();
 			}
 		});
 	}
@@ -89,7 +204,7 @@ public class ProfileActivity extends Activity {
 			try {
 				Bitmap bitmap = BitmapFactory.decodeStream(cr
 						.openInputStream(uri));
-				// ½«BitmapÉè¶¨µ½ImageView
+				// ï¿½ï¿½Bitmapï¿½è¶¨ï¿½ï¿½ImageView
 				ivPhoto.setImageBitmap(bitmap);
 			} catch (FileNotFoundException e) {
 				Log.e("Exception", e.getMessage(), e);
@@ -106,10 +221,10 @@ public class ProfileActivity extends Activity {
 		options.inPurgeable = true;
 		options.inInputShareable = true;
 		options.inJustDecodeBounds = true;
-		// »ñÈ¡Õâ¸öÍ¼Æ¬µÄ¿íºÍ¸ß£¬×¢Òâ´Ë´¦µÄbitmapÎªnull
+		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Ä¿ï¿½Í¸ß£ï¿½×¢ï¿½ï¿½Ë´ï¿½ï¿½ï¿½bitmapÎªnull
 		bitmap = BitmapFactory.decodeFile(imagePath, options);
-		options.inJustDecodeBounds = false; // ÉèÎª false
-		// ¼ÆËãËõ·Å±È
+		options.inJustDecodeBounds = false; // ï¿½ï¿½Îª false
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½
 		int h = options.outHeight;
 		int w = options.outWidth;
 		int beWidth = w / width;
@@ -124,14 +239,15 @@ public class ProfileActivity extends Activity {
 			be = 1;
 		}
 		options.inSampleSize = be;
-		// ÖØĞÂ¶ÁÈëÍ¼Æ¬£¬¶ÁÈ¡Ëõ·ÅºóµÄbitmap£¬×¢ÒâÕâ´ÎÒª°Ñoptions.inJustDecodeBounds ÉèÎª false
+		// ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Åºï¿½ï¿½bitmapï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½options.inJustDecodeBounds ï¿½ï¿½Îª
+		// false
 		bitmap = BitmapFactory.decodeFile(imagePath, options);
-		// ÀûÓÃThumbnailUtilsÀ´´´½¨ËõÂÔÍ¼£¬ÕâÀïÒªÖ¸¶¨ÒªËõ·ÅÄÄ¸öBitmap¶ÔÏó
+		// ï¿½ï¿½ï¿½ï¿½ThumbnailUtilsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÖ¸ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½Bitmapï¿½ï¿½ï¿½ï¿½
 		bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
 				ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 		return bitmap;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		long currentTime = System.currentTimeMillis();
