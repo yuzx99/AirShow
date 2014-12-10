@@ -1,5 +1,10 @@
 package com.mircobox.airshow;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.lidroid.xutils.BitmapUtils;
+
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -7,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,17 +23,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks,
-		HomeFragment.HomeCallbacks,
-		InfoFragment.InfoCallbacks,
-		ExhibitionFragment.ExhiCallbacks,
-		MessageFragment.MsgCallbacks,
-		AboutusFragment.AboutCallbacks,
-		UserFragment.UserCallbacks{
+		HomeFragment.HomeCallbacks, InfoFragment.InfoCallbacks,
+		ExhibitionFragment.ExhiCallbacks, MessageFragment.MsgCallbacks,
+		AboutusFragment.AboutCallbacks, UserFragment.UserCallbacks {
+
+	private SharedPreferences spData;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -65,11 +71,24 @@ public class MainActivity extends ActionBarActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		getActionBar().hide();
-
-		TextView tv = (TextView) findViewById(R.id.userName);
-		if (tv != null) {
-			tv.setText(mTitle);
+		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		String result = spData.getString("RESULT", "");
+		JSONObject jsonObject;
+		String nickName = null;
+		String urlHeaderSmall = null;
+		try {
+			jsonObject = new JSONObject(result);
+			urlHeaderSmall = jsonObject.getString("header_small");
+			nickName = jsonObject.getString("nickname");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		TextView tv = (TextView) findViewById(R.id.userName);
+		ImageView iv = (ImageView) findViewById(R.id.headIcon);
+		BitmapUtils bitmapUtils = new BitmapUtils(this);
+		bitmapUtils.display(iv, urlHeaderSmall);
+		tv.setText(nickName);
 	}
 
 	@Override
@@ -115,31 +134,32 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setTitle(mTitle);
 	}
-//  set menu disabled 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-//			// Only show items in the action bar relevant to this screen
-//			// if the drawer is not showing. Otherwise, let the drawer
-//			// decide what to show in the action bar.
-//			getMenuInflater().inflate(R.menu.main, menu);
-//			restoreActionBar();
-//			return true;
-//		}
-//		return super.onCreateOptionsMenu(menu);
-//	}
-//
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		// Handle action bar item clicks here. The action bar will
-//		// automatically handle clicks on the Home/Up button, so long
-//		// as you specify a parent activity in AndroidManifest.xml.
-//		int id = item.getItemId();
-//		if (id == R.id.action_settings) {
-//			return true;
-//		}
-//		return super.onOptionsItemSelected(item);
-//	}
+
+	// set menu disabled
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// if (!mNavigationDrawerFragment.isDrawerOpen()) {
+	// // Only show items in the action bar relevant to this screen
+	// // if the drawer is not showing. Otherwise, let the drawer
+	// // decide what to show in the action bar.
+	// getMenuInflater().inflate(R.menu.main, menu);
+	// restoreActionBar();
+	// return true;
+	// }
+	// return super.onCreateOptionsMenu(menu);
+	// }
+	//
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// // Handle action bar item clicks here. The action bar will
+	// // automatically handle clicks on the Home/Up button, so long
+	// // as you specify a parent activity in AndroidManifest.xml.
+	// int id = item.getItemId();
+	// if (id == R.id.action_settings) {
+	// return true;
+	// }
+	// return super.onOptionsItemSelected(item);
+	// }
 
 	@Override
 	public void onBackPressed() {
