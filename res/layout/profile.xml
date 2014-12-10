@@ -5,117 +5,126 @@
     android:background="@drawable/bg_login"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="166dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp" >
-
-        <ImageButton
-            android:id="@+id/ibtnUploadPhoto"
-            android:layout_width="73dp"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/selector_photobutton" />
-
-        <ImageView
-            android:id="@+id/ivPhoto"
-            android:layout_width="166dp"
-            android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
-            android:background="@drawable/ic_avatar"
-            android:clickable="false" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" >
-
-        <EditText
-            android:id="@+id/etRealName"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="14dp"
-            android:alpha="0.85"
-            android:gravity="center_vertical"
-            android:inputType="text"
-            android:maxLength="128"
-            android:paddingLeft="60dp"
-            android:textColor="#ffffff"
-            android:textCursorDrawable="@drawable/ic_input_box_cursor"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="23dp"
-            android:alpha="0.6"
-            android:gravity="center_vertical"
-            android:text="实名"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp" >
-
-        <EditText
-            android:id="@+id/etUserName"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="14dp"
-            android:alpha="0.85"
-            android:gravity="center_vertical"
-            android:inputType="text"
-            android:maxLength="128"
-            android:paddingLeft="60dp"
-            android:textColor="#ffffff"
-            android:textCursorDrawable="@drawable/ic_input_box_cursor"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="23dp"
-            android:alpha="0.6"
-            android:gravity="center_vertical"
-            android:text="昵称"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/btnProfCancel"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:alpha="0.85"
-            android:text="取消"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" >
 
-        <Button
-            android:id="@+id/btnProfOK"
-            android:layout_width="120dp"
+            <ImageButton
+                android:id="@+id/ibtnUploadPhoto"
+                android:layout_width="73dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/selector_photobutton" />
+
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_avatar"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="24dp"
-            android:alpha="0.85"
-            android:text="确定"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp" >
+
+            <EditText
+                android:id="@+id/etRealName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="14dp"
+                android:alpha="0.85"
+                android:gravity="center_vertical"
+                android:inputType="text"
+                android:maxLength="128"
+                android:paddingLeft="60dp"
+                android:textColor="#ffffff"
+                android:textCursorDrawable="@drawable/ic_input_box_cursor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="23dp"
+                android:alpha="0.6"
+                android:gravity="center_vertical"
+                android:text="实名"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp" >
+
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="14dp"
+                android:alpha="0.85"
+                android:gravity="center_vertical"
+                android:inputType="text"
+                android:maxLength="128"
+                android:paddingLeft="60dp"
+                android:textColor="#ffffff"
+                android:textCursorDrawable="@drawable/ic_input_box_cursor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="23dp"
+                android:alpha="0.6"
+                android:gravity="center_vertical"
+                android:text="昵称"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnProfCancel"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.85"
+                android:text="取消"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:background="@drawable/selector_button" />
+
+            <Button
+                android:id="@+id/btnProfOK"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:alpha="0.85"
+                android:text="确定"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:background="@drawable/selector_button" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -127,11 +127,8 @@ public class ProfileActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
-				// ����Pictures����Type�趨Ϊimage
 				intent.setType("image/*");
-				// ʹ��Intent.ACTION_GET_CONTENT���Action
 				intent.setAction(Intent.ACTION_GET_CONTENT);
-				// ȡ����Ƭ�󷵻ر�����
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -176,7 +173,6 @@ public class ProfileActivity extends Activity {
 			try {
 				Bitmap bitmap = BitmapFactory.decodeStream(cr
 						.openInputStream(uri));
-				// ��Bitmap�趨��ImageView
 				ivPhoto.setImageBitmap(bitmap);
 			} catch (FileNotFoundException e) {
 				Log.e("Exception", e.getMessage(), e);
