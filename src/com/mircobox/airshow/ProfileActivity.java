@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.microbox.model.UpdateProfileMolelThread;
 import com.mircobox.config.ApiUrlConfig;
 import com.mircobox.util.MBHttpUtils;
 
@@ -84,7 +85,7 @@ public class ProfileActivity extends Activity {
 					String name = jsonObject.getString("name");
 					String nickName = jsonObject.getString("nickname");
 					Toast.makeText(ProfileActivity.this,
-							"真实姓名：" + name + "/n昵称:" + nickName,
+							"真实姓名：" + name + "---昵称:" + nickName,
 							Toast.LENGTH_SHORT).show();
 
 				} catch (JSONException e) {
@@ -157,40 +158,11 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							String nameUpdate = etRealName.getText().toString();
-							String nikeNameUpdate = etUserName.getText()
-									.toString();
-							String urlTemp = ApiUrlConfig.URL_UPDATE_NAME_BASE
-									+ id + ApiUrlConfig.URL_UPDATE_NAME_POSTFIX;
-							MBHttpUtils ru = new MBHttpUtils();
-							JSONObject param = new JSONObject();
-							param.put("name", nameUpdate);
-							param.put("nickname", nikeNameUpdate);
-							param.put("token", token);
-							String result = ru.restHttpPostJson(urlTemp, param);
-							Message msg = new Message();
-							Bundle data = new Bundle();
-							data.putString("result", result);
-							msg.setData(data);
-							handlerUpdate.sendMessage(msg);
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-				}).start();
+				String nameUpdate = etRealName.getText().toString();
+				String nikeNameUpdate = etUserName.getText().toString();
+				UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
+						nameUpdate, nikeNameUpdate, id, token, handlerUpdate);
+				upft.start();
 			}
 		});
 	}

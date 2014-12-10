@@ -33,6 +33,7 @@ public class MBHttpUtils {
 
 	}
 
+	// 发送http get请求，返回内容String
 	public String restHttpGetJson(String url) throws ClientProtocolException,
 			IOException {
 		// 创建一个http客户端
@@ -50,6 +51,7 @@ public class MBHttpUtils {
 		}
 	}
 
+	// 发送http post请求，参数param json格式，返回内容String
 	public String restHttpPostJson(String url, JSONObject param)
 			throws ClientProtocolException, IOException {
 		// 创建一个http客户端

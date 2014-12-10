@@ -6,6 +6,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.microbox.model.LoginModelThread;
 import com.mircobox.config.ApiUrlConfig;
 import com.mircobox.util.MBHttpUtils;
 
@@ -83,13 +84,6 @@ public class LoginActivity extends Activity {
 			}
 		});
 		tgbtnSavePwd = (ToggleButton) findViewById(R.id.tgbtnSavePwd);
-		// 判断自动登录
-		if (spUserInfo.getBoolean("ISCHECK", false)) {
-			tgbtnSavePwd.setChecked(true);
-			tgbtnSavePwd.setBackgroundResource(R.drawable.ic_checked_pressed);
-			login(spUserInfo.getString("USER_ID", ""),
-					spUserInfo.getString("PASSWORD", ""));
-		}
 		tgbtnSavePwd.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -120,6 +114,7 @@ public class LoginActivity extends Activity {
 		});
 	}
 
+	// 登录后跳转
 	Handler handlerLogin = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -150,36 +145,9 @@ public class LoginActivity extends Activity {
 	};
 
 	private void login(final String userId, final String password) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					MBHttpUtils ru = new MBHttpUtils();
-					JSONObject param = new JSONObject();
-					param.put("account", userId);
-					param.put("password", password);
-					String result = ru.restHttpPostJson(ApiUrlConfig.URL_LOGIN,
-							param);
-					Message msg = new Message();
-					Bundle data = new Bundle();
-					data.putString("result", result);
-					data.putString("userId", userId);
-					data.putString("password", password);
-					msg.setData(data);
-					handlerLogin.sendMessage(msg);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		}).start();
+		LoginModelThread lmt = new LoginModelThread(userId, password,
+				handlerLogin);
+		lmt.start();
 	}
 
 	@Override
