@@ -28,6 +28,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="距中国XX航空展开幕还有14天"
+            android:textSize="16sp"
+            android:alpha="0.85"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 </LinearLayout>
