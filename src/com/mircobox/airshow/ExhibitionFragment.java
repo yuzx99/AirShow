@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class ExhibitionFragment extends Fragment {
 
@@ -48,12 +50,14 @@ public class ExhibitionFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initViewCompoent();
+		initTitleBar();
 		initViewPager();
 	}
 
-	private void initViewCompoent() {
-		ImageView drawer = (ImageView) getView().findViewById(R.id.exhiDrawer);
+	private void initTitleBar() {
+		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		title.setText("第十届中国航空博览会");
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class AboutusFragment extends Fragment {
 
@@ -31,11 +33,13 @@ public class AboutusFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initViewCompoent();
+		initTitleBar();
 	}
 
-	private void initViewCompoent() {
-		ImageView drawer = (ImageView) getView().findViewById(R.id.aboutDrawer);
+	private void initTitleBar() {
+		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		title.setText("关于我们");
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 			
 			@Override

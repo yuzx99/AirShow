@@ -17,7 +17,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class MessageFragment extends Fragment {
 
@@ -46,12 +48,14 @@ public class MessageFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initViewCompoent();
+		initTitleBar();
 		initLeaveMessage();
 	}
 
-	private void initViewCompoent() {
-		ImageView drawer = (ImageView) getView().findViewById(R.id.msgDrawer);
+	private void initTitleBar() {
+		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		title.setText("留言");
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 
 			@Override
