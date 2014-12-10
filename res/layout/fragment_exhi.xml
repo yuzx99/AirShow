@@ -4,31 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_banner" >
-
-        <ImageView
-            android:id="@+id/exhiDrawer"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/test_menu" />
-
-        <TextView
-            android:id="@+id/exhiPageTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.85"
-            android:text="第十届中国航空博览会"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
-    </RelativeLayout>
+    <include layout="@layout/main_title_bar" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/exhiPager"
@@ -36,7 +12,7 @@
         android:layout_height="match_parent" >
 
         <android.support.v4.view.PagerTabStrip
-            android:id="@+id/exhiPagerTitle"
+            android:id="@+id/exhiPagerTab"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="top"

@@ -7,9 +7,13 @@ import com.mircobox.util.Utility;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CategoryActivity extends Activity {
@@ -25,17 +29,31 @@ public class CategoryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.category);
-
+		initTitleBar();
 		initInfo();
 	}
 
+	private void initTitleBar(){
+		TextView title = (TextView)findViewById(R.id.pageTitle);
+		title.setText("涓撻");
+		RelativeLayout back = (RelativeLayout) findViewById(R.id.pageBack);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+	}
+	
 	private void initInfo() {
 		cateInfoList = (ListView) findViewById(R.id.cateInfoList);
 		SimpleAdapter adapter = new SimpleAdapter(this, getDate(),
 				R.layout.info_item, infoMapping, itemMapping);
 		cateInfoList.setAdapter(adapter);
 		Utility.setListViewHeightBasedOnChildren(cateInfoList);
-		
+
 	}
 
 	private ArrayList<HashMap<String, Object>> getDate() {
@@ -46,10 +64,9 @@ public class CategoryActivity extends Activity {
 				R.drawable.test_pic, R.drawable.test_pic, R.drawable.test_pic,
 				R.drawable.test_pic, R.drawable.test_pic, R.drawable.test_pic,
 				R.drawable.test_pic, R.drawable.test_pic };
-		String[] titles = new String[] { "第1届中国航空航天博览会成功落幕", "第2届中国航展飞行表演时刻表",
-				"第3届中国航空航天博览会成功落幕", "第4届中国航展飞行表演时刻表", "第5届中国航空航天博览会成功落幕",
-				"第6届中国航展飞行表演时刻表", "第7届中国航空航天博览会成功落幕", "第8届中国航展飞行表演时刻表",
-				"第9届中国航展飞行表演时刻表", "第10届中国航展飞行表演时刻表" };
+		String[] titles = new String[] { "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷",
+				"绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷",
+				"绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷", "绗崄灞婁腑鍥借埅绌哄睍鎴愬姛钀藉箷" };
 		String[] dates = new String[] { "2014-11-9", "2014-11-8", "2014-11-9",
 				"2014-11-8", "2014-11-9", "2014-11-8", "2014-11-9",
 				"2014-11-8", "2014-11-8", "2014-11-8" };
@@ -63,7 +80,6 @@ public class CategoryActivity extends Activity {
 		return list;
 	}
 
-	
 	@Override
 	public void onBackPressed() {
 		finish();

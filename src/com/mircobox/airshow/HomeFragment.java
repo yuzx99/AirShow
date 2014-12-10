@@ -29,12 +29,14 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
 	private ViewPager vPager = null;
-	// װ����ImageView����
+
 	private ImageView[] imageViews = null;
 	private ImageView imageView = null;
 	private AtomicInteger what = new AtomicInteger(0);
@@ -61,13 +63,15 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
     	super.onActivityCreated(savedInstanceState);
-    	initViewCompoents();
+    	initTitleBar();
     	initViewPager();
     	initInfoList();
     	
     }
-    public void initViewCompoents(){
-    	ImageView drawer = (ImageView)getView().findViewById(R.id.homeDrawer);
+    public void initTitleBar(){
+    	TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+    	title.setText("距中国XX航空展开幕还有14天");
+    	RelativeLayout drawer = (RelativeLayout)getView().findViewById(R.id.mainDrawer);
     	drawer.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -77,6 +81,7 @@ public class HomeFragment extends Fragment {
 			}
 		});
     }
+    
     public static interface HomeCallbacks{
     	public void openDrawer();
     }
@@ -96,7 +101,7 @@ public class HomeFragment extends Fragment {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
 		ViewGroup vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
 
-		// ���ViewPagerͼƬ
+
 		List<View> lPics = new ArrayList<View>();
 
 		Resources res = getResources();
@@ -120,7 +125,7 @@ public class HomeFragment extends Fragment {
 		// img4.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_4)));
 		lPics.add(img4);
 
-		// ��imageViews�������
+
 		imageViews = new ImageView[lPics.size()];
 		for (int i = 0; i < lPics.size(); i++) {
 			imageView = new ImageView(getActivity());

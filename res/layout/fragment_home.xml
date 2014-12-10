@@ -4,28 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_banner" >
-
-        <ImageView
-            android:id="@+id/homeDrawer"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/test_menu" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="距中国XX航空展开幕还有14天"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
+    <include layout="@layout/main_title_bar"/>
 
     <ScrollView
         android:layout_width="fill_parent"

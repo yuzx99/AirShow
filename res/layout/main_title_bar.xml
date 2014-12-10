@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+   <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_banner" >
+
+        <RelativeLayout
+            android:id="@+id/mainDrawer"
+            android:layout_width="60dp"
+            android:layout_height="60dp" >
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/test_menu" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="距中国XX航空展开幕还有14天"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</LinearLayout>

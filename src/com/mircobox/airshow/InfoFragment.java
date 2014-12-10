@@ -8,15 +8,20 @@ import com.mircobox.util.Utility;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class InfoFragment extends Fragment {
 	private ListView infoList = null;
@@ -44,12 +49,14 @@ public class InfoFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initViewCompoents();
+		initTitleBar();
 		initInfo();
 	}
 
-	private void initViewCompoents() {
-		ImageView drawer = (ImageView) getView().findViewById(R.id.infoDrawer);
+	private void initTitleBar() {
+		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		title.setText("资讯");
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -80,6 +87,17 @@ public class InfoFragment extends Fragment {
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), getDate(),
 				R.layout.info_item, infoMapping, itemMapping);
 		infoList.setAdapter(adapter);
+		
+		infoList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private ArrayList<HashMap<String, Object>> getDate() {

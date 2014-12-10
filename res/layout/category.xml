@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollbars="none" >
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="#fafafa" >
+        android:layout_height="fill_parent"
+        android:scrollbars="none" >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/bg_banner" >
+            android:layout_height="wrap_content"
+            android:background="#fafafa"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/cateTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="第十届航展飞行表演队"
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="184dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/test_pic" />
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="184dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-4dp"
-            android:background="@drawable/test_pic" />
+            <ListView
+                android:id="@+id/cateInfoList"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="#c0c0c0"
+                android:dividerHeight="1dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </ScrollView>
 
-        <ListView
-            android:id="@+id/cateInfoList"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scrollbars="none"
-            android:divider="#c0c0c0"
-            android:dividerHeight="1dp"/>
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
