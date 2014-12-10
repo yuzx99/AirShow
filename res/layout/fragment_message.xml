@@ -33,8 +33,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:background="#fafafa" >
 
+        <ListView
+            android:id="@+id/msgList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            >
+            
+        </ListView>
+        <!--
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -97,6 +106,7 @@
                 </ListView>
             </LinearLayout>
         </ScrollView>
+        -->
 
         <ImageButton
             android:id="@+id/ibtnLeaveMsg"

@@ -20,77 +20,74 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 public class MessageFragment extends Fragment {
-	
-	private ListView todayMsgList = null;
-	private ListView ytdMsgList = null;
-	private ListView earlierMsgList = null;
+
+	private ListView messageList = null;
 	private int[] msgItems = new int[] { R.id.msgImageItem, R.id.msgNameItem,
-			R.id.msgContentItem };
+			R.id.msgContentItem, R.id.msgDateItem };
 	private String[] msgMapping = new String[] { "user_photo", "user_name",
-			"msg_content" };
-	
+			"msg_content", "msg_date" };
+
 	private MsgCallbacks mCallbacks;
-	
-    public static Fragment newInstance(Context context) {
-    	MessageFragment f = new MessageFragment();
- 
-        return f;
-    }
- 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_message, null);
-        return root;
-    }
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-    	super.onActivityCreated(savedInstanceState);
-    	initViewCompoent();
-    	initLeaveMessage();
-    }
-    
-    private void initViewCompoent(){
-    	ImageView drawer = (ImageView)getView().findViewById(R.id.msgDrawer);
-    	drawer.setOnClickListener(new OnClickListener() {
-			
+
+	public static Fragment newInstance(Context context) {
+		MessageFragment f = new MessageFragment();
+
+		return f;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		ViewGroup root = (ViewGroup) inflater.inflate(
+				R.layout.fragment_message, null);
+		return root;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		initViewCompoent();
+		initLeaveMessage();
+	}
+
+	private void initViewCompoent() {
+		ImageView drawer = (ImageView) getView().findViewById(R.id.msgDrawer);
+		drawer.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				mCallbacks.openDrawerMsg();
 			}
 		});
-    }
-    
-    public static interface MsgCallbacks{
-    	public void openDrawerMsg();
-    }
-    
-    @Override
-    public void onAttach(Activity activity){
-    	super.onAttach(activity);
-    	try{
-    		mCallbacks = (MsgCallbacks)activity;
-    	}catch(ClassCastException e){
-    		throw new ClassCastException(
-					"Activity must implement MsgCallbacks.");
-    	}
-    }
-    private void initLeaveMessage() {
-		todayMsgList = (ListView) getView().findViewById(R.id.todayMsgList);
-		ytdMsgList = (ListView) getView().findViewById(R.id.ytdMsgList);
-		earlierMsgList = (ListView) getView().findViewById(R.id.earlierMsgList);
-		SimpleAdapter todayAdapter = new SimpleAdapter(getActivity(), getLeaveMessage(),
-				R.layout.msg_item, msgMapping, msgItems);
-		todayMsgList.setAdapter(todayAdapter);
-		todayMsgList.setDividerHeight(0);
-		Utility.setListViewHeightBasedOnChildren(todayMsgList);
-		ytdMsgList.setAdapter(todayAdapter);
-		Utility.setListViewHeightBasedOnChildren(ytdMsgList);
-		earlierMsgList.setAdapter(todayAdapter);
-		Utility.setListViewHeightBasedOnChildren(earlierMsgList);
+	}
 
-		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(R.id.ibtnLeaveMsg);
+	public static interface MsgCallbacks {
+		public void openDrawerMsg();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (MsgCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(
+					"Activity must implement MsgCallbacks.");
+		}
+	}
+
+	private void initLeaveMessage() {
+
+
+		messageList = (ListView) getView().findViewById(R.id.msgList);
+		SimpleAdapter msgAdapter = new SimpleAdapter(getActivity(),
+				getLeaveMessage(), R.layout.msg_item_new, msgMapping, msgItems);
+		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(
+				R.id.ibtnLeaveMsg);
+		messageList.setAdapter(msgAdapter);
+		messageList.setDividerHeight(0);
+		
 		ibtnLeaveMsg.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -113,11 +110,14 @@ public class MessageFragment extends Fragment {
 				getString(R.string.test_msg_content),
 				getString(R.string.test_msg_content),
 				getString(R.string.test_msg_content) };
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		String[] itemDates = new String[] { "10:10", "10:30", "11:40" };
+
 		for (int i = 0; i < imgIDs.length; i++) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put(msgMapping[0], imgIDs[i]);
 			map.put(msgMapping[1], itemNames[i]);
 			map.put(msgMapping[2], itemContents[i]);
+			map.put(msgMapping[3], itemDates[i]);
 			listItem.add(map);
 		}
 		return listItem;
