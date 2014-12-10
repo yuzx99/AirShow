@@ -1,14 +1,33 @@
 package com.mircobox.airshow;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.lidroid.xutils.BitmapUtils;
+import com.microbox.model.GetMessageModelThread;
+import com.microbox.model.MessageListInfo;
+import com.mircobox.config.ApiUrlConfig;
+import com.mircobox.util.MBDateUtils;
+import com.mircobox.util.MBHttpUtils;
 import com.mircobox.util.Utility;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +39,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MessageFragment extends Fragment {
 
@@ -53,9 +73,10 @@ public class MessageFragment extends Fragment {
 	}
 
 	private void initTitleBar() {
-		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
 		title.setText("留言");
-		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
+				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -83,15 +104,11 @@ public class MessageFragment extends Fragment {
 
 	private void initLeaveMessage() {
 
-
 		messageList = (ListView) getView().findViewById(R.id.msgList);
-		SimpleAdapter msgAdapter = new SimpleAdapter(getActivity(),
-				getLeaveMessage(), R.layout.msg_item_new, msgMapping, msgItems);
+
 		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(
 				R.id.ibtnLeaveMsg);
-		messageList.setAdapter(msgAdapter);
-		messageList.setDividerHeight(0);
-		
+
 		ibtnLeaveMsg.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -102,28 +119,55 @@ public class MessageFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
+		GetMessageModelThread gmmt = new GetMessageModelThread(handlerMessage);
+		gmmt.start();
 	}
 
-	private ArrayList<HashMap<String, Object>> getLeaveMessage() {
-		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-		Integer[] imgIDs = new Integer[] { R.drawable.test_pho,
-				R.drawable.test_pho, R.drawable.test_pho };
-		String[] itemNames = new String[] { getString(R.string.test_name),
-				getString(R.string.test_name), getString(R.string.test_name) };
-		String[] itemContents = new String[] {
-				getString(R.string.test_msg_content),
-				getString(R.string.test_msg_content),
-				getString(R.string.test_msg_content) };
-		String[] itemDates = new String[] { "10:10", "10:30", "11:40" };
-
-		for (int i = 0; i < imgIDs.length; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put(msgMapping[0], imgIDs[i]);
-			map.put(msgMapping[1], itemNames[i]);
-			map.put(msgMapping[2], itemContents[i]);
-			map.put(msgMapping[3], itemDates[i]);
-			listItem.add(map);
+	Handler handlerMessage = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			List<MessageListInfo> info = new ArrayList<MessageListInfo>();
+			if (result != null) {
+				try {
+					JSONArray arr = new JSONArray(result);
+					for (int i = 0; i < arr.length(); i++) {
+						JSONObject temp = (JSONObject) arr.get(i);
+						String content = temp.getString("content");
+						String publisher = temp.getString("publisher");
+						JSONObject user = temp.getJSONObject("user");
+						String header_small = user.getString("header_small");
+						long created_time = temp.getLong("created_time");
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"MM/dd HH:mm");
+						Date date = new Date(created_time);
+						String wtoy = MBDateUtils.whetherTodayOrYesterday(date);
+						String dateItem;
+						if (wtoy != null) {
+							dateItem = wtoy + " "
+									+ sdf.format(date).split(" ")[1];
+						} else {
+							dateItem = sdf.format(date);
+						}
+						MessageListInfo mli = new MessageListInfo(content,
+								publisher, header_small, dateItem);
+						info.add(mli);
+					}
+					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+					MessageShowListAdapter mslAdapter = new MessageShowListAdapter(
+							getActivity(), info, bitmapUtils);
+					messageList.setAdapter(mslAdapter);
+					messageList.setDividerHeight(0);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				Toast.makeText(getActivity(), "获取留言失败", Toast.LENGTH_SHORT)
+						.show();
+			}
 		}
-		return listItem;
-	}
+	};
 }

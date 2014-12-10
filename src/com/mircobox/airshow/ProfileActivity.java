@@ -141,7 +141,7 @@ public class ProfileActivity extends Activity {
 		});
 		ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 		// 显示头像
-		BitmapUtils bitmapUtils = new BitmapUtils(this);
+		BitmapUtils bitmapUtils = new BitmapUtils(ProfileActivity.this);
 		bitmapUtils.display(ivPhoto, urlHeaderSmall);
 		etRealName = (EditText) findViewById(R.id.etRealName);
 		etRealName.setText(name);

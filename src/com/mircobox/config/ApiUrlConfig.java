@@ -7,4 +7,5 @@ public class ApiUrlConfig {
 	public static final String URL_LOGIN = BASE_URL + "news/login";
 	public static final String URL_UPDATE_NAME_BASE = BASE_URL + "news/user/";
 	public static final String URL_UPDATE_NAME_POSTFIX = "/update_name";
+	public static final String URL_GET_MESSAGE = BASE_URL + "news/messages";
 }
