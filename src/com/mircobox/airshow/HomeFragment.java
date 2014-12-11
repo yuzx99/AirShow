@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
     }
     public void initTitleBar(){
     	TextView title = (TextView)getView().findViewById(R.id.mainTitle);
-    	title.setText("距中国XX航空展开幕还有14天");
+    	title.setText("主页");
     	RelativeLayout drawer = (RelativeLayout)getView().findViewById(R.id.mainDrawer);
     	drawer.setOnClickListener(new OnClickListener() {
 			
@@ -80,6 +80,9 @@ public class HomeFragment extends Fragment {
 				mCallbacks.openDrawer();
 			}
 		});
+    	
+    	TextView notice = (TextView)getView().findViewById(R.id.noticeBoard);
+    	notice.setText("距中国XX航空展开幕还有14天");
     }
     
     public static interface HomeCallbacks{

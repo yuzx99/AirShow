@@ -4,9 +4,12 @@ public class CategoryListItem {
 	private String iconUrl;
 	private String title;
 
-	public CategoryListItem(){
-		
+	public CategoryListItem(String iconUrl, String title){
+		super();
+		this.iconUrl = iconUrl;
+		this.title = title;
 	}
+	
 	public String getIconUrl() {
 		return iconUrl;
 	}
