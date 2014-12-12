@@ -92,11 +92,11 @@ public class LoginActivity extends Activity {
 				tgbtnSavePwd.setChecked(arg1);
 				if (arg1) {
 					tgbtnSavePwd
-							.setBackgroundResource(R.drawable.ic_checked_pressed);
+							.setBackgroundResource(R.drawable.ic_checked_normal);
 					spUserInfo.edit().putBoolean("ISCHECK", true).commit();
 				} else {
 					tgbtnSavePwd
-							.setBackgroundResource(R.drawable.ic_checked_normal);
+							.setBackgroundResource(R.drawable.ic_unchecked_normal);
 					spUserInfo.edit().putBoolean("ISCHECK", false).commit();
 				}
 			}
