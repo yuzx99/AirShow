@@ -176,7 +176,9 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
+				Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
 			}
 		});
 		btnOK = (Button) findViewById(R.id.btnProfOK);
