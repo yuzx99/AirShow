@@ -7,7 +7,7 @@
    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bg_banner" >
+        android:background="@drawable/bg_banner_noshadow" >
 
         <RelativeLayout
             android:id="@+id/mainDrawer"
