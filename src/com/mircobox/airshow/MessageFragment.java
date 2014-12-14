@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.microbox.adapter.MessageShowListAdapter;
 import com.microbox.model.GetMessageModelThread;
 import com.microbox.model.MessageListInfo;
 import com.mircobox.config.ApiUrlConfig;
@@ -100,6 +101,12 @@ public class MessageFragment extends Fragment {
 			throw new ClassCastException(
 					"Activity must implement MsgCallbacks.");
 		}
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	private void initLeaveMessage() {

@@ -69,6 +69,9 @@ public class MBHttpUtils {
 			// 得到应答的字符串，这也是一个 JSON 格式保存的数据
 			String result = EntityUtils.toString(response.getEntity(), "UTF-8");
 			return result;
+		} else if (response.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
+			String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+			return result;
 		} else {
 			return null;
 		}

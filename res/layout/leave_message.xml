@@ -8,6 +8,7 @@
     <include layout="@layout/titlebar"/>
 
     <EditText
+         android:id="@+id/textContentMessage"
         android:layout_width="326dp"
         android:layout_height="161dp"
         android:layout_gravity="center_horizontal"
