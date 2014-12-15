@@ -108,6 +108,8 @@ public class MessageFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		GetMessageModelThread gmmt = new GetMessageModelThread(handlerMessage);
+		gmmt.start();
 	}
 
 	private void initLeaveMessage() {
