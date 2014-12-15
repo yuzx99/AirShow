@@ -3,7 +3,6 @@ package com.microbox.adapter;
 import java.util.List;
 
 import com.lidroid.xutils.BitmapUtils;
-import com.microbox.model.MessageListInfo;
 import com.mircobox.airshow.R;
 import com.mircobox.airshow.R.id;
 import com.mircobox.airshow.R.layout;

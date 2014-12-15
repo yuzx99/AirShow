@@ -1,4 +1,4 @@
-package com.microbox.model;
+package com.microbox.adapter;
 
 public class MessageListInfo {
 	String content;

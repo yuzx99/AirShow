@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -47,60 +48,67 @@ public class HomeFragment extends Fragment {
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle" };
 	private int[] itemMapping = new int[] { R.id.catePicItem, R.id.cateTitle };
 
-	private HomeCallbacks  mCallbacks;
-	
-    public static Fragment newInstance(Context context) {
-    	HomeFragment f = new HomeFragment();
- 
-        return f;
-    }
- 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home, null);
-        return root;
-    }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-    	super.onActivityCreated(savedInstanceState);
-    	initTitleBar();
-    	initViewPager();
-    	initInfoList();
-    	
-    }
-    public void initTitleBar(){
-    	TextView title = (TextView)getView().findViewById(R.id.mainTitle);
-    	title.setText("距中国XX航空展开幕还有14天");
-    	RelativeLayout drawer = (RelativeLayout)getView().findViewById(R.id.mainDrawer);
-    	drawer.setOnClickListener(new OnClickListener() {
-			
+	private HomeCallbacks mCallbacks;
+
+	public static Fragment newInstance(Context context) {
+		HomeFragment f = new HomeFragment();
+
+		return f;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_home,
+				null);
+		return root;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		initTitleBar();
+		initViewPager();
+		initInfoList();
+
+	}
+
+	public void initTitleBar() {
+		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
+		title.setText("主页");
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
+				R.id.mainDrawer);
+		drawer.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				mCallbacks.openDrawer();
 			}
 		});
-    }
-    
-    public static interface HomeCallbacks{
-    	public void openDrawer();
-    }
-    
-    @Override
-    public void onAttach(Activity activity){
-    	super.onAttach(activity);
-    	try{
-    		mCallbacks = (HomeCallbacks)activity;
-    	}catch(ClassCastException e){
-    		throw new ClassCastException(
+
+		TextView notice = (TextView) getView().findViewById(R.id.noticeBoard);
+		notice.setText("距中国XX航空展开幕还有14天");
+	}
+
+	public static interface HomeCallbacks {
+		public void openDrawer();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (HomeCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(
 					"Activity must implement HomeCallbacks.");
-    	}
-    }
-    
-    public void initViewPager() {
+		}
+	}
+
+	public void initViewPager() {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
 		ViewGroup vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
-
 
 		List<View> lPics = new ArrayList<View>();
 
@@ -125,12 +133,11 @@ public class HomeFragment extends Fragment {
 		// img4.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_4)));
 		lPics.add(img4);
 
-
 		imageViews = new ImageView[lPics.size()];
 		for (int i = 0; i < lPics.size(); i++) {
 			imageView = new ImageView(getActivity());
 			imageView.setLayoutParams(new LayoutParams(10, 10));
-			imageView.setPadding(5, 5, 5, 5);
+			imageView.setPadding(10, 10, 10, 10);
 			imageViews[i] = imageView;
 			if (i == 0) {
 				imageViews[i]
@@ -283,15 +290,17 @@ public class HomeFragment extends Fragment {
 
 	private void initInfoList() {
 		categoryList = (ListView) getView().findViewById(R.id.categoryList);
-		SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(), getCategory(),
-				R.layout.cate_item, infoMapping, itemMapping);
+		SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
+				getCategory(), R.layout.cate_item, infoMapping, itemMapping);
 		categoryList.setAdapter(cateAdapter);
-		com.mircobox.util.Utility.setListViewHeightBasedOnChildren(categoryList);
+		com.mircobox.util.Utility
+				.setListViewHeightBasedOnChildren(categoryList);
 		infoList = (ListView) getView().findViewById(R.id.infoList);
 		infoList.setAdapter(cateAdapter);
 		com.mircobox.util.Utility.setListViewHeightBasedOnChildren(infoList);
 
-		ImageButton btnMoreCate = (ImageButton) getView().findViewById(R.id.ibtnMoreCate);
+		ImageButton btnMoreCate = (ImageButton) getView().findViewById(
+				R.id.ibtnMoreCate);
 		btnMoreCate.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -302,6 +311,21 @@ public class HomeFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
+
+		ImageButton btnMoreInfo = (ImageButton) getView().findViewById(
+				R.id.ibtnMoreInfo);
+		btnMoreInfo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
+				ft.replace(R.id.container, Fragment.instantiate(getActivity(),
+						"com.mircobox.airshow.InfoFragment"));
+				ft.commit();
+			}
+		});
 	}
 
 	private ArrayList<HashMap<String, Object>> getCategory() {
@@ -309,7 +333,7 @@ public class HomeFragment extends Fragment {
 		Integer[] imgIDs = new Integer[] { R.drawable.test_pho,
 				R.drawable.test_pho, R.drawable.test_pho };
 		String[] itemTitle = new String[] { "中国枭龙战机搏击长空", "中国八一跳伞队",
-				"中国大型飞机低空飞行"};
+				"中国大型飞机低空飞行" };
 
 		for (int i = 0; i < imgIDs.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();

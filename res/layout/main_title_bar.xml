@@ -7,7 +7,7 @@
    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bg_banner" >
+        android:background="@drawable/bg_banner_noshadow" >
 
         <RelativeLayout
             android:id="@+id/mainDrawer"
@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="距中国XX航空展开幕还有14天"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:alpha="0.85"
             android:textColor="@android:color/white" />
     </RelativeLayout>

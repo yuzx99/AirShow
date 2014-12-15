@@ -14,9 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
+
+import com.microbox.adapter.MessageListInfo;
 import com.microbox.adapter.MessageShowListAdapter;
 import com.microbox.model.GetMessageModelThread;
-import com.microbox.model.MessageListInfo;
 import com.mircobox.config.ApiUrlConfig;
 import com.mircobox.util.MBDateUtils;
 import com.mircobox.util.MBHttpUtils;
