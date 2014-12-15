@@ -49,7 +49,7 @@ public class LeaveMessageActivity extends Activity {
 			Bundle data = msg.getData();
 			String result = data.getString("result");
 			if (result != null) {
-				Toast.makeText(LeaveMessageActivity.this, "登录成功",
+				Toast.makeText(LeaveMessageActivity.this, "提交成功",
 						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
@@ -85,9 +85,15 @@ public class LeaveMessageActivity extends Activity {
 					JSONObject jsonObject = new JSONObject(result);
 					final String token = jsonObject.getString("token");
 					final String content = etMessage.getText().toString();
-					SubmitMessageModelThread smmt = new SubmitMessageModelThread(
-							token, content, handlerSentMessage);
-					smmt.start();
+					if (content.isEmpty()) {
+						Toast.makeText(LeaveMessageActivity.this, "留言不能为空",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						SubmitMessageModelThread smmt = new SubmitMessageModelThread(
+								token, content, handlerSentMessage);
+						smmt.start();
+					}
+
 					// new Thread(new Runnable() {
 					// @Override
 					// public void run() {

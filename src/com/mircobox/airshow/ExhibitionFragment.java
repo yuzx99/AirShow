@@ -55,9 +55,10 @@ public class ExhibitionFragment extends Fragment {
 	}
 
 	private void initTitleBar() {
-		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
+		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
 		title.setText("第十届中国航空博览会");
-		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
+				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,7 +89,9 @@ public class ExhibitionFragment extends Fragment {
 		PagerTabStrip pagerTabStrip = (PagerTabStrip) getView().findViewById(
 				R.id.exhiPagerTab);
 		pagerTabStrip.setTextColor(getResources().getColor(R.color.white));
-		
+		pagerTabStrip.setTabIndicatorColor(getResources().getColor(
+				R.color.title_bar_color));
+
 		fragmentList = new ArrayList<Fragment>();
 		fragmentList.add(new IntroductionFragment());
 		fragmentList.add(new TransportationFragment());
