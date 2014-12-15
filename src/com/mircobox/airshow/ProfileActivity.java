@@ -1,48 +1,30 @@
 package com.mircobox.airshow;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.model.UpdateProfileMolelThread;
-import com.mircobox.config.ApiUrlConfig;
 import com.mircobox.imageservice.CropOption;
 import com.mircobox.imageservice.CropOptionAdapter;
 import com.mircobox.imageservice.ImageService;
-import com.mircobox.util.MBHttpUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -108,11 +90,16 @@ public class ProfileActivity extends Activity {
 					e.printStackTrace();
 				}
 				// 记录已经修改
-				spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
-				Intent intent = new Intent(ProfileActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+					finish();
+				} else {
+					spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+					Intent intent = new Intent(ProfileActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
+
 			} else {
 				Toast.makeText(ProfileActivity.this, "信息修改失败",
 						Toast.LENGTH_SHORT).show();
@@ -169,10 +156,16 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(ProfileActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+					finish();
+				} else {
+					spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+					Intent intent = new Intent(ProfileActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
+
 			}
 		});
 		btnOK = (Button) findViewById(R.id.btnProfOK);
