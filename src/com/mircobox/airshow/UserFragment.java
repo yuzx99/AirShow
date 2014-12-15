@@ -2,12 +2,14 @@ package com.mircobox.airshow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ public class UserFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		initTitleBar();
+		initViewCompoent();
 	}
 
 	private void initTitleBar(){
@@ -46,6 +49,31 @@ public class UserFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				mCallbacks.openDrawerUser();
+			}
+		});
+	}
+	
+	private void initViewCompoent(){
+		Button btnExit = (Button)getView().findViewById(R.id.userExit);
+		btnExit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),LoginActivity.class);
+				startActivity(intent);
+				getActivity().finish();
+			}
+		});
+		
+		Button btnEdit = (Button) getView().findViewById(R.id.userEditProfile);
+		btnEdit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),ProfileActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
