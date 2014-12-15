@@ -78,21 +78,13 @@ public class ProfileActivity extends Activity {
 		setContentView(R.layout.profile);
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-		// 判断是否已经修改过信息
-		if (spUserInfo.getBoolean("ISMODIFIED", false)) {
-			Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-			startActivity(intent);
-			finish();
-		} else {
-			spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-			String result = spData.getString("RESULT", "");
-			try {
-				initUI(result);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		String result = spData.getString("RESULT", "");
+		try {
+			initUI(result);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -177,7 +169,8 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+				Intent intent = new Intent(ProfileActivity.this,
+						MainActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -315,7 +308,8 @@ public class ProfileActivity extends Activity {
 		Bundle bundle = picdata.getExtras();
 		if (null != bundle) {
 			Bitmap mBitmap = bundle.getParcelable("data");
-			ivPhoto.setImageBitmap(ImageService.getCroppedBitmap(mBitmap,mBitmap.getWidth()));
+			ivPhoto.setImageBitmap(ImageService.getCroppedBitmap(mBitmap,
+					mBitmap.getWidth()));
 		}
 		File f = new File(mImageCaptureUri.getPath());
 		if (f.exists()) {
@@ -323,7 +317,6 @@ public class ProfileActivity extends Activity {
 		}
 	}
 
-	
 	@Override
 	public void onBackPressed() {
 		long currentTime = System.currentTimeMillis();

@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 		etPassword = (EditText) findViewById(R.id.etPassword);
 
 		etUserID.setText(spUserInfo.getString("USER_ID", ""));
-		etPassword.setText(spUserInfo.getString("PASSWORD", ""));
+		// etPassword.setText(spUserInfo.getString("PASSWORD", ""));
 
 		tgbtnShowPwd = (ToggleButton) findViewById(R.id.tgbtnShowPwd);
 		tgbtnShowPwd.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -84,6 +84,8 @@ public class LoginActivity extends Activity {
 			}
 		});
 		tgbtnSavePwd = (ToggleButton) findViewById(R.id.tgbtnSavePwd);
+		tgbtnSavePwd.setChecked(false);
+		tgbtnSavePwd.setBackgroundResource(R.drawable.ic_unchecked_normal);
 		tgbtnSavePwd.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -133,10 +135,17 @@ public class LoginActivity extends Activity {
 				Editor editorData = spData.edit();
 				editorData.putString("RESULT", result);
 				editorData.commit();
-				Intent intent = new Intent(LoginActivity.this,
-						ProfileActivity.class);
-				startActivity(intent);
-				finish();
+				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+					Intent intent = new Intent(LoginActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				} else {
+					Intent intent = new Intent(LoginActivity.this,
+							ProfileActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			} else {
 				Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT)
 						.show();

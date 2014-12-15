@@ -84,10 +84,17 @@ public class SplashActivity extends Activity {
 				Editor editorData = spData.edit();
 				editorData.putString("RESULT", result);
 				editorData.commit();
-				Intent intent = new Intent(SplashActivity.this,
-						ProfileActivity.class);
-				startActivity(intent);
-				finish();
+				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+					Intent intent = new Intent(SplashActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				} else {
+					Intent intent = new Intent(SplashActivity.this,
+							ProfileActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			} else {
 				Toast.makeText(SplashActivity.this, "登录失败", Toast.LENGTH_SHORT)
 						.show();
