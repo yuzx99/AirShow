@@ -39,18 +39,21 @@ public class InfoListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		InfoListItem item = getItem(position);
-		ImageView icon = null;
-		TextView title = null;
-		TextView date = null;
+		ImageView itemIcon = null;
+		TextView itemTitle = null;
+		TextView itemDate = null;
+		TextView itemId = null;
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.info_item, null);
 		}
-		icon = (ImageView)convertView.findViewById(R.id.infoPicItem);
-		title = (TextView)convertView.findViewById(R.id.infoTitleItem);
-		date = (TextView)convertView.findViewById(R.id.infoDateItem);
-		bitmapUtils.display(icon, item.getIconUrl());
-		title.setText(item.getTitle());
-		date.setText(item.getDate());
+		itemIcon = (ImageView)convertView.findViewById(R.id.infoPicItem);
+		itemTitle = (TextView)convertView.findViewById(R.id.infoTitleItem);
+		itemDate = (TextView)convertView.findViewById(R.id.infoDateItem);
+		itemId = (TextView)convertView.findViewById(R.id.infoIdItem);
+		bitmapUtils.display(itemIcon, item.getIconUrl());
+		itemTitle.setText(item.getTitle());
+		itemDate.setText(item.getDate());
+		itemId.setText(item.getId());
 		return convertView;
 	}
 

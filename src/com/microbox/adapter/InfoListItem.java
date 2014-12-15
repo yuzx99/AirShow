@@ -4,12 +4,14 @@ public class InfoListItem {
 	private String iconUrl;
 	private String title;
 	private String date;
+	private String id;
 	
-	public InfoListItem(String iconUrl, String title, String date){
+	public InfoListItem(String iconUrl, String title, String date, String id){
 		super();
 		this.iconUrl = iconUrl;
 		this.title = title;
 		this.date = date;
+		this.id = id;
 	}
 	public String getIconUrl() {
 		return iconUrl;
@@ -29,4 +31,11 @@ public class InfoListItem {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 }

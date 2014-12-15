@@ -48,13 +48,16 @@ public class CategoryListAdapter extends BaseAdapter {
 		CategoryListItem item = getItem(position);
 		ImageView itemIcon = null;
 		TextView itemTitle = null;
+		TextView itemId = null;
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.cate_item, null);
 		}
 		itemIcon = (ImageView)convertView.findViewById(R.id.catePicItem);
 		itemTitle = (TextView)convertView.findViewById(R.id.cateTitle);
+		itemId = (TextView) convertView.findViewById(R.id.cateId);
 		bitmapUtils.display(itemIcon, item.getIconUrl());
 		itemTitle.setText(item.getTitle());
+		itemId.setText(item.getId());
 		return convertView;
 	}
 

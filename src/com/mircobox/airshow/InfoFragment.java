@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class InfoFragment extends Fragment {
 	private ListView infoList = null;
@@ -95,7 +96,9 @@ public class InfoFragment extends Fragment {
 					long arg3) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
-				startActivity(intent);
+				TextView tv = (TextView) arg1.findViewById(R.id.infoTitleItem);
+				Toast.makeText(getActivity(), tv.getText(), Toast.LENGTH_LONG).show();
+				//startActivity(intent);
 			}
 		});
 	}
