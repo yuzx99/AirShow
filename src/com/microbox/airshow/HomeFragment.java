@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.lidroid.xutils.BitmapUtils;
+import com.microbox.adapter.CategoryListAdapter;
+import com.microbox.adapter.CategoryListItem;
+import com.microbox.model.GetCategoryModelThread;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
@@ -292,13 +300,12 @@ public class HomeFragment extends Fragment {
 
 	private void initInfoList() {
 		categoryList = (ListView) getView().findViewById(R.id.categoryList);
-		SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
-				getCategory(), R.layout.cate_item, infoMapping, itemMapping);
-		categoryList.setAdapter(cateAdapter);
-		com.microbox.util.Utility
-				.setListViewHeightBasedOnChildren(categoryList);
+//		SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
+//				getCategory(), R.layout.cate_item, infoMapping, itemMapping);
+//		categoryList.setAdapter(cateAdapter);
+		new GetCategoryModelThread(cateHandler).start();
 		infoList = (ListView) getView().findViewById(R.id.infoList);
-		infoList.setAdapter(cateAdapter);
+//		infoList.setAdapter(cateAdapter);
 		com.microbox.util.Utility.setListViewHeightBasedOnChildren(infoList);
 
 		ImageButton btnMoreCate = (ImageButton) getView().findViewById(
@@ -329,6 +336,41 @@ public class HomeFragment extends Fragment {
 			}
 		});
 	}
+
+	private final Handler cateHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			List<CategoryListItem> list = new ArrayList<CategoryListItem>();
+			if (result != null) {
+				try {
+					JSONArray array = new JSONArray(result);
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject temp = (JSONObject) array.get(i);
+						String title = temp.getString("title");
+						String imageurl = temp.getString("images");
+						String id = temp.getString("id");
+						CategoryListItem item = new CategoryListItem(imageurl,
+								title, id);
+						list.add(item);
+					}
+					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+					CategoryListAdapter adapter = new CategoryListAdapter(
+							getActivity(), list, bitmapUtils);
+					categoryList.setAdapter(adapter);
+					com.microbox.util.Utility
+					.setListViewHeightBasedOnChildren(categoryList);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	};
 
 	private ArrayList<HashMap<String, Object>> getCategory() {
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();

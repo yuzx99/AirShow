@@ -313,14 +313,19 @@ public class ProfileActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		long currentTime = System.currentTimeMillis();
-		if ((currentTime - touchTime) >= waitTime) {
-			Toast.makeText(this, this.getString(R.string.exit_again),
-					Toast.LENGTH_SHORT).show();
-			touchTime = currentTime;
-		} else {
+		if(spUserInfo.getBoolean("ISMODIFIED", false)){
 			finish();
-			System.exit(0);
+		}else{
+			long currentTime = System.currentTimeMillis();
+			if ((currentTime - touchTime) >= waitTime) {
+				Toast.makeText(this, this.getString(R.string.exit_again),
+						Toast.LENGTH_SHORT).show();
+				touchTime = currentTime;
+			} else {
+				finish();
+				System.exit(0);
+			}
 		}
+
 	}
 }
