@@ -18,12 +18,16 @@ public class InfoListAdapter extends BaseAdapter {
 	private List<InfoListItem> mItems;
 	private BitmapUtils bitmapUtils;
 	
-	public InfoListAdapter(Context context, List<InfoListItem> data, BitmapUtils bitmapUtils) {
+
+	public InfoListAdapter(Context context, List<InfoListItem> data,
+			BitmapUtils bitmapUtils) {
+		super();
+
 		this.mInflater = LayoutInflater.from(context);
 		this.mItems = data;
 		this.bitmapUtils = bitmapUtils;
 	}
-	
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
