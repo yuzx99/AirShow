@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.mircobox.config.ApiUrlConfig;
-import com.mircobox.util.MBHttpUtils;
+import com.microbox.config.ApiUrlConfig;
+import com.microbox.util.MBHttpUtils;
 
 public class LoginModelThread extends Thread {
 

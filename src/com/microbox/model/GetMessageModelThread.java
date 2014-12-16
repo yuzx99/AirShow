@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 
-import com.mircobox.config.ApiUrlConfig;
-import com.mircobox.util.MBHttpUtils;
+import com.microbox.config.ApiUrlConfig;
+import com.microbox.util.MBHttpUtils;
 
 import android.os.Bundle;
 import android.os.Handler;
