@@ -49,7 +49,7 @@
                     android:orientation="horizontal" >
                 </LinearLayout>
             </RelativeLayout>
-
+            <!--
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="38dp"
@@ -76,6 +76,7 @@
                     android:layout_marginRight="14dp"
                     android:background="@drawable/selector_more" />
             </RelativeLayout>
+            
 
             <ListView
                 android:id="@+id/categoryList"
@@ -84,6 +85,7 @@
                 android:divider="#7fdcdcdc"
                 android:dividerHeight="1dp" >
             </ListView>
+            -->
 
             <RelativeLayout
                 android:layout_width="fill_parent"

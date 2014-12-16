@@ -13,7 +13,12 @@ import org.json.JSONObject;
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.adapter.CategoryListAdapter;
 import com.microbox.adapter.CategoryListItem;
+import com.microbox.adapter.InfoListAdapter;
+import com.microbox.adapter.InfoListItem;
+import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.GetCategoryModelThread;
+import com.microbox.model.HttpGetJsonModelThread;
+import com.microbox.util.Utility;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
@@ -56,7 +61,7 @@ public class HomeFragment extends Fragment {
 	private AtomicInteger what = new AtomicInteger(0);
 	private boolean isContinue = true;
 
-	private ListView categoryList = null;
+//	private ListView categoryList = null;
 	private ListView infoList = null;
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle" };
 	private int[] itemMapping = new int[] { R.id.catePicItem, R.id.cateTitle };
@@ -302,28 +307,12 @@ public class HomeFragment extends Fragment {
 	}
 
 	private void initInfoList() {
-		categoryList = (ListView) getView().findViewById(R.id.categoryList);
-		// SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
-		// getCategory(), R.layout.cate_item, infoMapping, itemMapping);
-		// categoryList.setAdapter(cateAdapter);
-		new GetCategoryModelThread(cateHandler).start();
+
 		infoList = (ListView) getView().findViewById(R.id.infoList);
-		// infoList.setAdapter(cateAdapter);
-		com.microbox.util.Utility.setListViewHeightBasedOnChildren(infoList);
-
-		ImageButton btnMoreCate = (ImageButton) getView().findViewById(
-				R.id.ibtnMoreCate);
-		btnMoreCate.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),
-						CategoryActivity.class);
-				startActivity(intent);
-			}
-		});
-
+		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(infoHandler,
+				ApiUrlConfig.URL_GET_NEWS);
+		hgjmt.start();
+		
 		ImageButton btnMoreInfo = (ImageButton) getView().findViewById(
 				R.id.ibtnMoreInfo);
 		btnMoreInfo.setOnClickListener(new OnClickListener() {
@@ -340,60 +329,112 @@ public class HomeFragment extends Fragment {
 		});
 	}
 
-	private final Handler cateHandler = new Handler() {
-
+	private final Handler infoHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
-			List<CategoryListItem> list = new ArrayList<CategoryListItem>();
+			List<InfoListItem> newsList = new ArrayList<InfoListItem>();
 			if (result != null) {
 				try {
-					JSONArray array = new JSONArray(result);
-					for (int i = 0; i < array.length(); i++) {
-						JSONObject temp = (JSONObject) array.get(i);
+					JSONArray arr = new JSONArray(result);
+					int maxLength = (arr.length()>4 ? 4 : arr.length());
+					for (int i = 0; i < maxLength; i++) {
+						JSONObject temp = (JSONObject) arr.get(i);
+						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
-						String imageurl = temp.getString("images");
-						String id = temp.getString("id");
-						CategoryListItem item = new CategoryListItem(imageurl,
-								title, id);
-						list.add(item);
+						String date = temp.getString("create_time");
+						String id = String.valueOf(i);
+						InfoListItem ilt = new InfoListItem(iconUrl, title,
+								date, id);
+						newsList.add(ilt);
 					}
 					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
-					CategoryListAdapter adapter = new CategoryListAdapter(
-							getActivity(), list, bitmapUtils);
-					categoryList.setAdapter(adapter);
-					com.microbox.util.Utility
-							.setListViewHeightBasedOnChildren(categoryList);
-					categoryList
-							.setOnItemClickListener(new OnItemClickListener() {
+					InfoListAdapter ilAdapter = new InfoListAdapter(
+							getActivity(), newsList, bitmapUtils);
+					infoList.setAdapter(ilAdapter);
+					Utility.setListViewHeightBasedOnChildren(infoList);
+					infoList.setOnItemClickListener(new OnItemClickListener() {
 
-								@Override
-								public void onItemClick(AdapterView<?> arg0,
-										View arg1, int arg2, long arg3) {
-									// TODO Auto-generated method stub
-									TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
-									Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
-									Intent intent = new Intent();
-									intent.setClass(getActivity(), CategoryDetailActivity.class);
-									Bundle data = new Bundle();
-									data.putString("CATE_ID", tvID.getText().toString());
-									intent.putExtras(data);
-									startActivity(intent);
-								}
-							});
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(getActivity(),
+									InfoDetailActivity.class);
+							TextView tv = (TextView) arg1
+									.findViewById(R.id.infoTitleItem);
+							Toast.makeText(getActivity(), tv.getText(),
+									Toast.LENGTH_LONG).show();
+							// startActivity(intent);
+						}
+					});
 				} catch (JSONException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
-				Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
+				Toast.makeText(getActivity(), "获取资讯失败", Toast.LENGTH_SHORT)
 						.show();
 			}
 		}
-
 	};
+	
+//	private final Handler cateHandler = new Handler() {
+//
+//		@Override
+//		public void handleMessage(Message msg) {
+//			// TODO Auto-generated method stub
+//			super.handleMessage(msg);
+//			Bundle data = msg.getData();
+//			String result = data.getString("result");
+//			List<CategoryListItem> list = new ArrayList<CategoryListItem>();
+//			if (result != null) {
+//				try {
+//					JSONArray array = new JSONArray(result);
+//					for (int i = 0; i < array.length(); i++) {
+//						JSONObject temp = (JSONObject) array.get(i);
+//						String title = temp.getString("title");
+//						String imageurl = temp.getString("images");
+//						String id = temp.getString("id");
+//						CategoryListItem item = new CategoryListItem(imageurl,
+//								title, id);
+//						list.add(item);
+//					}
+//					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+//					CategoryListAdapter adapter = new CategoryListAdapter(
+//							getActivity(), list, bitmapUtils);
+//					infoList.setAdapter(adapter);
+//					com.microbox.util.Utility
+//							.setListViewHeightBasedOnChildren(infoList);
+//					infoList
+//							.setOnItemClickListener(new OnItemClickListener() {
+//
+//								@Override
+//								public void onItemClick(AdapterView<?> arg0,
+//										View arg1, int arg2, long arg3) {
+//									// TODO Auto-generated method stub
+//									TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
+//									Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
+//									Intent intent = new Intent();
+//									intent.setClass(getActivity(), CategoryDetailActivity.class);
+//									Bundle data = new Bundle();
+//									data.putString("CATE_ID", tvID.getText().toString());
+//									intent.putExtras(data);
+//									startActivity(intent);
+//								}
+//							});
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
+//			} else {
+//				Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
+//						.show();
+//			}
+//		}
+//
+//	};
 
 	private ArrayList<HashMap<String, Object>> getCategory() {
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
