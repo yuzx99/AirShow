@@ -131,11 +131,12 @@ public class InfoFragment extends Fragment {
 							// TODO Auto-generated method stub
 							Intent intent = new Intent(getActivity(),
 									InfoDetailActivity.class);
-							TextView tv = (TextView) arg1
-									.findViewById(R.id.infoTitleItem);
-							Toast.makeText(getActivity(), tv.getText(),
-									Toast.LENGTH_LONG).show();
-							// startActivity(intent);
+							TextView tvId = (TextView) arg1
+									.findViewById(R.id.infoIdItem);
+							Bundle bundle = new Bundle();
+							bundle.putString("id", tvId.getText().toString());
+							intent.putExtras(bundle);
+							startActivity(intent);
 						}
 					});
 				} catch (JSONException e) {
