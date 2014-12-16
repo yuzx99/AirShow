@@ -10,4 +10,5 @@ public class ApiUrlConfig {
 	public static final String URL_GET_MESSAGE = BASE_URL + "news/messages";
 	public static final String URL_SEND_MESSAGE = BASE_URL
 			+ "news/message/send";
+	public static final String URL_GET_NEWS = BASE_URL + "news/news";
 }

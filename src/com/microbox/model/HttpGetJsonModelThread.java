@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-public class GetMessageModelThread extends Thread {
+public class HttpGetJsonModelThread extends Thread {
 	private Handler handler;
+	private String url;
 
-	public GetMessageModelThread(Handler handler) {
+	public HttpGetJsonModelThread(Handler handler, String url) {
+		super();
 		this.handler = handler;
+		this.url = url;
 	}
 
 	@Override
@@ -23,7 +26,7 @@ public class GetMessageModelThread extends Thread {
 		// TODO Auto-generated method stub
 		try {
 			MBHttpUtils ru = new MBHttpUtils();
-			String result = ru.restHttpGetJson(ApiUrlConfig.URL_GET_MESSAGE);
+			String result = ru.restHttpGetJson(url);
 			Message msg = new Message();
 			Bundle data = new Bundle();
 			data.putString("result", result);

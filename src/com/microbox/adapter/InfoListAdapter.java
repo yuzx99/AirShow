@@ -5,6 +5,7 @@ import java.util.List;
 import com.lidroid.xutils.BitmapUtils;
 import com.mircobox.airshow.R;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,14 @@ public class InfoListAdapter extends BaseAdapter {
 	private List<InfoListItem> mItems;
 	private BitmapUtils bitmapUtils;
 	
+	public InfoListAdapter(Context context, List<InfoListItem> data,
+			BitmapUtils bitmapUtils) {
+		super();
+		this.mInflater = LayoutInflater.from(context);
+		this.mItems = data;
+		this.bitmapUtils = bitmapUtils;
+	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub

@@ -17,7 +17,7 @@ import com.lidroid.xutils.BitmapUtils;
 
 import com.microbox.adapter.MessageListInfo;
 import com.microbox.adapter.MessageShowListAdapter;
-import com.microbox.model.GetMessageModelThread;
+import com.microbox.model.HttpGetJsonModelThread;
 import com.mircobox.config.ApiUrlConfig;
 import com.mircobox.util.MBDateUtils;
 import com.mircobox.util.MBHttpUtils;
@@ -108,7 +108,8 @@ public class MessageFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		GetMessageModelThread gmmt = new GetMessageModelThread(handlerMessage);
+		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
+				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
 		gmmt.start();
 	}
 
@@ -129,7 +130,8 @@ public class MessageFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
-		GetMessageModelThread gmmt = new GetMessageModelThread(handlerMessage);
+		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
+				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
 		gmmt.start();
 	}
 

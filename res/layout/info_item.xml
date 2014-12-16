@@ -9,14 +9,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
+
     <ImageView
         android:id="@+id/infoPicItem"
         android:layout_width="77dp"
         android:layout_height="57dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="9dp"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/test_pic" />
+        android:layout_marginTop="7dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
