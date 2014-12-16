@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 public class InfoDetailActivity extends Activity {
 
+	private String infoId;
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -21,8 +23,8 @@ public class InfoDetailActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.info_detail);
 		Intent intent = getIntent();
-		String id = intent.getStringExtra("id");
-		Toast.makeText(InfoDetailActivity.this, "id:" + id, Toast.LENGTH_SHORT)
+		infoId= intent.getStringExtra("INFO_ID");
+		Toast.makeText(InfoDetailActivity.this, "id:" + infoId, Toast.LENGTH_SHORT)
 				.show();
 		initViewCompoent();
 	}

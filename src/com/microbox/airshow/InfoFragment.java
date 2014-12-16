@@ -134,7 +134,7 @@ public class InfoFragment extends Fragment {
 							TextView tvId = (TextView) arg1
 									.findViewById(R.id.infoIdItem);
 							Bundle bundle = new Bundle();
-							bundle.putString("id", tvId.getText().toString());
+							bundle.putString("INFO_ID", tvId.getText().toString());
 							intent.putExtras(bundle);
 							startActivity(intent);
 						}
