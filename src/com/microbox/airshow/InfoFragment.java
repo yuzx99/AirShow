@@ -114,7 +114,7 @@ public class InfoFragment extends Fragment {
 						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
 						String date = temp.getString("create_time");
-						String id = String.valueOf(i);
+						String id = temp.getString("id");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,
 								date, id);
 						newsList.add(ilt);
