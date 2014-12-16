@@ -6,8 +6,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mircobox.config.ApiUrlConfig;
-import com.mircobox.util.MBHttpUtils;
+import com.microbox.config.ApiUrlConfig;
+import com.microbox.util.MBHttpUtils;
 
 import android.os.Bundle;
 import android.os.Handler;

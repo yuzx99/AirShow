@@ -19,9 +19,10 @@ public class CategoryListAdapter extends BaseAdapter {
 	private List<CategoryListItem> mItems;
 	private BitmapUtils bitmapUtils;
 	
-	public CategoryListAdapter(Context context, List<CategoryListItem> data) {
+	public CategoryListAdapter(Context context, List<CategoryListItem> data, BitmapUtils bitmapUtils) {
 		this.mInflater = LayoutInflater.from(context);
 		this.mItems = data;
+		this.bitmapUtils = bitmapUtils;
 	}
 
 	@Override

@@ -11,28 +11,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-public class HttpGetJsonModelThread extends Thread {
-	private Handler handler;
-	private String url;
+public class GetCategoryModelThread extends Thread {
 
-	public HttpGetJsonModelThread(Handler handler, String url) {
+	private Handler mHandler;
+
+	public GetCategoryModelThread(Handler handler){
 		super();
-		this.handler = handler;
-		this.url = url;
+		this.mHandler = handler;
 	}
-
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		try {
+		super.run();
+		try{
 			MBHttpUtils ru = new MBHttpUtils();
-			String result = ru.restHttpGetJson(url);
+			String result = ru.restHttpGetJson(ApiUrlConfig.URL_GET_CATEGORY);
 			Message msg = new Message();
 			Bundle data = new Bundle();
 			data.putString("result", result);
 			msg.setData(data);
-			handler.sendMessage(msg);
-		} catch (ClientProtocolException e) {
+			mHandler.sendMessage(msg);
+		}catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
