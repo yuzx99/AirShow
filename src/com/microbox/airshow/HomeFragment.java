@@ -37,12 +37,15 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
 
@@ -300,12 +303,12 @@ public class HomeFragment extends Fragment {
 
 	private void initInfoList() {
 		categoryList = (ListView) getView().findViewById(R.id.categoryList);
-//		SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
-//				getCategory(), R.layout.cate_item, infoMapping, itemMapping);
-//		categoryList.setAdapter(cateAdapter);
+		// SimpleAdapter cateAdapter = new SimpleAdapter(getActivity(),
+		// getCategory(), R.layout.cate_item, infoMapping, itemMapping);
+		// categoryList.setAdapter(cateAdapter);
 		new GetCategoryModelThread(cateHandler).start();
 		infoList = (ListView) getView().findViewById(R.id.infoList);
-//		infoList.setAdapter(cateAdapter);
+		// infoList.setAdapter(cateAdapter);
 		com.microbox.util.Utility.setListViewHeightBasedOnChildren(infoList);
 
 		ImageButton btnMoreCate = (ImageButton) getView().findViewById(
@@ -363,10 +366,30 @@ public class HomeFragment extends Fragment {
 							getActivity(), list, bitmapUtils);
 					categoryList.setAdapter(adapter);
 					com.microbox.util.Utility
-					.setListViewHeightBasedOnChildren(categoryList);
+							.setListViewHeightBasedOnChildren(categoryList);
+					categoryList
+							.setOnItemClickListener(new OnItemClickListener() {
+
+								@Override
+								public void onItemClick(AdapterView<?> arg0,
+										View arg1, int arg2, long arg3) {
+									// TODO Auto-generated method stub
+									TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
+									Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
+									Intent intent = new Intent();
+									intent.setClass(getActivity(), CategoryDetailActivity.class);
+									Bundle data = new Bundle();
+									data.putString("CATE_ID", tvID.getText().toString());
+									intent.putExtras(data);
+									startActivity(intent);
+								}
+							});
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			} else {
+				Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
+						.show();
 			}
 		}
 
