@@ -201,7 +201,6 @@ public class HomeFragment extends Fragment {
 					}
 				}
 			}
-
 		}).start();
 	}
 
@@ -362,14 +361,13 @@ public class HomeFragment extends Fragment {
 								int arg2, long arg3) {
 							// TODO Auto-generated method stub
 							Intent intent = new Intent(getActivity(),
-									InfoDetailActivity.class);						
+									InfoDetailActivity.class);
 							TextView tvId = (TextView) arg1
 									.findViewById(R.id.infoIdItem);
 							Bundle bundle = new Bundle();
 							bundle.putString("INFO_ID", tvId.getText().toString());
 							intent.putExtras(bundle);
 							startActivity(intent);
-							// startActivity(intent);
 						}
 					});
 				} catch (JSONException e) {
