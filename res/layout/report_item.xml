@@ -4,32 +4,43 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/reportIdItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/reportTitle"
-                android:layout_width="235dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="16dp"
-                android:alpha="0.85"
-                android:text="hhhhhhhhhhhh"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/reportUrlItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/ic_list_goto" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/reportTitle"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.85"
+            android:text="hhhhhhhhhhhh"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_list_goto" />
+    </RelativeLayout>
 
 </LinearLayout>
