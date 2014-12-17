@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <drawable name="actionbar_background">#0077d9</drawable>
     <drawable name="activated_background_color">#00a7ff</drawable>
+
     <color name="white">#ffffff</color>
     <color name="title_bar_color">#0F7FD1</color>
+    <color name="canvas">#FF404040</color>
+    <color name="bar">#C0202020</color>
+
 </resources>

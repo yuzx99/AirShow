@@ -54,6 +54,10 @@
             android:name="com.microbox.airshow.CategoryDetailActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.artifex.mupdf.MuPDFActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.microbox.exhibition;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.artifex.mupdf.MuPDFActivity;
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.HttpHandler;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
 import com.microbox.adapter.ReportListAdapter;
@@ -16,10 +23,12 @@ import com.microbox.adapter.ReportListItem;
 import com.microbox.airshow.InfoDetailActivity;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.HttpGetJsonModelThread;
+import com.microbox.util.MBFileUtils;
 import com.mircobox.airshow.R;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -90,12 +99,79 @@ public class ReportFragment extends Fragment {
 									// TODO Auto-generated method stub
 									TextView tvTitle = (TextView) view
 											.findViewById(R.id.reportTitle);
-									Toast.makeText(
-											getActivity(),
-											"Title:"
-													+ tvTitle.getText()
-															.toString(),
-											Toast.LENGTH_SHORT).show();
+									TextView tvUrl = (TextView) view
+											.findViewById(R.id.reportUrlItem);
+									HttpUtils http = new HttpUtils();
+									MBFileUtils mbfu = new MBFileUtils();
+									final String target = mbfu.creatBaseDir()
+											+ "/"
+											+ tvTitle.getText().toString();
+									HttpHandler handler = http.download(tvUrl
+											.getText().toString(), target,
+											true, true,
+											new RequestCallBack<File>() {
+
+												@Override
+												public void onLoading(
+														long total,
+														long current,
+														boolean isUploading) {
+													// TODO Auto-generated
+													// method stub
+													Toast.makeText(
+															getActivity(),
+															"下载" + current
+																	+ "kb",
+															Toast.LENGTH_SHORT)
+															.show();
+												}
+
+												@Override
+												public void onStart() {
+													// TODO Auto-generated
+													// method stub
+													Toast.makeText(
+															getActivity(),
+															"获取文件...",
+															Toast.LENGTH_SHORT)
+															.show();
+												}
+
+												@Override
+												public void onFailure(
+														HttpException arg0,
+														String arg1) {
+													// TODO Auto-generated
+													// method stub
+													Toast.makeText(
+															getActivity(),
+															"下载失败",
+															Toast.LENGTH_SHORT)
+															.show();
+
+												}
+
+												@Override
+												public void onSuccess(
+														ResponseInfo<File> arg0) {
+													// TODO Auto-generated
+													// method stub
+													// Toast.makeText(
+													// getActivity(),
+													// "下载成功",
+													// Toast.LENGTH_SHORT)
+													// .show();
+													Uri uri = Uri.parse(target);
+													Intent intent = new Intent(
+															getActivity(),
+															MuPDFActivity.class);
+													intent.setAction(Intent.ACTION_VIEW);
+													intent.setData(uri);
+													startActivity(intent);
+
+												}
+
+											});
 								}
 
 							});
