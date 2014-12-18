@@ -8,9 +8,11 @@
     <include layout="@layout/titlebar"/>
     
 	<ImageView
-	    android:layout_width="300dp"
-	    android:layout_height="150dp"
-	    android:layout_marginTop="20dp"
+	    android:id="@+id/infoDetPageVideo"
+	    android:layout_width="360dp"
+	    android:layout_height="180dp"
+	    android:layout_marginTop="16dp"
+	    android:visibility="gone" 
 	    android:layout_gravity="center_horizontal"
 	    android:background="@drawable/btn_play_video"/>
 </LinearLayout>

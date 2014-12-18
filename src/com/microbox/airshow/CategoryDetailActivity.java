@@ -47,7 +47,7 @@ public class CategoryDetailActivity extends Activity {
 		}
 
 		cateDetList = (ListView) findViewById(R.id.cateDetList);
-		 String url = "http://10.60.43.10:5000/news/topic/" + mCateId;
+		String url = "http://10.60.43.10:5000/news/topic/" + mCateId;
 		new GetDataModelThread(cateDetHandler, url).start();
 	}
 
@@ -70,7 +70,6 @@ public class CategoryDetailActivity extends Activity {
 						String title = temp.getString("title");
 						String date = temp.getString("create_time");
 						String id = temp.getString("id");
-
 						InfoListItem item = new InfoListItem(imageurl, title,
 								date, id);
 						list.add(item);

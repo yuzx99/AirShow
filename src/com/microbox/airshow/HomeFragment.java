@@ -297,6 +297,17 @@ public class HomeFragment extends Fragment {
 
 		@Override
 		public Object instantiateItem(View arg0, int arg1) {
+			View view = views.get(arg1);
+			final int position = arg1;
+			view.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					Toast.makeText(getActivity(), String.valueOf(position),
+							Toast.LENGTH_SHORT).show();
+				}
+			});
 			((ViewPager) arg0).addView(views.get(arg1), 0);
 			return views.get(arg1);
 		}
@@ -362,7 +373,7 @@ public class HomeFragment extends Fragment {
 						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
 						String date = temp.getString("create_time");
-						String id = String.valueOf(i);
+						String id = temp.getString("id");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,
 								date, id);
 						newsList.add(ilt);
