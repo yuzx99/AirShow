@@ -71,6 +71,10 @@ public class HomeFragment extends Fragment {
 
 	List<View> lPics = null;
 
+	private TextView noticeBoard1 = null;
+	private TextView noticeBoard2 = null;
+	private TextView noticeBoard3 = null;
+
 	private HomeCallbacks mCallbacks;
 
 	public static Fragment newInstance(Context context) {
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment {
 		initTitleBar();
 		initViewPager();
 		initInfoList();
-
+		initNoticeBoard();
 	}
 
 	public void initTitleBar() {
@@ -333,6 +337,48 @@ public class HomeFragment extends Fragment {
 
 		}
 	}
+
+	private void initNoticeBoard() {
+		noticeBoard1 = (TextView) getView().findViewById(R.id.noticeBoard1);
+		noticeBoard2 = (TextView) getView().findViewById(R.id.noticeBoard2);
+		noticeBoard3 = (TextView) getView().findViewById(R.id.noticeBoard3);
+		new HttpGetJsonModelThread(noticeHandler, ApiUrlConfig.URL_GET_NOTICE)
+				.start();
+	}
+
+	private final Handler noticeHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			List<String> noticeList = new ArrayList<String>();
+			if (result != null) {
+				try {
+					JSONArray array = new JSONArray(result);
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject object = array.getJSONObject(i);
+						String title = object.getString("title");
+						noticeList.add(title);
+					}
+					TextView[] tvs = new TextView[] { noticeBoard1,
+							noticeBoard2, noticeBoard3 };
+					int noticeNumber = (noticeList.size() < 3 ? noticeList
+							.size() : 3);
+					for (int index = 0; index < noticeNumber; index++) {
+						tvs[index].setText(noticeList.get(index));
+						tvs[index].setVisibility(TextView.VISIBLE);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+	};
 
 	private void initInfoList() {
 
