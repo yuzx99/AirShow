@@ -112,32 +112,6 @@ public class ReportFragment extends Fragment {
 											new RequestCallBack<File>() {
 
 												@Override
-												public void onLoading(
-														long total,
-														long current,
-														boolean isUploading) {
-													// TODO Auto-generated
-													// method stub
-													Toast.makeText(
-															getActivity(),
-															"下载" + current
-																	+ "kb",
-															Toast.LENGTH_SHORT)
-															.show();
-												}
-
-												@Override
-												public void onStart() {
-													// TODO Auto-generated
-													// method stub
-													Toast.makeText(
-															getActivity(),
-															"获取文件...",
-															Toast.LENGTH_SHORT)
-															.show();
-												}
-
-												@Override
 												public void onFailure(
 														HttpException arg0,
 														String arg1) {
