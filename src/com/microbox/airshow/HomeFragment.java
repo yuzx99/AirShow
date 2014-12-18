@@ -17,6 +17,7 @@ import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.GetCategoryModelThread;
+import com.microbox.model.GetDataModelThread;
 import com.microbox.model.HttpGetJsonModelThread;
 import com.microbox.util.Utility;
 import com.mircobox.airshow.R;
@@ -46,6 +47,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -58,13 +60,16 @@ public class HomeFragment extends Fragment {
 
 	private ImageView[] imageViews = null;
 	private ImageView imageView = null;
+	private ViewGroup vGroup = null;
 	private AtomicInteger what = new AtomicInteger(0);
 	private boolean isContinue = true;
 
-//	private ListView categoryList = null;
+	// private ListView categoryList = null;
 	private ListView infoList = null;
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle" };
 	private int[] itemMapping = new int[] { R.id.catePicItem, R.id.cateTitle };
+
+	List<View> lPics = null;
 
 	private HomeCallbacks mCallbacks;
 
@@ -126,51 +131,14 @@ public class HomeFragment extends Fragment {
 
 	public void initViewPager() {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
-		ViewGroup vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
+		vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
+		lPics = new ArrayList<View>();
 
-		List<View> lPics = new ArrayList<View>();
+		new GetDataModelThread(adHandler, ApiUrlConfig.URL_GET_AD_IMAGES)
+				.start();
 
-		Resources res = getResources();
-		ImageView img1 = new ImageView(getActivity());
-		img1.setBackgroundResource(R.drawable.test_pic);
-		// img1.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_1)));
-		lPics.add(img1);
-
-		ImageView img2 = new ImageView(getActivity());
-		img2.setBackgroundResource(R.drawable.test_pic);
-		// img2.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_2)));
-		lPics.add(img2);
-
-		ImageView img3 = new ImageView(getActivity());
-		img3.setBackgroundResource(R.drawable.test_pic);
-		// img3.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_3)));
-		lPics.add(img3);
-
-		ImageView img4 = new ImageView(getActivity());
-		img4.setBackgroundResource(R.drawable.test_pic);
-		// img4.setBackgroundDrawable(compressImage(res.getDrawable(R.drawable.test_4)));
-		lPics.add(img4);
-
-		imageViews = new ImageView[lPics.size()];
-		for (int i = 0; i < lPics.size(); i++) {
-			imageView = new ImageView(getActivity());
-			imageView.setLayoutParams(new LayoutParams(10, 10));
-			imageView.setPadding(10, 10, 10, 10);
-			imageViews[i] = imageView;
-			if (i == 0) {
-				imageViews[i]
-						.setBackgroundResource(R.drawable.test_page_indicator_focused);
-			} else {
-				imageViews[i]
-						.setBackgroundResource(R.drawable.test_page_indicator_unfocused);
-			}
-			vGroup.addView(imageViews[i]);
-		}
-
-		vPager.setAdapter(new AdvAdapter(lPics));
 		vPager.setOnPageChangeListener(new GuidePageChangeListener());
 		vPager.setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
@@ -189,32 +157,73 @@ public class HomeFragment extends Fragment {
 				return false;
 			}
 		});
+	}
 
-		new Thread(new Runnable() {
+	private final Handler adHandler = new Handler() {
 
-			@Override
-			public void run() {
-				while (true) {
-					if (isContinue) {
-						viewHandler.sendEmptyMessage(what.get());
-						whatOption();
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			List<String> adUrlList = new ArrayList<String>();
+			if (result != null) {
+				try {
+					JSONArray array = new JSONArray(result);
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject obj = array.getJSONObject(i);
+						String link = obj.getString("link");
+						adUrlList.add(link);
 					}
+					vPager.setAdapter(new AdvAdapter(adUrlList));
+
+					imageViews = new ImageView[adUrlList.size()];
+					for (int i = 0; i < adUrlList.size(); i++) {
+						imageView = new ImageView(getActivity());
+						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+								10, 10);
+						lp.rightMargin = 15;
+						imageView.setLayoutParams(lp);
+						imageViews[i] = imageView;
+						if (i == 0) {
+							imageViews[i]
+									.setBackgroundResource(R.drawable.test_page_indicator_focused);
+						} else {
+							imageViews[i]
+									.setBackgroundResource(R.drawable.test_page_indicator_unfocused);
+						}
+						vGroup.addView(imageViews[i]);
+					}
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							while (true) {
+								if (isContinue) {
+									viewHandler.sendEmptyMessage(what.get());
+									// whatOption();
+									what.incrementAndGet();
+									if (what.get() > imageViews.length - 1) {
+										what.getAndAdd(-4);
+									}
+									try {
+										Thread.sleep(5000);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}
+					}).start();
+
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
 			}
-		}).start();
-	}
-
-	private void whatOption() {
-		what.incrementAndGet();
-		if (what.get() > imageViews.length - 1) {
-			what.getAndAdd(-4);
 		}
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
 
-		}
-	}
+	};
 
 	private final Handler viewHandler = new Handler() {
 
@@ -255,10 +264,19 @@ public class HomeFragment extends Fragment {
 	}
 
 	private final class AdvAdapter extends PagerAdapter {
+		private List<String> urls = null;
 		private List<View> views = null;
 
-		public AdvAdapter(List<View> views) {
-			this.views = views;
+		public AdvAdapter(List<String> urls) {
+			this.urls = urls;
+			BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+			views = new ArrayList<View>();
+			for (String url : urls) {
+
+				ImageView image = new ImageView(getActivity());
+				bitmapUtils.display(image, url);
+				this.views.add(image);
+			}
 		}
 
 		@Override
@@ -311,7 +329,7 @@ public class HomeFragment extends Fragment {
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(infoHandler,
 				ApiUrlConfig.URL_GET_NEWS);
 		hgjmt.start();
-		
+
 		ImageButton btnMoreInfo = (ImageButton) getView().findViewById(
 				R.id.ibtnMoreInfo);
 		btnMoreInfo.setOnClickListener(new OnClickListener() {
@@ -338,7 +356,7 @@ public class HomeFragment extends Fragment {
 			if (result != null) {
 				try {
 					JSONArray arr = new JSONArray(result);
-					int maxLength = (arr.length()>4 ? 4 : arr.length());
+					int maxLength = (arr.length() > 4 ? 4 : arr.length());
 					for (int i = 0; i < maxLength; i++) {
 						JSONObject temp = (JSONObject) arr.get(i);
 						String iconUrl = temp.getString("icon");
@@ -365,7 +383,8 @@ public class HomeFragment extends Fragment {
 							TextView tvId = (TextView) arg1
 									.findViewById(R.id.infoIdItem);
 							Bundle bundle = new Bundle();
-							bundle.putString("INFO_ID", tvId.getText().toString());
+							bundle.putString("INFO_ID", tvId.getText()
+									.toString());
 							intent.putExtras(bundle);
 							startActivity(intent);
 						}
@@ -380,61 +399,61 @@ public class HomeFragment extends Fragment {
 			}
 		}
 	};
-	
-//	private final Handler cateHandler = new Handler() {
-//
-//		@Override
-//		public void handleMessage(Message msg) {
-//			// TODO Auto-generated method stub
-//			super.handleMessage(msg);
-//			Bundle data = msg.getData();
-//			String result = data.getString("result");
-//			List<CategoryListItem> list = new ArrayList<CategoryListItem>();
-//			if (result != null) {
-//				try {
-//					JSONArray array = new JSONArray(result);
-//					for (int i = 0; i < array.length(); i++) {
-//						JSONObject temp = (JSONObject) array.get(i);
-//						String title = temp.getString("title");
-//						String imageurl = temp.getString("images");
-//						String id = temp.getString("id");
-//						CategoryListItem item = new CategoryListItem(imageurl,
-//								title, id);
-//						list.add(item);
-//					}
-//					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
-//					CategoryListAdapter adapter = new CategoryListAdapter(
-//							getActivity(), list, bitmapUtils);
-//					infoList.setAdapter(adapter);
-//					com.microbox.util.Utility
-//							.setListViewHeightBasedOnChildren(infoList);
-//					infoList
-//							.setOnItemClickListener(new OnItemClickListener() {
-//
-//								@Override
-//								public void onItemClick(AdapterView<?> arg0,
-//										View arg1, int arg2, long arg3) {
-//									// TODO Auto-generated method stub
-//									TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
-//									Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
-//									Intent intent = new Intent();
-//									intent.setClass(getActivity(), CategoryDetailActivity.class);
-//									Bundle data = new Bundle();
-//									data.putString("CATE_ID", tvID.getText().toString());
-//									intent.putExtras(data);
-//									startActivity(intent);
-//								}
-//							});
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//			} else {
-//				Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
-//						.show();
-//			}
-//		}
-//
-//	};
+
+	// private final Handler cateHandler = new Handler() {
+	//
+	// @Override
+	// public void handleMessage(Message msg) {
+	// // TODO Auto-generated method stub
+	// super.handleMessage(msg);
+	// Bundle data = msg.getData();
+	// String result = data.getString("result");
+	// List<CategoryListItem> list = new ArrayList<CategoryListItem>();
+	// if (result != null) {
+	// try {
+	// JSONArray array = new JSONArray(result);
+	// for (int i = 0; i < array.length(); i++) {
+	// JSONObject temp = (JSONObject) array.get(i);
+	// String title = temp.getString("title");
+	// String imageurl = temp.getString("images");
+	// String id = temp.getString("id");
+	// CategoryListItem item = new CategoryListItem(imageurl,
+	// title, id);
+	// list.add(item);
+	// }
+	// BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+	// CategoryListAdapter adapter = new CategoryListAdapter(
+	// getActivity(), list, bitmapUtils);
+	// infoList.setAdapter(adapter);
+	// com.microbox.util.Utility
+	// .setListViewHeightBasedOnChildren(infoList);
+	// infoList
+	// .setOnItemClickListener(new OnItemClickListener() {
+	//
+	// @Override
+	// public void onItemClick(AdapterView<?> arg0,
+	// View arg1, int arg2, long arg3) {
+	// // TODO Auto-generated method stub
+	// TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
+	// Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
+	// Intent intent = new Intent();
+	// intent.setClass(getActivity(), CategoryDetailActivity.class);
+	// Bundle data = new Bundle();
+	// data.putString("CATE_ID", tvID.getText().toString());
+	// intent.putExtras(data);
+	// startActivity(intent);
+	// }
+	// });
+	// } catch (JSONException e) {
+	// e.printStackTrace();
+	// }
+	// } else {
+	// Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
+	// .show();
+	// }
+	// }
+	//
+	// };
 
 	private ArrayList<HashMap<String, Object>> getCategory() {
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();

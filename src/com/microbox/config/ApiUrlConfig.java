@@ -15,4 +15,5 @@ public class ApiUrlConfig {
 	public static final String CONFERENCE_ID = "1";
 	public static final String URL_GET_REPORT = BASE_URL + "news/conferences/"
 			+ CONFERENCE_ID + "/get_file/REPORT";
+	public static final String URL_GET_AD_IMAGES = BASE_URL + "news/mainpage_images";
 }
