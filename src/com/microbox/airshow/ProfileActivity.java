@@ -392,10 +392,11 @@ public class ProfileActivity extends Activity {
 			MBFileUtils mbfu = new MBFileUtils();
 			String filePath = mbfu.creatBaseDir();
 			File f = new File(filePath, "head.png");
-			if (f.exists()) {
-				f.delete();
-			}
-			fos = new FileOutputStream(f);
+//			if (f.exists()) {
+//				f.delete();		
+//			}
+			
+			fos = new FileOutputStream(f,false);
 			if (null != fos) {
 				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
 				fos.flush();
