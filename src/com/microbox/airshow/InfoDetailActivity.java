@@ -13,9 +13,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebView;
+import android.webkit.WebSettings.ZoomDensity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,6 +34,7 @@ public class InfoDetailActivity extends Activity {
 	private String videoUrl;
 
 	ImageView videoImage;
+	WebView webView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,23 +65,7 @@ public class InfoDetailActivity extends Activity {
 		videoImage = (ImageView) findViewById(R.id.infoDetPageVideo);
 		new HttpGetJsonModelThread(infoDethandler, ApiUrlConfig.URL_GET_NEWS
 				+ "/" + infoId).start();
-
-		videoImage.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(videoUrl!=null){
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					String type = "video/*";
-					Uri uri = Uri
-							.parse(videoUrl);
-					//intent.setData(uri);
-					intent.setDataAndType(uri, type);
-					startActivity(intent);
-				}
-			}
-		});
+		webView = (WebView) findViewById(R.id.infoDetWeb);
 	}
 
 	private final Handler infoDethandler = new Handler() {
@@ -92,9 +82,41 @@ public class InfoDetailActivity extends Activity {
 					hasVideo = obj.getBoolean("has_video");
 					if (hasVideo) {
 						videoImage.setVisibility(ImageView.VISIBLE);
-					}
-					videoUrl = obj.getString("video_link");
+						videoUrl = obj.getString("video_link");
+						videoImage.setOnClickListener(new OnClickListener() {
 
+							@Override
+							public void onClick(View arg0) {
+								// TODO Auto-generated method stub
+								if (videoUrl != null) {
+									Intent intent = new Intent(
+											Intent.ACTION_VIEW);
+									String type = "video/*";
+									Uri uri = Uri.parse(videoUrl);
+									// intent.setData(uri);
+									intent.setDataAndType(uri, type);
+									startActivity(intent);
+								}
+							}
+						});
+					}
+					String content = obj.getString("content");
+					webView.loadDataWithBaseURL(null, content, "text/html",
+							"utf-8", null);
+					webView.getSettings().setJavaScriptEnabled(true);
+					webView.setWebChromeClient(new WebChromeClient());
+					webView.getSettings().setLayoutAlgorithm(
+							LayoutAlgorithm.SINGLE_COLUMN);
+					DisplayMetrics dm = getResources().getDisplayMetrics();
+					int scale = dm.densityDpi;
+					if (scale == 240) { //
+						webView.getSettings().setDefaultZoom(ZoomDensity.FAR);
+					} else if (scale == 160) {
+						webView.getSettings()
+								.setDefaultZoom(ZoomDensity.MEDIUM);
+					} else {
+						webView.getSettings().setDefaultZoom(ZoomDensity.CLOSE);
+					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
