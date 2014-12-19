@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -103,20 +104,35 @@ public class InfoDetailActivity extends Activity {
 					String content = obj.getString("content");
 					webView.loadDataWithBaseURL(null, content, "text/html",
 							"utf-8", null);
-					webView.getSettings().setJavaScriptEnabled(true);
-					webView.setWebChromeClient(new WebChromeClient());
+					webView.setVerticalScrollBarEnabled(false);
+					webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+					webView.setScrollContainer(false);
+					webView.setScrollbarFadingEnabled(false);
+					// webView.getSettings().setJavaScriptEnabled(true);
+					// webView.setWebChromeClient(new WebChromeClient());
 					webView.getSettings().setLayoutAlgorithm(
 							LayoutAlgorithm.SINGLE_COLUMN);
-					DisplayMetrics dm = getResources().getDisplayMetrics();
-					int scale = dm.densityDpi;
-					if (scale == 240) { //
-						webView.getSettings().setDefaultZoom(ZoomDensity.FAR);
-					} else if (scale == 160) {
-						webView.getSettings()
-								.setDefaultZoom(ZoomDensity.MEDIUM);
-					} else {
-						webView.getSettings().setDefaultZoom(ZoomDensity.CLOSE);
-					}
+					webView.getSettings().setDefaultTextEncodingName("UTF-8");
+					webView.getSettings().setBuiltInZoomControls(false);
+					webView.getSettings().setSupportZoom(false);
+					// webView.setOnTouchListener(new View.OnTouchListener() {
+					// @Override
+					// public boolean onTouch(View v, MotionEvent event) {
+					//
+					// }
+					//
+					// });
+					// webView.getSettings().setLoadWithOverviewMode(true);
+					// DisplayMetrics dm = getResources().getDisplayMetrics();
+					// int scale = dm.densityDpi;
+					// if (scale == 240) { //
+					// webView.getSettings().setDefaultZoom(ZoomDensity.FAR);
+					// } else if (scale == 160) {
+					// webView.getSettings()
+					// .setDefaultZoom(ZoomDensity.MEDIUM);
+					// } else {
+					// webView.getSettings().setDefaultZoom(ZoomDensity.CLOSE);
+					// }
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
