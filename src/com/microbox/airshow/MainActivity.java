@@ -303,4 +303,10 @@ public class MainActivity extends ActionBarActivity implements
 		mNavigationDrawerFragment.openDrawer();
 	}
 
+	@Override
+	public void updateDrawerProfile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.microbox.model.UpdateProfileMolelThread;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
@@ -29,6 +30,11 @@ public class UserFragment extends Fragment {
 	private SharedPreferences spUserInfo;
 	private SharedPreferences spData;
 
+	private ImageView ivUserPhoto;
+	private TextView etRealName;
+	private TextView etUserName;
+	
+	private  static final int EDIT_PROFILE = 1;
 	public static Fragment newInstance(Context context) {
 		UserFragment f = new UserFragment();
 
@@ -84,14 +90,14 @@ public class UserFragment extends Fragment {
 		urlHeaderSmall = jsonObject.getString("header_small");
 		name = jsonObject.getString("name");
 		nickName = jsonObject.getString("nickname");
-		ImageView ivUserPhoto = (ImageView) getView().findViewById(
+		ivUserPhoto = (ImageView) getView().findViewById(
 				R.id.userPhoto);
 		BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 		bitmapUtils.display(ivUserPhoto, urlHeaderSmall);
-		TextView etRealName = (TextView) getView().findViewById(
+		etRealName = (TextView) getView().findViewById(
 				R.id.userRealName);
 		etRealName.setText(name);
-		TextView etUserName = (TextView) getView().findViewById(
+		etUserName = (TextView) getView().findViewById(
 				R.id.userNickName);
 		etUserName.setText(nickName);
 		Button btnExit = (Button) getView().findViewById(R.id.userExit);
@@ -118,9 +124,29 @@ public class UserFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(), ProfileActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, EDIT_PROFILE);
 			}
 		});
+	}
+
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if(resultCode==getActivity().RESULT_OK && requestCode == EDIT_PROFILE){
+			Boolean isEdit = data.getExtras().getBoolean("profile_modified");
+			String newname = data.getExtras().getString("new_name");
+			String nickname = data.getExtras().getString("new_nickname");
+			String photourl = data.getExtras().getString("new_photo");
+			if(isEdit){
+				BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+				bitmapUtils.display(ivUserPhoto, photourl);
+				etRealName.setText(newname);
+				etUserName.setText(nickname);
+				mCallbacks.updateDrawerProfile();
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -137,5 +163,6 @@ public class UserFragment extends Fragment {
 
 	public static interface UserCallbacks {
 		public void openDrawerUser();
+		public void updateDrawerProfile();
 	}
 }
