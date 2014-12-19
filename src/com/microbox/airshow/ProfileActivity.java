@@ -108,6 +108,12 @@ public class ProfileActivity extends Activity {
 				}
 				// 记录已经修改
 				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+					Intent dataIntent = new Intent();
+					dataIntent.putExtra("profile_modified", true);
+					dataIntent.putExtra("new_name", nameUpdate);
+					dataIntent.putExtra("new_nickname", nikeNameUpdate);
+					dataIntent.putExtra("new_photo", headFileName);
+					setResult(RESULT_OK, dataIntent);
 					finish();
 				} else {
 					spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();

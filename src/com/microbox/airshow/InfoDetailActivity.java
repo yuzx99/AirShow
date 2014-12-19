@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebSettings.ZoomDensity;
@@ -64,9 +65,9 @@ public class InfoDetailActivity extends Activity {
 		});
 
 		videoImage = (ImageView) findViewById(R.id.infoDetPageVideo);
-		new HttpGetJsonModelThread(infoDethandler, ApiUrlConfig.URL_GET_NEWS
-				+ "/" + infoId).start();
 		webView = (WebView) findViewById(R.id.infoDetWeb);
+		new HttpGetJsonModelThread(infoDethandler, ApiUrlConfig.URL_GET_NEWS
+				+ "/" + infoId).start();	
 	}
 
 	private final Handler infoDethandler = new Handler() {
