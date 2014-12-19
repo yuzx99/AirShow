@@ -1,6 +1,9 @@
 package com.microbox.airshow;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +11,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.microbox.config.ApiUrlConfig;
 import com.microbox.imageservice.CropOption;
 import com.microbox.imageservice.CropOptionAdapter;
 import com.microbox.imageservice.ImageService;
 import com.microbox.model.UpdateProfileMolelThread;
+import com.microbox.util.MBFileUtils;
 import com.mircobox.airshow.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -26,6 +38,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -44,6 +57,9 @@ public class ProfileActivity extends Activity {
 	private Button btnOK;
 	private SharedPreferences spData;
 	private SharedPreferences spUserInfo;
+	private String headFileName = null;
+	private String nameUpdate;
+	private String nikeNameUpdate;
 
 	private long waitTime = 3000;
 	private long touchTime = 0;
@@ -145,8 +161,8 @@ public class ProfileActivity extends Activity {
 		});
 		ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 		// 显示头像
-		BitmapUtils bitmapUtils = new BitmapUtils(ProfileActivity.this);
-		bitmapUtils.display(ivPhoto, urlHeaderSmall);
+		// BitmapUtils bitmapUtils = new BitmapUtils(ProfileActivity.this);
+		// bitmapUtils.display(ivPhoto, urlHeaderSmall);
 		etRealName = (EditText) findViewById(R.id.etRealName);
 		etRealName.setText(name);
 		etUserName = (EditText) findViewById(R.id.etUserName);
@@ -175,11 +191,46 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String nameUpdate = etRealName.getText().toString();
-				String nikeNameUpdate = etUserName.getText().toString();
-				UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
-						nameUpdate, nikeNameUpdate, id, token, handlerUpdate);
-				upft.start();
+				nameUpdate = etRealName.getText().toString();
+				nikeNameUpdate = etUserName.getText().toString();
+				if (headFileName != null) {
+					RequestParams params = new RequestParams();
+					params.addBodyParameter("file", new File(headFileName));
+					HttpUtils http = new HttpUtils();
+					http.send(HttpRequest.HttpMethod.POST,
+							ApiUrlConfig.URL_UPLOAD_ICON, params,
+							new RequestCallBack<String>() {
+
+								@Override
+								public void onFailure(HttpException arg0,
+										String arg1) {
+									// TODO Auto-generated method stub
+									System.out.println("上传头像失败！");
+								}
+
+								@Override
+								public void onSuccess(ResponseInfo<String> arg0) {
+									// TODO Auto-generated method stub
+									try {
+										JSONObject jsonObject = new JSONObject(
+												arg0.result);
+										String header = jsonObject
+												.getString("filename");
+										UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
+												nameUpdate, nikeNameUpdate, id,
+												token, handlerUpdate, header);
+										upft.start();
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+								}
+
+							});
+
+				}
+
 			}
 		});
 	}
@@ -202,10 +253,12 @@ public class ProfileActivity extends Activity {
 			switch (requestCode) {
 			case PICK_FROM_FILE:
 				mImageCaptureUri = data.getData();
+				System.out.println(mImageCaptureUri);
 				doCrop();
 				break;
 
 			case CROP_FROM_CAMERA:
+				System.out.println("CROP_FROM_CAMERA");
 				if (null != data) {
 					saveCutPic(data);
 				}
@@ -304,6 +357,8 @@ public class ProfileActivity extends Activity {
 			Bitmap mBitmap = bundle.getParcelable("data");
 			ivPhoto.setImageBitmap(ImageService.getCroppedBitmap(mBitmap,
 					mBitmap.getWidth()));
+			headFileName = savePic(ImageService.getCroppedBitmap(mBitmap,
+					mBitmap.getWidth()));
 		}
 		File f = new File(mImageCaptureUri.getPath());
 		if (f.exists()) {
@@ -313,9 +368,9 @@ public class ProfileActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		if(spUserInfo.getBoolean("ISMODIFIED", false)){
+		if (spUserInfo.getBoolean("ISMODIFIED", false)) {
 			finish();
-		}else{
+		} else {
 			long currentTime = System.currentTimeMillis();
 			if ((currentTime - touchTime) >= waitTime) {
 				Toast.makeText(this, this.getString(R.string.exit_again),
@@ -327,5 +382,31 @@ public class ProfileActivity extends Activity {
 			}
 		}
 
+	}
+
+	// 保存到sdcard
+	public String savePic(Bitmap b) {
+
+		FileOutputStream fos = null;
+		try {
+			MBFileUtils mbfu = new MBFileUtils();
+			String filePath = mbfu.creatBaseDir();
+			File f = new File(filePath, "head.png");
+			if (f.exists()) {
+				f.delete();
+			}
+			fos = new FileOutputStream(f);
+			if (null != fos) {
+				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+				fos.flush();
+				fos.close();
+			}
+			return f.getPath();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
