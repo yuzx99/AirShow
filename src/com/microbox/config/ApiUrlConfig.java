@@ -22,4 +22,6 @@ public class ApiUrlConfig {
 			+ "news/user/upload_icon";
 	public static final String URL_UPDTAE_HEADER = BASE_URL
 			+ "news/user/update_header";
+	public static final String URL_CONFERENCE_CONTENT = BASE_URL
+			+ "news/conferences/content";
 }
