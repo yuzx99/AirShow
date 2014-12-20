@@ -21,6 +21,7 @@ import com.microbox.config.ApiUrlConfig;
 import com.microbox.imageservice.CropOption;
 import com.microbox.imageservice.CropOptionAdapter;
 import com.microbox.imageservice.ImageService;
+import com.microbox.model.UpdateProfileAllModelThread;
 import com.microbox.model.UpdateProfileMolelThread;
 import com.microbox.model.UpdateUserHeaderModelThread;
 import com.microbox.util.MBFileUtils;
@@ -221,6 +222,12 @@ public class ProfileActivity extends Activity {
 													token, header,
 													handlerUpdate);
 											uuhmt.start();
+										} else {
+											UpdateProfileAllModelThread upamt = new UpdateProfileAllModelThread(
+													nameUpdate, nikeNameUpdate,
+													id, token, header,
+													handlerUpdate);
+											upamt.start();
 										}
 
 									} catch (JSONException e) {
