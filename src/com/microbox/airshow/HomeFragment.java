@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.adapter.CategoryListAdapter;
 import com.microbox.adapter.CategoryListItem;
+import com.microbox.adapter.ImageItem;
 import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
 import com.microbox.config.ApiUrlConfig;
@@ -171,19 +172,21 @@ public class HomeFragment extends Fragment {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
-			List<String> adUrlList = new ArrayList<String>();
+			List<ImageItem> imageList = new ArrayList<ImageItem>();
 			if (result != null) {
 				try {
 					JSONArray array = new JSONArray(result);
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject obj = array.getJSONObject(i);
 						String link = obj.getString("link");
-						adUrlList.add(link);
+						String newsId = obj.getString("news_id");
+						ImageItem item = new ImageItem(newsId, link);
+						imageList.add(item);
 					}
-					vPager.setAdapter(new AdvAdapter(adUrlList));
+					vPager.setAdapter(new AdvAdapter(imageList));
 
-					imageViews = new ImageView[adUrlList.size()];
-					for (int i = 0; i < adUrlList.size(); i++) {
+					imageViews = new ImageView[imageList.size()];
+					for (int i = 0; i < imageList.size(); i++) {
 						imageView = new ImageView(getActivity());
 						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 								10, 10);
@@ -268,17 +271,17 @@ public class HomeFragment extends Fragment {
 	}
 
 	private final class AdvAdapter extends PagerAdapter {
-		private List<String> urls = null;
+		private List<ImageItem> imageList = null;
 		private List<View> views = null;
 
-		public AdvAdapter(List<String> urls) {
-			this.urls = urls;
+		public AdvAdapter(List<ImageItem> list) {
+			this.imageList = list;
 			BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 			views = new ArrayList<View>();
-			for (String url : urls) {
+			for (int i = 0 ;i<imageList.size();i++) {
 
 				ImageView image = new ImageView(getActivity());
-				bitmapUtils.display(image, url);
+				bitmapUtils.display(image, imageList.get(i).getImageUrl());
 				this.views.add(image);
 			}
 		}
@@ -302,14 +305,20 @@ public class HomeFragment extends Fragment {
 		@Override
 		public Object instantiateItem(View arg0, int arg1) {
 			View view = views.get(arg1);
-			final int position = arg1;
+			final String newsId = imageList.get(arg1).getNewsId();
 			view.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					Toast.makeText(getActivity(), String.valueOf(position),
-							Toast.LENGTH_SHORT).show();
+					if(newsId!=null){
+						Intent intent = new Intent(getActivity(),
+								InfoDetailActivity.class);
+						Bundle bundle = new Bundle();
+						bundle.putString("INFO_ID", newsId);
+						intent.putExtras(bundle);
+						startActivity(intent);
+					}
 				}
 			});
 			((ViewPager) arg0).addView(views.get(arg1), 0);
