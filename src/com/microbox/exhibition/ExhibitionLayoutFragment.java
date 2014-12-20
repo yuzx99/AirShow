@@ -18,7 +18,7 @@ public class ExhibitionLayoutFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.introduction,
+		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.exhibition_layout,
 				null);
 		return root;
 	}
