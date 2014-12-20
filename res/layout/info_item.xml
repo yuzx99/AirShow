@@ -10,13 +10,26 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/infoPicItem"
+    <RelativeLayout
         android:layout_width="77dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="9dp"
         android:layout_marginLeft="9dp"
-        android:layout_marginTop="7dp" />
+        android:layout_marginTop="9dp" >
+
+        <ImageView
+            android:id="@+id/infoPicItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        
+        <ImageView 
+            android:id="@+id/infoVideoItem"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/pic_play_video"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

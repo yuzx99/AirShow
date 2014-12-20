@@ -115,8 +115,9 @@ public class InfoFragment extends Fragment {
 						String title = temp.getString("title");
 						String date = temp.getString("create_time");
 						String id = temp.getString("id");
+						Boolean hasVideo = temp.getBoolean("has_video");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,
-								date, id);
+								date, id, hasVideo);
 						newsList.add(ilt);
 					}
 					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());

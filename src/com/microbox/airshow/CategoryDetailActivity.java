@@ -70,8 +70,9 @@ public class CategoryDetailActivity extends Activity {
 						String title = temp.getString("title");
 						String date = temp.getString("create_time");
 						String id = temp.getString("id");
+						Boolean hasVideo = temp.getBoolean("has_video");
 						InfoListItem item = new InfoListItem(imageurl, title,
-								date, id);
+								date, id, hasVideo);
 						list.add(item);
 					}
 

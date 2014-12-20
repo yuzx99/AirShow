@@ -5,13 +5,15 @@ public class InfoListItem {
 	private String title;
 	private String date;
 	private String id;
-
-	public InfoListItem(String iconUrl, String title, String date, String id) {
+	private Boolean hasVideo;
+	
+	public InfoListItem(String iconUrl, String title, String date, String id, Boolean hasVideo) {
 		super();
 		this.iconUrl = iconUrl;
 		this.title = title;
 		this.date = date;
 		this.id = id;
+		this.hasVideo = hasVideo;
 	}
 
 	public String getIconUrl() {
@@ -44,6 +46,14 @@ public class InfoListItem {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Boolean getHasVideo() {
+		return hasVideo;
+	}
+
+	public void setHasVideo(Boolean hasVideo) {
+		this.hasVideo = hasVideo;
 	}
 
 }

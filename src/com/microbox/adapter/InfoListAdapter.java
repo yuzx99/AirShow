@@ -54,6 +54,7 @@ public class InfoListAdapter extends BaseAdapter {
 		TextView itemTitle = null;
 		TextView itemDate = null;
 		TextView itemId = null;
+		ImageView itemVideo = null;
 		if(convertView == null){
 			convertView = mInflater.inflate(R.layout.info_item, null);
 		}
@@ -61,10 +62,14 @@ public class InfoListAdapter extends BaseAdapter {
 		itemTitle = (TextView)convertView.findViewById(R.id.infoTitleItem);
 		itemDate = (TextView)convertView.findViewById(R.id.infoDateItem);
 		itemId = (TextView)convertView.findViewById(R.id.infoIdItem);
+		itemVideo = (ImageView)convertView.findViewById(R.id.infoVideoItem);
 		bitmapUtils.display(itemIcon, item.getIconUrl());
 		itemTitle.setText(item.getTitle());
 		itemDate.setText(item.getDate());
 		itemId.setText(item.getId());
+		if(item.getHasVideo()){
+			itemVideo.setVisibility(ImageView.VISIBLE);
+		}	
 		return convertView;
 	}
 
