@@ -24,4 +24,6 @@ public class ApiUrlConfig {
 			+ "news/user/update_header";
 	public static final String URL_CONFERENCE_CONTENT = BASE_URL
 			+ "news/conferences/content";
+	public static final String URL_GET_SIMPLE_NEWS = BASE_URL + "news/simple_news";
+	public static final String URL_GET_SIMPLE_CONF = BASE_URL + "conferences/simple_content";
 }

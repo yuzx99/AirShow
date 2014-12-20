@@ -393,7 +393,7 @@ public class HomeFragment extends Fragment {
 
 		infoList = (ListView) getView().findViewById(R.id.infoList);
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(infoHandler,
-				ApiUrlConfig.URL_GET_NEWS);
+				ApiUrlConfig.URL_GET_SIMPLE_NEWS);
 		hgjmt.start();
 
 		ImageButton btnMoreInfo = (ImageButton) getView().findViewById(

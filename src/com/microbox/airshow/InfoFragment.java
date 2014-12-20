@@ -154,7 +154,7 @@ public class InfoFragment extends Fragment {
 	private void initInfo() {
 		infoList = (ListView) getView().findViewById(R.id.infoPageList);
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(handlerNews,
-				ApiUrlConfig.URL_GET_NEWS);
+				ApiUrlConfig.URL_GET_SIMPLE_NEWS);
 		hgjmt.start();
 	}
 
