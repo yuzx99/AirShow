@@ -22,6 +22,7 @@ import com.microbox.imageservice.CropOption;
 import com.microbox.imageservice.CropOptionAdapter;
 import com.microbox.imageservice.ImageService;
 import com.microbox.model.UpdateProfileMolelThread;
+import com.microbox.model.UpdateUserHeaderModelThread;
 import com.microbox.util.MBFileUtils;
 import com.mircobox.airshow.R;
 
@@ -32,6 +33,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -78,13 +80,7 @@ public class ProfileActivity extends Activity {
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		String result = spData.getString("RESULT", "");
-		try {
-			initUI(result);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		initUI();
 	}
 
 	Handler handlerUpdate = new Handler() {
@@ -93,15 +89,20 @@ public class ProfileActivity extends Activity {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
+			String name = null;
+			String nickName = null;
+			String header_small = null;
 			if (result != null) {
 				try {
 					JSONObject jsonObject = new JSONObject(result);
-					String name = jsonObject.getString("name");
-					String nickName = jsonObject.getString("nickname");
-					Toast.makeText(ProfileActivity.this,
-							"真实姓名：" + name + "---昵称:" + nickName,
-							Toast.LENGTH_SHORT).show();
-
+					name = jsonObject.getString("name");
+					nickName = jsonObject.getString("nickname");
+					header_small = jsonObject.getString("header_small");
+					Editor editorData = spData.edit();
+					editorData.putString("HEADER_SMALL", header_small);
+					editorData.putString("NAME", name);
+					editorData.putString("NICKNAME", nickName);
+					editorData.commit();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -110,13 +111,14 @@ public class ProfileActivity extends Activity {
 				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
 					Intent dataIntent = new Intent();
 					dataIntent.putExtra("profile_modified", true);
-					dataIntent.putExtra("new_name", nameUpdate);
-					dataIntent.putExtra("new_nickname", nikeNameUpdate);
-					dataIntent.putExtra("new_photo", headFileName);
+					dataIntent.putExtra("new_name", name);
+					dataIntent.putExtra("new_nickname", nickName);
+					dataIntent.putExtra("new_photo", header_small);
 					setResult(RESULT_OK, dataIntent);
 					finish();
 				} else {
 					spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+
 					Intent intent = new Intent(ProfileActivity.this,
 							MainActivity.class);
 					startActivity(intent);
@@ -130,20 +132,13 @@ public class ProfileActivity extends Activity {
 		}
 	};
 
-	private void initUI(String result) throws JSONException {
+	private void initUI() {
 
-		JSONObject jsonObject = null;
-		String urlHeaderSmall = null;
-		final String name;
-		final String nickName;
-		final String id;
-		final String token;
-		jsonObject = new JSONObject(result);
-		urlHeaderSmall = jsonObject.getString("header_small");
-		name = jsonObject.getString("name");
-		nickName = jsonObject.getString("nickname");
-		id = jsonObject.getString("id");
-		token = jsonObject.getString("token");
+		final String token = spData.getString("TOKEN", "");
+		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
+		final String name = spData.getString("NAME", "");
+		final String nickName = spData.getString("NICKNAME", "");
+		final String id = spData.getString("ID", "");
 
 		ibtnUploadPhoto = (ImageButton) findViewById(R.id.ibtnUploadPhoto);
 		ibtnUploadPhoto.setOnClickListener(new OnClickListener() {
@@ -151,11 +146,6 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				// intent.setType("image/*");
-				// intent.setAction(Intent.ACTION_GET_CONTENT);
-				// startActivityForResult(Intent.createChooser(
-				// intent, "Complete action using"),
-				// PICK_FROM_FILE);
 				Intent intent = new Intent();
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -222,10 +212,17 @@ public class ProfileActivity extends Activity {
 												arg0.result);
 										String header = jsonObject
 												.getString("filename");
-										UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
-												nameUpdate, nikeNameUpdate, id,
-												token, handlerUpdate, header);
-										upft.start();
+										boolean isNameChanged = true;
+										if (nameUpdate.equals(name)
+												&& nikeNameUpdate
+														.equals(nickName)) {
+											isNameChanged = false;
+											UpdateUserHeaderModelThread uuhmt = new UpdateUserHeaderModelThread(
+													token, header,
+													handlerUpdate);
+											uuhmt.start();
+										}
+
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -234,7 +231,16 @@ public class ProfileActivity extends Activity {
 								}
 
 							});
-
+				} else {
+					if (nameUpdate.equals(name)
+							&& nikeNameUpdate.equals(nickName)) {
+						finish();
+					} else {
+						UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
+								nameUpdate, nikeNameUpdate, id, token,
+								handlerUpdate);
+						upft.start();
+					}
 				}
 
 			}
@@ -398,11 +404,11 @@ public class ProfileActivity extends Activity {
 			MBFileUtils mbfu = new MBFileUtils();
 			String filePath = mbfu.creatBaseDir();
 			File f = new File(filePath, "head.png");
-//			if (f.exists()) {
-//				f.delete();		
-//			}
-			
-			fos = new FileOutputStream(f,false);
+			// if (f.exists()) {
+			// f.delete();
+			// }
+
+			fos = new FileOutputStream(f, false);
 			if (null != fos) {
 				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
 				fos.flush();

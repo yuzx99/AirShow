@@ -33,8 +33,9 @@ public class UserFragment extends Fragment {
 	private ImageView ivUserPhoto;
 	private TextView etRealName;
 	private TextView etUserName;
-	
-	private  static final int EDIT_PROFILE = 1;
+
+	private static final int EDIT_PROFILE = 1;
+
 	public static Fragment newInstance(Context context) {
 		UserFragment f = new UserFragment();
 
@@ -56,14 +57,8 @@ public class UserFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
-		String result = spData.getString("RESULT", "");
 		initTitleBar();
-		try {
-			initViewCompoent(result);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		initViewCompoent();
 	}
 
 	private void initTitleBar() {
@@ -81,24 +76,17 @@ public class UserFragment extends Fragment {
 		});
 	}
 
-	private void initViewCompoent(String result) throws JSONException {
-		JSONObject jsonObject = null;
-		String urlHeaderSmall = null;
-		final String name;
-		final String nickName;
-		jsonObject = new JSONObject(result);
-		urlHeaderSmall = jsonObject.getString("header_small");
-		name = jsonObject.getString("name");
-		nickName = jsonObject.getString("nickname");
-		ivUserPhoto = (ImageView) getView().findViewById(
-				R.id.userPhoto);
+	private void initViewCompoent() {
+		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
+		String name = spData.getString("NAME", "");
+		String nickName = spData.getString("NICKNAME", "");
+
+		ivUserPhoto = (ImageView) getView().findViewById(R.id.userPhoto);
 		BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 		bitmapUtils.display(ivUserPhoto, urlHeaderSmall);
-		etRealName = (TextView) getView().findViewById(
-				R.id.userRealName);
+		etRealName = (TextView) getView().findViewById(R.id.userRealName);
 		etRealName.setText(name);
-		etUserName = (TextView) getView().findViewById(
-				R.id.userNickName);
+		etUserName = (TextView) getView().findViewById(R.id.userNickName);
 		etUserName.setText(nickName);
 		Button btnExit = (Button) getView().findViewById(R.id.userExit);
 		btnExit.setOnClickListener(new OnClickListener() {
@@ -129,16 +117,16 @@ public class UserFragment extends Fragment {
 		});
 	}
 
-	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if(resultCode==getActivity().RESULT_OK && requestCode == EDIT_PROFILE){
+		if (resultCode == getActivity().RESULT_OK
+				&& requestCode == EDIT_PROFILE) {
 			Boolean isEdit = data.getExtras().getBoolean("profile_modified");
 			String newname = data.getExtras().getString("new_name");
 			String nickname = data.getExtras().getString("new_nickname");
 			String photourl = data.getExtras().getString("new_photo");
-			if(isEdit){
+			if (isEdit) {
 				BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 				bitmapUtils.display(ivUserPhoto, photourl);
 				etRealName.setText(newname);
@@ -163,6 +151,7 @@ public class UserFragment extends Fragment {
 
 	public static interface UserCallbacks {
 		public void openDrawerUser();
+
 		public void updateDrawerProfile();
 	}
 }
