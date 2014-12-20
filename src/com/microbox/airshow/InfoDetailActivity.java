@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -67,7 +68,7 @@ public class InfoDetailActivity extends Activity {
 		videoImage = (ImageView) findViewById(R.id.infoDetPageVideo);
 		webView = (WebView) findViewById(R.id.infoDetWeb);
 		new HttpGetJsonModelThread(infoDethandler, ApiUrlConfig.URL_GET_NEWS
-				+ "/" + infoId).start();	
+				+ "/" + infoId).start();
 	}
 
 	private final Handler infoDethandler = new Handler() {
@@ -114,8 +115,22 @@ public class InfoDetailActivity extends Activity {
 					webView.getSettings().setLayoutAlgorithm(
 							LayoutAlgorithm.SINGLE_COLUMN);
 					webView.getSettings().setDefaultTextEncodingName("UTF-8");
-					webView.getSettings().setBuiltInZoomControls(false);
+//					webView.getSettings().setBuiltInZoomControls(false);
 					webView.getSettings().setSupportZoom(false);
+					
+					webView.getSettings().setBuiltInZoomControls(true);
+					webView.getSettings().setDisplayZoomControls(false);
+					webView.setOnTouchListener(new OnTouchListener() {
+
+						@Override
+						public boolean onTouch(View arg0, MotionEvent arg1) {
+							// TODO Auto-generated method stub
+							
+							return false;
+						}
+					});
+					// webView.getSettings().setUseWideViewPort(true);
+					// webSettings.setLoadWithOverviewMode(true);
 					// webView.setOnTouchListener(new View.OnTouchListener() {
 					// @Override
 					// public boolean onTouch(View v, MotionEvent event) {

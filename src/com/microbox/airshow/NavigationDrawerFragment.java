@@ -119,7 +119,8 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-
+		mDrawerListView.setDividerHeight(0);
+		
 		String[] itemTitle = getResources().getStringArray(R.array.item_title);
 		int[] itemIconRes = new int[] { R.drawable.ic_sidebar_homepage,
 				R.drawable.ic_sidebar_news, R.drawable.ic_sidebar_exhibition,
