@@ -8,6 +8,7 @@ import com.microbox.exhibition.AgendaFragment;
 import com.microbox.exhibition.ExhibitionLayoutFragment;
 import com.microbox.exhibition.IntroductionFragment;
 import com.microbox.exhibition.ReportFragment;
+import com.microbox.exhibition.SponsorFragment;
 import com.microbox.exhibition.TransportationFragment;
 import com.mircobox.airshow.R;
 
@@ -96,6 +97,7 @@ public class ExhibitionFragment extends Fragment {
 		fragmentList = new ArrayList<Fragment>();
 		fragmentList.add(new IntroductionFragment());
 		fragmentList.add(new TransportationFragment());
+		fragmentList.add(new SponsorFragment());
 		fragmentList.add(new AgendaFragment());
 		fragmentList.add(new ExhibitionLayoutFragment());
 		fragmentList.add(new ReportFragment());

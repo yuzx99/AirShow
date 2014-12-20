@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AgendaFragment extends Fragment {
+public class SponsorFragment extends Fragment {
 	public  Fragment newInstance(Context context) {
 		AgendaFragment f = new AgendaFragment();
 		return f;
@@ -18,7 +18,7 @@ public class AgendaFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.agenda,
+		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.sponsor,
 				null);
 		return root;
 	}
