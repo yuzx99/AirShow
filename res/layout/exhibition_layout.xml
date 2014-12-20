@@ -7,12 +7,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        
+
         <ImageView
-            android:id="@+id/transMap"
+            android:id="@+id/exhiLayout"
             android:layout_width="match_parent"
             android:layout_height="184dp"
-            android:background="@drawable/location"/>
+            android:background="@drawable/place" />
     </ScrollView>
 
 </LinearLayout>
