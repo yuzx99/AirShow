@@ -82,9 +82,26 @@ public class SplashActivity extends Activity {
 			if (result != null) {
 				Toast.makeText(SplashActivity.this, "登录成功", Toast.LENGTH_SHORT)
 						.show();
-				Editor editorData = spData.edit();
-				editorData.putString("RESULT", result);
-				editorData.commit();
+				try {
+					Editor editorData = spData.edit();
+					JSONObject jObject = new JSONObject(result);
+					String account = jObject.getString("account");
+					String header_small = jObject.getString("header_small");
+					String name = jObject.getString("name");
+					String token = jObject.getString("token");
+					String nickname = jObject.getString("nickname");
+					String id = jObject.getString("id");
+					editorData.putString("ACCOUNT", account);
+					editorData.putString("HEADER_SMALL", header_small);
+					editorData.putString("NAME", name);
+					editorData.putString("TOKEN", token);
+					editorData.putString("NICKNAME", nickname);
+					editorData.putString("ID", id);
+					editorData.commit();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (spUserInfo.getBoolean("ISMODIFIED", false)) {
 					Intent intent = new Intent(SplashActivity.this,
 							MainActivity.class);

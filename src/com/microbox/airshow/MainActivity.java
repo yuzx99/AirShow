@@ -84,18 +84,8 @@ public class MainActivity extends ActionBarActivity implements
 
 		getActionBar().hide();
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		String result = spData.getString("RESULT", "");
-		JSONObject jsonObject;
-		String nickName = null;
-		String urlHeaderSmall = null;
-		try {
-			jsonObject = new JSONObject(result);
-			urlHeaderSmall = jsonObject.getString("header_small");
-			nickName = jsonObject.getString("nickname");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
+		String nickName = spData.getString("NICKNAME", "");
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
@@ -306,7 +296,14 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void updateDrawerProfile() {
 		// TODO Auto-generated method stub
-		
+		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
+		String nickName = spData.getString("NICKNAME", "");
+		TextView tv = (TextView) findViewById(R.id.userName);
+		ImageView iv = (ImageView) findViewById(R.id.headIcon);
+		BitmapUtils bitmapUtils = new BitmapUtils(this);
+		bitmapUtils.display(iv, urlHeaderSmall);
+		tv.setText(nickName);
 	}
 
 }

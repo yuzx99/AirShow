@@ -75,56 +75,22 @@ public class LeaveMessageActivity extends Activity {
 		});
 
 		final EditText etMessage = (EditText) findViewById(R.id.textContentMessage);
-		final String result = spData.getString("RESULT", "");
+
 		Button btnSubmit = (Button) findViewById(R.id.btnSubmitMsg);
 		btnSubmit.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				try {
-					JSONObject jsonObject = new JSONObject(result);
-					final String token = jsonObject.getString("token");
-					final String content = etMessage.getText().toString();
-					if (content.isEmpty()) {
-						Toast.makeText(LeaveMessageActivity.this, "留言不能为空",
-								Toast.LENGTH_SHORT).show();
-					} else {
-						SubmitMessageModelThread smmt = new SubmitMessageModelThread(
-								token, content, handlerSentMessage);
-						smmt.start();
-					}
-
-					// new Thread(new Runnable() {
-					// @Override
-					// public void run() {
-					// try {
-					// MBHttpUtils ru = new MBHttpUtils();
-					// JSONObject param = new JSONObject();
-					// param.put("token", token);
-					// param.put("content", content);
-					// String result = ru.restHttpPostJson(
-					// ApiUrlConfig.URL_SEND_MESSAGE, param);
-					// Message msg = new Message();
-					// Bundle data = new Bundle();
-					// data.putString("result", result);
-					// msg.setData(data);
-					// handlerSentMessage.sendMessage(msg);
-					// } catch (JSONException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// } catch (ClientProtocolException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// } catch (IOException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
-					// }
-					// }).start();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				String token = spData.getString("TOKEN", "");
+				String content = etMessage.getText().toString();
+				if (content.isEmpty()) {
+					Toast.makeText(LeaveMessageActivity.this, "留言不能为空",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					SubmitMessageModelThread smmt = new SubmitMessageModelThread(
+							token, content, handlerSentMessage);
+					smmt.start();
 				}
 			}
 		});
