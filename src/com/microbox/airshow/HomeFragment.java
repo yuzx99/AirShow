@@ -23,10 +23,13 @@ import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.GetCategoryModelThread;
 import com.microbox.model.GetDataModelThread;
 import com.microbox.model.HttpGetJsonModelThread;
+import com.microbox.reminder.AlarmReceiver;
 import com.microbox.util.Utility;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -34,6 +37,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
@@ -81,6 +85,7 @@ public class HomeFragment extends Fragment {
 
 	private HomeCallbacks mCallbacks;
 
+	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
 	public static Fragment newInstance(Context context) {
 		HomeFragment f = new HomeFragment();
 
@@ -151,6 +156,7 @@ public class HomeFragment extends Fragment {
 							notice.setText("距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天");
 						}
+						//setRepeatingAlarm();
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -512,6 +518,23 @@ public class HomeFragment extends Fragment {
 			}
 		}
 	};
+
+	private void setRepeatingAlarm() {
+		AlarmManager alarmManager = (AlarmManager) getActivity()
+				.getSystemService(Context.ALARM_SERVICE);
+		int alarmType = AlarmManager.ELAPSED_REALTIME_WAKEUP;
+		long lengthofWait = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+		Intent intent = new Intent();
+		intent.setAction(NEW_ALARM);
+		PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity(),
+				0, intent, 0);
+		// alarmManager.setInexactRepeating(alarmType, lengthofWait,
+		// lengthofWait,
+		// alarmIntent);
+		alarmManager.setRepeating(alarmType, SystemClock.elapsedRealtime(),
+				10 * 1000, alarmIntent);
+	//	alarmManager.cancel(alarmIntent);
+	}
 
 	// private final Handler cateHandler = new Handler() {
 	//
