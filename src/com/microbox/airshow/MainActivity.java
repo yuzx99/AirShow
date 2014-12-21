@@ -212,6 +212,7 @@ public class MainActivity extends ActionBarActivity implements
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
+			spData.edit().clear().commit();
 			finish();
 			System.exit(0);
 		}

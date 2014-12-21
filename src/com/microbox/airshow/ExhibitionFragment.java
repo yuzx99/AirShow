@@ -61,7 +61,7 @@ public class ExhibitionFragment extends Fragment {
 				null);
 		return root;
 	}
-	
+
 	Handler handlerContent = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -71,7 +71,8 @@ public class ExhibitionFragment extends Fragment {
 			try {
 				JSONObject joObject = new JSONObject(result);
 				String intro_content = joObject.getString("intro_content");
-				String logistics_content = joObject.getString("logistics_content");
+				String logistics_content = joObject
+						.getString("logistics_content");
 				String group_content = joObject.getString("group_content");
 				String agenda_content = joObject.getString("agenda_content");
 				String layout_content = joObject.getString("layout_content");
@@ -81,6 +82,7 @@ public class ExhibitionFragment extends Fragment {
 				editorData.putString("group_content", group_content);
 				editorData.putString("agenda_content", agenda_content);
 				editorData.putString("layout_content", layout_content);
+				editorData.putBoolean("is_loaded", true);
 				editorData.commit();
 				initTitleBar();
 				initViewPager();
@@ -96,9 +98,14 @@ public class ExhibitionFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
-		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
-				handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
-		hgjmt.start();
+		if (spData.getBoolean("is_loaded", false)) {
+			initTitleBar();
+			initViewPager();
+		} else {
+			HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
+					handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
+			hgjmt.start();
+		}
 	}
 
 	private void initTitleBar() {

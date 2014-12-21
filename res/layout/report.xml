@@ -10,5 +10,5 @@
 	    android:layout_height="wrap_content"
 	    android:divider="#c0c0c0"
 	    android:dividerHeight="0.5dp"
-	    android:scrollbars="none" />"
+	    android:scrollbars="none" />
 </LinearLayout>
