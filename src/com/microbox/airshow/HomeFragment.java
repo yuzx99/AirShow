@@ -1,6 +1,9 @@
 package com.microbox.airshow;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,9 +118,52 @@ public class HomeFragment extends Fragment {
 			}
 		});
 
-		TextView notice = (TextView) getView().findViewById(R.id.noticeBoard);
-		notice.setText("距中国XX航空展开幕还有14天");
+		new HttpGetJsonModelThread(remindHandler,
+				ApiUrlConfig.URL_GET_SIMPLE_CONF).start();
 	}
+
+	private final Handler remindHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			if (result != null) {
+				try {
+					JSONObject obj = new JSONObject(result);
+					String temp = obj.getString("started_time");
+					String startTime = temp.replace("T", " ");
+					System.out.println(startTime);
+					String conf = obj.getString("title");
+					SimpleDateFormat sdf = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss");
+					TextView notice = (TextView) getView().findViewById(
+							R.id.noticeBoard);
+					try {
+						Date startDate = sdf.parse(startTime);
+						Date curDate = new Date(System.currentTimeMillis());
+						long days = (startDate.getTime() - curDate.getTime())
+								/ (24 * 60 * 60 * 1000);
+						System.out.println(startDate);
+						if (days > 0) {
+							notice.setText("距" + conf + "开幕还有"
+									+ String.valueOf(days) + "天");
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+	};
 
 	public static interface HomeCallbacks {
 		public void openDrawer();
@@ -278,7 +324,7 @@ public class HomeFragment extends Fragment {
 			this.imageList = list;
 			BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 			views = new ArrayList<View>();
-			for (int i = 0 ;i<imageList.size();i++) {
+			for (int i = 0; i < imageList.size(); i++) {
 
 				ImageView image = new ImageView(getActivity());
 				bitmapUtils.display(image, imageList.get(i).getImageUrl());
@@ -311,7 +357,7 @@ public class HomeFragment extends Fragment {
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					if(newsId!=null){
+					if (newsId != null) {
 						Intent intent = new Intent(getActivity(),
 								InfoDetailActivity.class);
 						Bundle bundle = new Bundle();
