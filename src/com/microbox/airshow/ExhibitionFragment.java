@@ -3,18 +3,27 @@ package com.microbox.airshow;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.microbox.airshow.HomeFragment.HomeCallbacks;
+import com.microbox.config.ApiUrlConfig;
 import com.microbox.exhibition.AgendaFragment;
 import com.microbox.exhibition.ExhibitionLayoutFragment;
 import com.microbox.exhibition.IntroductionFragment;
 import com.microbox.exhibition.ReportFragment;
 import com.microbox.exhibition.SponsorFragment;
 import com.microbox.exhibition.TransportationFragment;
+import com.microbox.model.HttpGetJsonModelThread;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,9 +31,12 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.text.AndroidCharacter;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +46,7 @@ public class ExhibitionFragment extends Fragment {
 	private ExhiCallbacks mCallbacks;
 	private List<Fragment> fragmentList;
 	private List<String> titleList;
+	private SharedPreferences spData;
 
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
@@ -48,12 +61,44 @@ public class ExhibitionFragment extends Fragment {
 				null);
 		return root;
 	}
+	
+	Handler handlerContent = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			try {
+				JSONObject joObject = new JSONObject(result);
+				String intro_content = joObject.getString("intro_content");
+				String logistics_content = joObject.getString("logistics_content");
+				String group_content = joObject.getString("group_content");
+				String agenda_content = joObject.getString("agenda_content");
+				String layout_content = joObject.getString("layout_content");
+				Editor editorData = spData.edit();
+				editorData.putString("intro_content", intro_content);
+				editorData.putString("logistics_content", logistics_content);
+				editorData.putString("group_content", group_content);
+				editorData.putString("agenda_content", agenda_content);
+				editorData.putString("layout_content", layout_content);
+				editorData.commit();
+				initTitleBar();
+				initViewPager();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	};
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initTitleBar();
-		initViewPager();
+		spData = getActivity().getSharedPreferences("data",
+				Context.MODE_PRIVATE);
+		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
+				handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
+		hgjmt.start();
 	}
 
 	private void initTitleBar() {
