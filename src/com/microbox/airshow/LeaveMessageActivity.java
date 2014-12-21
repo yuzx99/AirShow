@@ -52,6 +52,9 @@ public class LeaveMessageActivity extends Activity {
 			if (result != null) {
 				Toast.makeText(LeaveMessageActivity.this, "提交成功",
 						Toast.LENGTH_SHORT).show();
+				Intent resultIntent= new Intent();
+				resultIntent.putExtra("leave_message", true);
+				setResult(RESULT_OK, resultIntent);
 				finish();
 			} else {
 				Toast.makeText(LeaveMessageActivity.this, "提交留言失败",

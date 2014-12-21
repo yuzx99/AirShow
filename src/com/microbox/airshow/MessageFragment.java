@@ -54,6 +54,7 @@ public class MessageFragment extends Fragment {
 
 	private MsgCallbacks mCallbacks;
 
+	private final static int LEAVE_MESSAGE = 100;
 	public static Fragment newInstance(Context context) {
 		MessageFragment f = new MessageFragment();
 
@@ -116,9 +117,23 @@ public class MessageFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
-				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
-		gmmt.start();
+		
+	}
+
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == LEAVE_MESSAGE && resultCode == getActivity().RESULT_OK){
+			Boolean leavedMsg = data.getExtras().getBoolean("leave_message");
+			if(leavedMsg){
+				HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
+						handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
+				gmmt.start();
+			}
+		}
+		
 	}
 
 	private void initLeaveMessage() {
@@ -135,7 +150,7 @@ public class MessageFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(),
 						LeaveMessageActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, LEAVE_MESSAGE);
 			}
 		});
 		
