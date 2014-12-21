@@ -9,17 +9,11 @@
         android:layout_height="match_parent"
         android:scrollbars="none" >
 
-        <LinearLayout
+        <WebView
+            android:id="@+id/transMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/transMap"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/location" />
-        </LinearLayout>
+            android:layout_marginTop="20dp" />
     </ScrollView>
 
 </LinearLayout>

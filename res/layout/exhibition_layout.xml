@@ -9,17 +9,11 @@
         android:layout_height="match_parent"
         android:scrollbars="none" >
 
-        <LinearLayout
+        <WebView
+            android:id="@+id/exhibition_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/exhiLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/place" />
-        </LinearLayout>
+            android:layout_marginTop="20dp" />
     </ScrollView>
 
 </LinearLayout>

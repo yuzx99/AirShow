@@ -4,16 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <WebView
+        android:id="@+id/sponsor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/sponsor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sponsor" />
-    </LinearLayout>
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>
