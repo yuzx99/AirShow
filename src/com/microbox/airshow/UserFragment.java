@@ -120,7 +120,7 @@ public class UserFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if (resultCode == getActivity().RESULT_OK
+		if (resultCode == Activity.RESULT_OK
 				&& requestCode == EDIT_PROFILE) {
 			Boolean isEdit = data.getExtras().getBoolean("profile_modified");
 			String newname = data.getExtras().getString("new_name");

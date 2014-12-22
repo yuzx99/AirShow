@@ -4,15 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ScrollView
+    <WebView
+        android:id="@+id/exhibition_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none" >
-
-        <WebView
-            android:id="@+id/exhibition_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

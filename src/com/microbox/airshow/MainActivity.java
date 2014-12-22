@@ -62,12 +62,12 @@ public class MainActivity extends ActionBarActivity implements
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
-	// private UserFragment mUserFragment;
-	// private HomeFragment mHomeFragment;
-	// private InfoFragment mInfoFragment;
-	// private ExhibitionFragment mExhibitionFragment;
-	// private MessageFragment mMessageFragment;
-	// private AboutusFragment mAboutusFragment;
+	private UserFragment mUserFragment;
+	private HomeFragment mHomeFragment;
+	private InfoFragment mInfoFragment;
+	private ExhibitionFragment mExhibitionFragment;
+	private MessageFragment mMessageFragment;
+	private AboutusFragment mAboutusFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,54 +98,56 @@ public class MainActivity extends ActionBarActivity implements
 
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction tx = fm.beginTransaction();
-		// switch (position) {
-		// case 0:
-		// if (mUserFragment == null) {
-		// mUserFragment = (UserFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mUserFragment);
-		// break;
-		// case 1:
-		// if (mHomeFragment == null) {
-		// mHomeFragment = (HomeFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mHomeFragment);
-		// break;
-		// case 2:
-		// if (mInfoFragment == null) {
-		// mInfoFragment = (InfoFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mInfoFragment);
-		// break;
-		// case 3:
-		// if (mExhibitionFragment == null) {
-		// mExhibitionFragment = (ExhibitionFragment) Fragment
-		// .instantiate(MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mExhibitionFragment);
-		// break;
-		// case 4:
-		// if (mMessageFragment == null) {
-		// mMessageFragment = (MessageFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mMessageFragment);
-		// break;
-		// case 5:
-		// if (mAboutusFragment == null) {
-		// mAboutusFragment = (AboutusFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mAboutusFragment);
-		// break;
-		// default:
-		// break;
-		// }
-		tx.replace(R.id.container,
-				Fragment.instantiate(MainActivity.this, fragments[position]));
+		switch (position) {
+		case 0:
+			if (mUserFragment == null) {
+				mUserFragment = (UserFragment) Fragment.instantiate(
+						MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mUserFragment);
+			break;
+		case 1:
+			if (mHomeFragment == null) {
+				mHomeFragment = (HomeFragment) Fragment.instantiate(
+						MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mHomeFragment);
+			break;
+		case 2:
+			if (mInfoFragment == null) {
+				mInfoFragment = (InfoFragment) Fragment.instantiate(
+						MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mInfoFragment);
+			break;
+		case 3:
+			if (mExhibitionFragment == null) {
+//				mExhibitionFragment = (ExhibitionFragment) ExhibitionFragment
+//						.newInstance(MainActivity.this);
+				 mExhibitionFragment = (ExhibitionFragment) Fragment
+				 .instantiate(MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mExhibitionFragment);
+			break;
+		case 4:
+			if (mMessageFragment == null) {
+				mMessageFragment = (MessageFragment) Fragment.instantiate(
+						MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mMessageFragment);
+			break;
+		case 5:
+			if (mAboutusFragment == null) {
+				mAboutusFragment = (AboutusFragment) Fragment.instantiate(
+						MainActivity.this, fragments[position]);
+			}
+			tx.replace(R.id.container, mAboutusFragment);
+			break;
+		default:
+			break;
+		}
+		// tx.replace(R.id.container,
+		// Fragment.instantiate(MainActivity.this, fragments[position]));
 		tx.commit();
 		onSectionAttached(position);
 

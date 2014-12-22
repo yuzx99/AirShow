@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment {
 							notice.setText("距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天");
 						}
-						//setRepeatingAlarm();
+						setRepeatingAlarm();
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

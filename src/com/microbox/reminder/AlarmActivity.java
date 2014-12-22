@@ -38,6 +38,7 @@ public class AlarmActivity extends Activity {
 						0, intent, 0);
 				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 				alarmManager.cancel(alarmIntent);
+				AlarmActivity.this.finish();
 			}
 		})
 		.setPositiveButton("确定", new DialogInterface.OnClickListener() {

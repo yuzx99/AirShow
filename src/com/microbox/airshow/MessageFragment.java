@@ -125,7 +125,7 @@ public class MessageFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == LEAVE_MESSAGE && resultCode == getActivity().RESULT_OK){
+		if(requestCode == LEAVE_MESSAGE && resultCode == Activity.RESULT_OK){
 			Boolean leavedMsg = data.getExtras().getBoolean("leave_message");
 			if(leavedMsg){
 				HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
