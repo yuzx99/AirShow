@@ -27,6 +27,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.text.AndroidCharacter;
@@ -48,6 +49,8 @@ public class ExhibitionFragment extends Fragment {
 	private List<String> titleList;
 	private SharedPreferences spData;
 
+	SectionPagerAdapter pagerAdapter;
+	
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
 
@@ -160,11 +163,12 @@ public class ExhibitionFragment extends Fragment {
 		for (int i = 0; i < titles.length; i++) {
 			titleList.add(titles[i]);
 		}
-		vp.setAdapter(new SectionPagerAdapter(getFragmentManager(),
-				fragmentList, titleList));
+		pagerAdapter = new SectionPagerAdapter(getFragmentManager(),
+				fragmentList, titleList);
+		vp.setAdapter(pagerAdapter);
 	}
 
-	public class SectionPagerAdapter extends FragmentPagerAdapter {
+	public class SectionPagerAdapter extends FragmentStatePagerAdapter {
 
 		private List<Fragment> fragments;
 		private List<String> titles;
@@ -195,5 +199,6 @@ public class ExhibitionFragment extends Fragment {
 
 			return (titles.size() > position) ? titles.get(position) : "";
 		}
+
 	}
 }

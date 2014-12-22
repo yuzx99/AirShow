@@ -8,6 +8,8 @@ import com.microbox.model.HttpGetJsonModelThread;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -115,9 +117,9 @@ public class InfoDetailActivity extends Activity {
 					webView.getSettings().setLayoutAlgorithm(
 							LayoutAlgorithm.SINGLE_COLUMN);
 					webView.getSettings().setDefaultTextEncodingName("UTF-8");
-//					webView.getSettings().setBuiltInZoomControls(false);
+					// webView.getSettings().setBuiltInZoomControls(false);
 					webView.getSettings().setSupportZoom(false);
-					
+
 					webView.getSettings().setBuiltInZoomControls(true);
 					webView.getSettings().setDisplayZoomControls(false);
 					webView.setOnTouchListener(new OnTouchListener() {
@@ -125,10 +127,28 @@ public class InfoDetailActivity extends Activity {
 						@Override
 						public boolean onTouch(View arg0, MotionEvent arg1) {
 							// TODO Auto-generated method stub
-							
+
 							return false;
 						}
 					});
+					// cache
+//					WebSettings webSettings = webView.getSettings();
+//					webSettings.setAppCachePath(getContext()
+//							.getApplicationContext().getCacheDir()
+//							.getAbsolutePath());
+//					webSettings.setAllowFileAccess(true);
+//					webSettings.setAppCacheEnabled(true);
+//					webSettings
+//							.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//					webSettings.setDomStorageEnabled(true);
+//					webSettings.setAppCacheMaxSize(1024 * 1024 * 10);
+//					webSettings.setDatabaseEnabled(true);
+//					webSettings
+//							.setDatabasePath(getContext()
+//									.getApplicationContext()
+//									.getDir("database", Context.MODE_PRIVATE)
+//									.getPath());
+					
 					// webView.getSettings().setUseWideViewPort(true);
 					// webSettings.setLoadWithOverviewMode(true);
 					// webView.setOnTouchListener(new View.OnTouchListener() {
@@ -164,6 +184,11 @@ public class InfoDetailActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		finish();
+	}
+
+	protected ContextWrapper getContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
