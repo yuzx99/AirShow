@@ -33,5 +33,10 @@
     <string name="text_not_found">Text not found</string>
     <string name="searching_">Searching...</string>
     <string name="link_control">Link highlighting and enabling</string>
+    <string name="company_name">上海广尧商务咨询有限公司</string>
+    <string name="company_introduce">上海广尧商务咨询有限公司，作为中国航空学会国际航空产业会议的独家合作伙伴以及中国商飞《大飞机》杂志社的独家战略伙伴，是目前国内唯一一家全方位提供航空产业咨询与服务的公司。</string>
+    <string name="contact">联系人：Adeson XING</string>
+    <string name="tel">电话：+862151559030</string>
+    <string name="email">邮箱：adesonx@galleon.cc</string>
 
 </resources>
