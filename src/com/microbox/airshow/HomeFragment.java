@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment {
 	private HomeCallbacks mCallbacks;
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
+
 	public static Fragment newInstance(Context context) {
 		HomeFragment f = new HomeFragment();
 
@@ -149,14 +150,15 @@ public class HomeFragment extends Fragment {
 					try {
 						Date startDate = sdf.parse(startTime);
 						Date curDate = new Date(System.currentTimeMillis());
-						long days = (startDate.getTime() - curDate.getTime())
-								/ (24 * 60 * 60 * 1000);
+						// 24*60*60*1000 = 86400000
+						long days = startDate.getTime() / 86400000
+								- curDate.getTime() / 86400000;
 						System.out.println(startDate);
 						if (days > 0) {
 							notice.setText("距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天");
 						}
-//						setRepeatingAlarm();
+						// setRepeatingAlarm();
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -533,7 +535,7 @@ public class HomeFragment extends Fragment {
 		// alarmIntent);
 		alarmManager.setRepeating(alarmType, SystemClock.elapsedRealtime(),
 				10 * 1000, alarmIntent);
-	//	alarmManager.cancel(alarmIntent);
+		// alarmManager.cancel(alarmIntent);
 	}
 
 	// private final Handler cateHandler = new Handler() {
