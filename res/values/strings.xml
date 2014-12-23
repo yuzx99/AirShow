@@ -39,4 +39,11 @@
     <string name="tel">电话：+862151559030</string>
     <string name="email">邮箱：adesonx@galleon.cc</string>
 
+    <string name="title_exhi_intro">会展介绍</string>
+    <string name="title_exhi_trans">交通住宿</string>
+    <string name="title_exhi_agenda">会议日程</string>
+    <string name="title_exhi_sponsor">组委会</string>
+    <string name="title_exhi_layout">会展布局</string>
+    <string name="title_exhi_report">历届会议报告</string>
+    
 </resources>

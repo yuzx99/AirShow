@@ -17,43 +17,41 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class AgendaActivity extends Activity {
+public class TransportationActivity extends Activity {
 
 	private WebView wbContent;
 	private SharedPreferences spData;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.agenda);
+		setContentView(R.layout.transportation);
 		initTitleBar();
 		initWebView();
 	}
-	
-	private void initTitleBar(){
-		RelativeLayout back = (RelativeLayout)findViewById(R.id.pageBack);
+
+	private void initTitleBar() {
+		RelativeLayout back = (RelativeLayout) findViewById(R.id.pageBack);
 		back.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				finish();
 			}
 		});
-		
-		TextView title = (TextView)findViewById(R.id.pageTitle);
-		title.setText(getResources().getString(R.string.title_exhi_agenda));
+
+		TextView title = (TextView) findViewById(R.id.pageTitle);
+		title.setText(getResources().getString(R.string.title_exhi_trans));
 	}
- 
 
 	private void initWebView() {
 		// TODO Auto-generated method stub
-		wbContent = (WebView) findViewById(R.id.agenda);
-		spData = getSharedPreferences("data",
-				Context.MODE_PRIVATE);
-		String content = spData.getString("agenda_content", "");
+		wbContent = (WebView) findViewById(R.id.transMap);
+		spData = getSharedPreferences("data", Context.MODE_PRIVATE);
+		String content = spData.getString("logistics_content", "");
 		wbContent
 				.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 		wbContent.setVerticalScrollBarEnabled(false);
@@ -72,6 +70,7 @@ public class AgendaActivity extends Activity {
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
+
 				return false;
 			}
 		});

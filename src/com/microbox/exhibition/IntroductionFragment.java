@@ -88,7 +88,7 @@ public class IntroductionFragment extends Fragment {
 
 	private void initWebView() {
 		// TODO Auto-generated method stub
-		wbContent = (WebView) getView().findViewById(R.id.exhi_info);
+		wbContent = (WebView) getView().findViewById(R.id.exhi_intro);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
 		String content = spData.getString("intro_content", "");

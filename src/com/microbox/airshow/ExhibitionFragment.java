@@ -8,17 +8,24 @@ import org.json.JSONObject;
 
 import com.microbox.airshow.HomeFragment.HomeCallbacks;
 import com.microbox.config.ApiUrlConfig;
+import com.microbox.exhibition.AgendaActivity;
 import com.microbox.exhibition.AgendaFragment;
+import com.microbox.exhibition.ExhibitionLayoutActivity;
 import com.microbox.exhibition.ExhibitionLayoutFragment;
+import com.microbox.exhibition.IntroductionActivity;
 import com.microbox.exhibition.IntroductionFragment;
+import com.microbox.exhibition.ReportActivity;
 import com.microbox.exhibition.ReportFragment;
+import com.microbox.exhibition.SponsorActivity;
 import com.microbox.exhibition.SponsorFragment;
+import com.microbox.exhibition.TransportationActivity;
 import com.microbox.exhibition.TransportationFragment;
 import com.microbox.model.HttpGetJsonModelThread;
 import com.mircobox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -41,6 +48,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ExhibitionFragment extends Fragment {
 
@@ -49,8 +57,8 @@ public class ExhibitionFragment extends Fragment {
 	private List<String> titleList;
 	private SharedPreferences spData;
 
-	SectionPagerAdapter pagerAdapter;
-	
+
+
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
 
@@ -60,9 +68,25 @@ public class ExhibitionFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_exhi,
-				null);
+		ViewGroup root = (ViewGroup) inflater.inflate(
+				R.layout.fragment_exhibition, null);
 		return root;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		spData = getActivity().getSharedPreferences("data",
+				Context.MODE_PRIVATE);
+		if (spData.getBoolean("is_loaded", false)) {
+			initTitleBar();
+			initViewCompoent();
+			// initViewPager();
+		} else {
+			HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
+					handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
+			hgjmt.start();
+		}
 	}
 
 	Handler handlerContent = new Handler() {
@@ -88,28 +112,14 @@ public class ExhibitionFragment extends Fragment {
 				editorData.putBoolean("is_loaded", true);
 				editorData.commit();
 				initTitleBar();
-				initViewPager();
+				initViewCompoent();
+				// initViewPager();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	};
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		spData = getActivity().getSharedPreferences("data",
-				Context.MODE_PRIVATE);
-		if (spData.getBoolean("is_loaded", false)) {
-			initTitleBar();
-			initViewPager();
-		} else {
-			HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
-					handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
-			hgjmt.start();
-		}
-	}
 
 	private void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
@@ -126,6 +136,109 @@ public class ExhibitionFragment extends Fragment {
 		});
 	}
 
+	private void initViewCompoent() {
+		ImageView exhiIntro = (ImageView) getView()
+				.findViewById(R.id.exhiIntro);
+		exhiIntro.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						IntroductionActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiIntro.setOnTouchListener(new PicOnTouchListener());
+		
+		ImageView exhiTrans = (ImageView) getView()
+				.findViewById(R.id.exhiTrans);
+		exhiTrans.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						TransportationActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiTrans.setOnTouchListener(new PicOnTouchListener());
+		
+		ImageView exhiSponsor = (ImageView) getView().findViewById(
+				R.id.exhiSponsor);
+		exhiSponsor.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(), SponsorActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiSponsor.setOnTouchListener(new PicOnTouchListener());
+		
+		ImageView exhiAgenda = (ImageView) getView().findViewById(
+				R.id.exhiAgenda);
+		exhiAgenda.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(), AgendaActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiAgenda.setOnTouchListener(new PicOnTouchListener());
+		
+		ImageView exhiLayout = (ImageView) getView().findViewById(
+				R.id.exhiLayout);
+		exhiLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						ExhibitionLayoutActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiLayout.setOnTouchListener(new PicOnTouchListener());
+		
+		ImageView exhiReport = (ImageView) getView().findViewById(
+				R.id.exhiReport);
+		exhiReport.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(), ReportActivity.class);
+				startActivity(intent);
+			}
+		});
+		exhiReport.setOnTouchListener(new PicOnTouchListener());
+	}
+
+	public class PicOnTouchListener implements OnTouchListener{
+
+		@Override
+		public boolean onTouch(View arg0, MotionEvent arg1) {
+			// TODO Auto-generated method stub
+			switch (arg1.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				arg0.setAlpha(0.6f);
+				break;
+			case MotionEvent.ACTION_UP:
+				arg0.setAlpha(1f);
+				break;
+			default:
+				break;
+			}
+			return false;
+		}
+		
+	}
+	
 	public static interface ExhiCallbacks {
 		public void openDrawerExhi();
 	}
@@ -163,7 +276,7 @@ public class ExhibitionFragment extends Fragment {
 		for (int i = 0; i < titles.length; i++) {
 			titleList.add(titles[i]);
 		}
-		pagerAdapter = new SectionPagerAdapter(getFragmentManager(),
+		SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(),
 				fragmentList, titleList);
 		vp.setAdapter(pagerAdapter);
 	}

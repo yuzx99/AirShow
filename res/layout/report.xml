@@ -3,12 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-	<ListView 
-	    android:id="@+id/reportList"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:divider="#c0c0c0"
-	    android:dividerHeight="0.5dp"
-	    android:scrollbars="none" />
+
+    <include layout="@layout/titlebar" />
+
+    <ListView
+        android:id="@+id/reportList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#c0c0c0"
+        android:dividerHeight="0.5dp"
+        android:scrollbars="none" />
+
 </LinearLayout>
