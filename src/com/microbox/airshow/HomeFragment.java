@@ -32,7 +32,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.AvoidXfermode.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,6 +85,7 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard2 = null;
 	private TextView noticeBoard3 = null;
 
+	private SharedPreferences spConfigure;
 	private HomeCallbacks mCallbacks;
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
@@ -104,6 +107,7 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		spConfigure = getActivity().getSharedPreferences("AIRSHOW_CONFIGURE",Context.MODE_PRIVATE);
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -158,7 +162,8 @@ public class HomeFragment extends Fragment {
 							notice.setText("距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天");
 						}
-						// setRepeatingAlarm();
+						
+//						 setRepeatingAlarm();
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
