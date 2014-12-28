@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.LoginModelThread;
+import com.microbox.util.ConnectionDetector;
 import com.mircobox.airshow.R;
 
 public class SplashActivity extends Activity {
@@ -44,6 +45,12 @@ public class SplashActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setFullScreen();
 		setContentView(R.layout.splash);
+		ConnectionDetector cd = new ConnectionDetector(this);
+		if (!cd.isConnectingToInternet()) {
+			Toast.makeText(this,
+					getResources().getString(R.string.not_connection),
+					Toast.LENGTH_SHORT).show();
+		}
 		// 记录登录信息
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);

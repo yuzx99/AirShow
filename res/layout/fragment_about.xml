@@ -14,13 +14,15 @@
         android:layout_marginTop="14dp"
         android:text="@string/company_name"
         android:textColor="#ffffff"
+        android:alpha="0.8"
         android:textSize="25sp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:alpha="153"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.6"
         android:text="@string/company_introduce"
         android:textColor="#ffffff"
         android:textSize="18sp" />
@@ -36,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:alpha="60"
+        android:alpha="0.5"
         android:text="@string/contact"
         android:textColor="#ffffff"
         android:textSize="18sp" />
@@ -46,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:alpha="30"
+        android:alpha="0.5"
         android:text="@string/tel"
         android:textColor="#ffffff"
         android:textSize="20sp" />
@@ -56,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:alpha="30"
+        android:alpha="0.5"
         android:text="@string/email"
         android:textColor="#ffffff"
         android:textSize="20sp" />
