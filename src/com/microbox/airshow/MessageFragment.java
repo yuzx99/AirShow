@@ -1,6 +1,7 @@
 package com.microbox.airshow;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -175,18 +176,29 @@ public class MessageFragment extends Fragment {
 						String publisher = temp.getString("publisher");
 						JSONObject user = temp.getJSONObject("user");
 						String header_small = user.getString("header_small");
-						long created_time = temp.getLong("created_time");
+						//long created_time = temp.getLong("created_time");
+						String createdTime = temp.getString("created_time").replace("T", " ");						
 						SimpleDateFormat sdf = new SimpleDateFormat(
 								"MM/dd HH:mm");
-						Date date = new Date(created_time);
-						String wtoy = MBDateUtils.whetherTodayOrYesterday(date);
-						String dateItem;
-						if (wtoy != null) {
-							dateItem = wtoy + " "
-									+ sdf.format(date).split(" ")[1];
-						} else {
-							dateItem = sdf.format(date);
+						SimpleDateFormat dateFormate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						//Date date = new Date(created_time);
+						String dateItem=null;
+						try {
+							Date dateFormat = dateFormate.parse(createdTime);
+							Date date = new Date(dateFormat.getTime());
+							String wtoy = MBDateUtils.whetherTodayOrYesterday(date);
+							
+							if (wtoy != null) {
+								dateItem = wtoy + " "
+										+ sdf.format(date).split(" ")[1];
+							} else {
+								dateItem = sdf.format(date);
+							}
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+						
 						MessageListInfo mli = new MessageListInfo(content,
 								publisher, header_small, dateItem);
 						info.add(mli);
