@@ -18,6 +18,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -58,6 +61,16 @@ public class SplashActivity extends Activity {
 		llbg = (LinearLayout) findViewById(R.id.splash);
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
 		bitmapUtils.display(llbg, ApiUrlConfig.URL_ADVERTISING_IMAGE);
+		llbg.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				// TODO Auto-generated method stub
+				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT).show();
+				// openNextpage();
+				return false;
+			}
+		});
 		startTimer();
 	}
 

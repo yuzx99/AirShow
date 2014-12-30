@@ -241,7 +241,15 @@ public class ProfileActivity extends Activity {
 				} else {
 					if (nameUpdate.equals(name)
 							&& nikeNameUpdate.equals(nickName)) {
-						finish();
+						if (spUserInfo.getBoolean("ISMODIFIED", false)) {
+							finish();
+						} else {
+							spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+							Intent intent = new Intent(ProfileActivity.this,
+									MainActivity.class);
+							startActivity(intent);
+							finish();
+						}
 					} else {
 						UpdateProfileMolelThread upft = new UpdateProfileMolelThread(
 								nameUpdate, nikeNameUpdate, id, token,

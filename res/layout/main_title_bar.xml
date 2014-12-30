@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="距中国XX航空展开幕还有14天"
+            android:text="标题"
             android:textSize="17sp"
             android:alpha="0.85"
             android:textColor="@android:color/white" />
