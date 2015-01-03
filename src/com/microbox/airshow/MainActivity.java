@@ -62,12 +62,12 @@ public class MainActivity extends ActionBarActivity implements
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
-//	private UserFragment mUserFragment;
-//	private HomeFragment mHomeFragment;
-//	private InfoFragment mInfoFragment;
-//	private ExhibitionFragment mExhibitionFragment;
-//	private MessageFragment mMessageFragment;
-//	private AboutusFragment mAboutusFragment;
+	// private UserFragment mUserFragment;
+	// private HomeFragment mHomeFragment;
+	// private InfoFragment mInfoFragment;
+	// private ExhibitionFragment mExhibitionFragment;
+	// private MessageFragment mMessageFragment;
+	// private AboutusFragment mAboutusFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,7 @@ public class MainActivity extends ActionBarActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		getActionBar().hide();
+
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
 		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
 		String nickName = spData.getString("NICKNAME", "");
@@ -146,10 +147,34 @@ public class MainActivity extends ActionBarActivity implements
 		// default:
 		// break;
 		// }
-		tx.replace(R.id.container,
-				Fragment.instantiate(MainActivity.this, fragments[position]));
-		tx.commit();
-		onSectionAttached(position);
+
+		// tx.replace(R.id.container, Fragment.instantiate(MainActivity.this,
+		// fragments[position]));
+		// tx.commit();
+		// onSectionAttached(position);
+
+		if (hasAccessRight()) {
+			tx.replace(R.id.container, Fragment.instantiate(MainActivity.this,
+					fragments[position]));
+			tx.commit();
+			onSectionAttached(position);
+		} else {
+			switch (position) {
+			case 0:
+			case 4:
+				Toast.makeText(
+						MainActivity.this,
+						getResources().getString(R.string.have_no_access_right),
+						Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				tx.replace(R.id.container, Fragment.instantiate(
+						MainActivity.this, fragments[position]));
+				tx.commit();
+				onSectionAttached(position);
+				break;
+			}
+		}
 
 	}
 
@@ -178,6 +203,16 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setTitle(mTitle);
+	}
+
+	private boolean hasAccessRight() {
+		boolean authorized = true;
+		SharedPreferences spConfigure = this.getSharedPreferences("configure",
+				Context.MODE_PRIVATE);
+		if (spConfigure.getBoolean("ISVISITOR", false)) {
+			authorized = false;
+		}
+		return authorized;
 	}
 
 	// set menu disabled

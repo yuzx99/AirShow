@@ -26,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -39,7 +40,8 @@ public class LoginActivity extends Activity {
 	private Button btnLogin;
 	private SharedPreferences spUserInfo;
 	private SharedPreferences spData;
-
+	private SharedPreferences spConfigure;
+	
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
@@ -56,7 +58,8 @@ public class LoginActivity extends Activity {
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-
+		spConfigure = this.getSharedPreferences("configure", Context.MODE_PRIVATE);
+		
 		etUserID = (EditText) findViewById(R.id.etUserID);
 		etPassword = (EditText) findViewById(R.id.etPassword);
 
@@ -115,6 +118,22 @@ public class LoginActivity extends Activity {
 				login(userId, password);
 			}
 		});
+
+		TextView visitor = (TextView) findViewById(R.id.visitorLogin);
+		visitor.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Toast.makeText(LoginActivity.this,
+						getResources().getString(R.string.login_as_visitor),
+						Toast.LENGTH_SHORT).show();
+				spConfigure.edit().putBoolean("ISVISITOR", true).commit();
+				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
 	}
 
 	// 登录后跳转
@@ -133,6 +152,7 @@ public class LoginActivity extends Activity {
 				editorUserInfo.putString("USER_ID", userId);
 				editorUserInfo.putString("PASSWORD", password);
 				editorUserInfo.commit();
+				spConfigure.edit().putBoolean("ISVISITOR", false).commit();
 				try {
 					Editor editorData = spData.edit();
 					JSONObject jObject = new JSONObject(result);

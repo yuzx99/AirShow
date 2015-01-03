@@ -56,8 +56,7 @@ public class ExhibitionFragment extends Fragment {
 	private List<Fragment> fragmentList;
 	private List<String> titleList;
 	private SharedPreferences spData;
-
-
+	private SharedPreferences spConfigure;
 
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
@@ -77,6 +76,8 @@ public class ExhibitionFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		spData = getActivity().getSharedPreferences("data",
+				Context.MODE_PRIVATE);
+		spConfigure = getActivity().getSharedPreferences("configure",
 				Context.MODE_PRIVATE);
 		if (spData.getBoolean("is_loaded", false)) {
 			initTitleBar();
@@ -150,7 +151,7 @@ public class ExhibitionFragment extends Fragment {
 			}
 		});
 		exhiIntro.setOnTouchListener(new PicOnTouchListener());
-		
+
 		ImageView exhiTrans = (ImageView) getView()
 				.findViewById(R.id.exhiTrans);
 		exhiTrans.setOnClickListener(new OnClickListener() {
@@ -164,7 +165,7 @@ public class ExhibitionFragment extends Fragment {
 			}
 		});
 		exhiTrans.setOnTouchListener(new PicOnTouchListener());
-		
+
 		ImageView exhiSponsor = (ImageView) getView().findViewById(
 				R.id.exhiSponsor);
 		exhiSponsor.setOnClickListener(new OnClickListener() {
@@ -177,7 +178,7 @@ public class ExhibitionFragment extends Fragment {
 			}
 		});
 		exhiSponsor.setOnTouchListener(new PicOnTouchListener());
-		
+
 		ImageView exhiAgenda = (ImageView) getView().findViewById(
 				R.id.exhiAgenda);
 		exhiAgenda.setOnClickListener(new OnClickListener() {
@@ -185,12 +186,22 @@ public class ExhibitionFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(), AgendaActivity.class);
-				startActivity(intent);
+				if (hasAccessRight()) {
+					Intent intent = new Intent(getActivity(),
+							AgendaActivity.class);
+					startActivity(intent);
+				} else {
+					Toast.makeText(
+							getActivity(),
+							getResources().getString(
+									R.string.have_no_access_right),
+							Toast.LENGTH_SHORT).show();
+				}
+
 			}
 		});
 		exhiAgenda.setOnTouchListener(new PicOnTouchListener());
-		
+
 		ImageView exhiLayout = (ImageView) getView().findViewById(
 				R.id.exhiLayout);
 		exhiLayout.setOnClickListener(new OnClickListener() {
@@ -204,7 +215,7 @@ public class ExhibitionFragment extends Fragment {
 			}
 		});
 		exhiLayout.setOnTouchListener(new PicOnTouchListener());
-		
+
 		ImageView exhiReport = (ImageView) getView().findViewById(
 				R.id.exhiReport);
 		exhiReport.setOnClickListener(new OnClickListener() {
@@ -212,14 +223,33 @@ public class ExhibitionFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(), ReportActivity.class);
-				startActivity(intent);
+
+				if (hasAccessRight()) {
+					Intent intent = new Intent(getActivity(),
+							ReportActivity.class);
+					startActivity(intent);
+				} else {
+					Toast.makeText(
+							getActivity(),
+							getResources().getString(
+									R.string.have_no_access_right),
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		exhiReport.setOnTouchListener(new PicOnTouchListener());
 	}
 
-	public class PicOnTouchListener implements OnTouchListener{
+	private boolean hasAccessRight() {
+		boolean authorized = true;
+
+		if (spConfigure.getBoolean("ISVISITOR", false)) {
+			authorized = false;
+		}
+		return authorized;
+	}
+
+	public class PicOnTouchListener implements OnTouchListener {
 
 		@Override
 		public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -236,9 +266,9 @@ public class ExhibitionFragment extends Fragment {
 			}
 			return false;
 		}
-		
+
 	}
-	
+
 	public static interface ExhiCallbacks {
 		public void openDrawerExhi();
 	}
@@ -276,8 +306,8 @@ public class ExhibitionFragment extends Fragment {
 		for (int i = 0; i < titles.length; i++) {
 			titleList.add(titles[i]);
 		}
-		SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(),
-				fragmentList, titleList);
+		SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(
+				getFragmentManager(), fragmentList, titleList);
 		vp.setAdapter(pagerAdapter);
 	}
 

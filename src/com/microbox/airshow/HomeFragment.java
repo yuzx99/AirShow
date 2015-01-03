@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard2 = null;
 	private TextView noticeBoard3 = null;
 
-	private SharedPreferences spConfigure;
+//	private SharedPreferences spConfigure;
 	private HomeCallbacks mCallbacks;
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		spConfigure = getActivity().getSharedPreferences("AIRSHOW_CONFIGURE",Context.MODE_PRIVATE);
+//		spConfigure = getActivity().getSharedPreferences("configure",Context.MODE_PRIVATE);
 		initTitleBar();
 		initViewPager();
 		initInfoList();
