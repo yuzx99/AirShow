@@ -56,6 +56,7 @@ public class MessageFragment extends Fragment {
 	private MsgCallbacks mCallbacks;
 
 	private final static int LEAVE_MESSAGE = 100;
+
 	public static Fragment newInstance(Context context) {
 		MessageFragment f = new MessageFragment();
 
@@ -118,23 +119,22 @@ public class MessageFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
 	}
 
-	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode == LEAVE_MESSAGE && resultCode == Activity.RESULT_OK){
+		if (requestCode == LEAVE_MESSAGE && resultCode == Activity.RESULT_OK) {
 			Boolean leavedMsg = data.getExtras().getBoolean("leave_message");
-			if(leavedMsg){
+			if (leavedMsg) {
 				HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
 						handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
 				gmmt.start();
 			}
 		}
-		
+
 	}
 
 	private void initLeaveMessage() {
@@ -154,7 +154,7 @@ public class MessageFragment extends Fragment {
 				startActivityForResult(intent, LEAVE_MESSAGE);
 			}
 		});
-		
+
 		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
 				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
 		gmmt.start();
@@ -176,18 +176,23 @@ public class MessageFragment extends Fragment {
 						String publisher = temp.getString("publisher");
 						JSONObject user = temp.getJSONObject("user");
 						String header_small = user.getString("header_small");
-						//long created_time = temp.getLong("created_time");
-						String createdTime = temp.getString("created_time").replace("T", " ");						
+						String companyName = user.getString("nickname");
+						publisher = companyName + "-" + publisher;
+						// long created_time = temp.getLong("created_time");
+						String createdTime = temp.getString("created_time")
+								.replace("T", " ");
 						SimpleDateFormat sdf = new SimpleDateFormat(
 								"MM/dd HH:mm");
-						SimpleDateFormat dateFormate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						//Date date = new Date(created_time);
-						String dateItem=null;
+						SimpleDateFormat dateFormate = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm:ss");
+						// Date date = new Date(created_time);
+						String dateItem = null;
 						try {
 							Date dateFormat = dateFormate.parse(createdTime);
 							Date date = new Date(dateFormat.getTime());
-							String wtoy = MBDateUtils.whetherTodayOrYesterday(date);
-							
+							String wtoy = MBDateUtils
+									.whetherTodayOrYesterday(date);
+
 							if (wtoy != null) {
 								dateItem = wtoy + " "
 										+ sdf.format(date).split(" ")[1];
@@ -198,7 +203,7 @@ public class MessageFragment extends Fragment {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
+
 						MessageListInfo mli = new MessageListInfo(content,
 								publisher, header_small, dateItem);
 						info.add(mli);
