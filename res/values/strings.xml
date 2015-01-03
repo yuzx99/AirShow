@@ -47,4 +47,5 @@
     <string name="title_exhi_report">历届会议报告</string>
         
     <string name="not_connection">未连接网络</string>
+    <string name="company_title">公司</string>
 </resources>

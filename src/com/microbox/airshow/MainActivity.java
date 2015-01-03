@@ -85,12 +85,12 @@ public class MainActivity extends ActionBarActivity implements
 		getActionBar().hide();
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
 		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
-		String nickName = spData.getString("NICKNAME", "");
+		String name = spData.getString("NAME", "");
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
 		bitmapUtils.display(iv, urlHeaderSmall);
-		tv.setText(nickName);
+		tv.setText(name);
 	}
 
 	@Override
@@ -301,12 +301,12 @@ public class MainActivity extends ActionBarActivity implements
 		// TODO Auto-generated method stub
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
 		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
-		String nickName = spData.getString("NICKNAME", "");
+		String name = spData.getString("NAME", "");
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
 		bitmapUtils.display(iv, urlHeaderSmall);
-		tv.setText(nickName);
+		tv.setText(name);
 	}
 
 }
