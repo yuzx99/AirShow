@@ -27,6 +27,7 @@ import cn.jpush.android.api.JPushInterface;
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.LoginModelThread;
+import com.microbox.push.ExitApplication;
 import com.microbox.util.ConnectionDetector;
 import com.microbox.airshow.R;
 
@@ -46,6 +47,7 @@ public class SplashActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setFullScreen();
 		setContentView(R.layout.splash);
+		ExitApplication.getInstance().addActivity(this);
 		ConnectionDetector cd = new ConnectionDetector(this);
 		if (!cd.isConnectingToInternet()) {
 			Toast.makeText(this,
@@ -170,8 +172,9 @@ public class SplashActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
-			finish();
-			System.exit(0);
+//			finish();
+//			System.exit(0);
+			ExitApplication.getInstance().exit();
 		}
 	}
 

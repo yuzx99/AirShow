@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import cn.jpush.android.api.JPushInterface;
 
 import com.microbox.model.LoginModelThread;
+import com.microbox.push.ExitApplication;
 import com.microbox.airshow.R;
 
 import android.app.Activity;
@@ -46,6 +47,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.login);
+		ExitApplication.getInstance().addActivity(this);
 		initUI();
 	}
 
@@ -204,8 +206,9 @@ public class LoginActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
-			finish();
-			System.exit(0);
+//			finish();
+//			System.exit(0);
+			ExitApplication.getInstance().exit();
 		}
 	}
 }

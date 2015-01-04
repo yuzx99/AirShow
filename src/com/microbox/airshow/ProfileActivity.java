@@ -25,6 +25,7 @@ import com.microbox.imageservice.ImageService;
 import com.microbox.model.UpdateProfileAllModelThread;
 import com.microbox.model.UpdateProfileMolelThread;
 import com.microbox.model.UpdateUserHeaderModelThread;
+import com.microbox.push.ExitApplication;
 import com.microbox.util.MBFileUtils;
 import com.microbox.airshow.R;
 
@@ -78,6 +79,7 @@ public class ProfileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.profile);
+		ExitApplication.getInstance().addActivity(this);
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
@@ -405,8 +407,9 @@ public class ProfileActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				touchTime = currentTime;
 			} else {
-				finish();
-				System.exit(0);
+//				finish();
+//				System.exit(0);
+				ExitApplication.getInstance().exit();
 			}
 		}
 

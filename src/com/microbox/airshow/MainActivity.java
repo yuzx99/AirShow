@@ -4,6 +4,7 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.airshow.R;
+import com.microbox.push.ExitApplication;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
@@ -63,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		ExitApplication.getInstance().addActivity(this);
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
@@ -240,8 +241,9 @@ public class MainActivity extends ActionBarActivity implements
 			touchTime = currentTime;
 		} else {
 			spData.edit().clear().commit();
-			finish();
-			System.exit(0);
+//			finish();
+//			System.exit(0);
+			ExitApplication.getInstance().exit();
 		}
 	}
 
