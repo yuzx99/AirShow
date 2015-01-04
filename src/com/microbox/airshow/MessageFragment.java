@@ -168,7 +168,11 @@ public class MessageFragment extends Fragment {
 						JSONObject user = temp.getJSONObject("user");
 						String header_small = user.getString("header_small");
 						String companyName = user.getString("nickname");
-						publisher = companyName + "-" + publisher;
+						if (companyName == null || companyName.equals("")) {
+
+						} else {
+							publisher = companyName + "-" + publisher;
+						}
 						// long created_time = temp.getLong("created_time");
 						String createdTime = temp.getString("created_time")
 								.replace("T", " ");
