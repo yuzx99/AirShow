@@ -7,27 +7,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.lidroid.xutils.BitmapUtils;
-import com.microbox.adapter.CategoryListAdapter;
-import com.microbox.adapter.CategoryListItem;
 import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
-import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.GetDataModelThread;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class CategoryDetailActivity extends Activity {
 

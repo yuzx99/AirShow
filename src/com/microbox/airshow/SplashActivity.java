@@ -1,6 +1,5 @@
 package com.microbox.airshow;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,9 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,11 +22,13 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.LoginModelThread;
 import com.microbox.util.ConnectionDetector;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 public class SplashActivity extends Activity {
 
@@ -62,11 +60,12 @@ public class SplashActivity extends Activity {
 		BitmapUtils bitmapUtils = new BitmapUtils(this);
 		bitmapUtils.display(llbg, ApiUrlConfig.URL_ADVERTISING_IMAGE);
 		llbg.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT)
+						.show();
 				// openNextpage();
 				return false;
 			}
@@ -175,4 +174,19 @@ public class SplashActivity extends Activity {
 			System.exit(0);
 		}
 	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		JPushInterface.onPause(this);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		JPushInterface.onResume(this);
+	}
+
 }

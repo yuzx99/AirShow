@@ -1,11 +1,9 @@
 package com.microbox.airshow;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,10 +12,8 @@ import com.lidroid.xutils.BitmapUtils;
 import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
 import com.microbox.model.HttpGetJsonModelThread;
-import com.microbox.airshow.HomeFragment.HomeCallbacks;
 import com.microbox.config.ApiUrlConfig;
-import com.microbox.util.Utility;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,10 +28,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 

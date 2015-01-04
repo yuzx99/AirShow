@@ -1,15 +1,12 @@
 package com.microbox.airshow;
 
-import java.io.IOException;
-
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.microbox.config.ApiUrlConfig;
+import cn.jpush.android.api.JPushInterface;
+
 import com.microbox.model.LoginModelThread;
-import com.microbox.util.MBHttpUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +18,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
@@ -41,7 +37,7 @@ public class LoginActivity extends Activity {
 	private SharedPreferences spUserInfo;
 	private SharedPreferences spData;
 	private SharedPreferences spConfigure;
-	
+
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
@@ -58,8 +54,9 @@ public class LoginActivity extends Activity {
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		spConfigure = this.getSharedPreferences("configure", Context.MODE_PRIVATE);
-		
+		spConfigure = this.getSharedPreferences("configure",
+				Context.MODE_PRIVATE);
+
 		etUserID = (EditText) findViewById(R.id.etUserID);
 		etPassword = (EditText) findViewById(R.id.etPassword);
 
@@ -129,7 +126,8 @@ public class LoginActivity extends Activity {
 						getResources().getString(R.string.login_as_visitor),
 						Toast.LENGTH_SHORT).show();
 				spConfigure.edit().putBoolean("ISVISITOR", true).commit();
-				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+				Intent intent = new Intent(LoginActivity.this,
+						MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

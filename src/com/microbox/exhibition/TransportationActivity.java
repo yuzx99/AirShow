@@ -1,6 +1,6 @@
 package com.microbox.exhibition;
 
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.webkit.WebSettings.LayoutAlgorithm;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 

@@ -3,30 +3,26 @@ package com.microbox.airshow;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.HttpGetJsonModelThread;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
-import android.webkit.WebSettings.ZoomDensity;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -132,23 +128,23 @@ public class InfoDetailActivity extends Activity {
 						}
 					});
 					// cache
-//					WebSettings webSettings = webView.getSettings();
-//					webSettings.setAppCachePath(getContext()
-//							.getApplicationContext().getCacheDir()
-//							.getAbsolutePath());
-//					webSettings.setAllowFileAccess(true);
-//					webSettings.setAppCacheEnabled(true);
-//					webSettings
-//							.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//					webSettings.setDomStorageEnabled(true);
-//					webSettings.setAppCacheMaxSize(1024 * 1024 * 10);
-//					webSettings.setDatabaseEnabled(true);
-//					webSettings
-//							.setDatabasePath(getContext()
-//									.getApplicationContext()
-//									.getDir("database", Context.MODE_PRIVATE)
-//									.getPath());
-					
+					// WebSettings webSettings = webView.getSettings();
+					// webSettings.setAppCachePath(getContext()
+					// .getApplicationContext().getCacheDir()
+					// .getAbsolutePath());
+					// webSettings.setAllowFileAccess(true);
+					// webSettings.setAppCacheEnabled(true);
+					// webSettings
+					// .setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+					// webSettings.setDomStorageEnabled(true);
+					// webSettings.setAppCacheMaxSize(1024 * 1024 * 10);
+					// webSettings.setDatabaseEnabled(true);
+					// webSettings
+					// .setDatabasePath(getContext()
+					// .getApplicationContext()
+					// .getDir("database", Context.MODE_PRIVATE)
+					// .getPath());
+
 					// webView.getSettings().setUseWideViewPort(true);
 					// webSettings.setLoadWithOverviewMode(true);
 					// webView.setOnTouchListener(new View.OnTouchListener() {

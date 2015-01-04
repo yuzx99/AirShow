@@ -3,7 +3,7 @@ package com.microbox.adapter;
 import java.util.List;
 
 import com.lidroid.xutils.BitmapUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

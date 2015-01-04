@@ -1,13 +1,9 @@
 package com.microbox.airshow;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import cn.jpush.android.api.JPushInterface;
 
 import com.lidroid.xutils.BitmapUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
@@ -17,18 +13,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 

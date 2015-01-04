@@ -3,10 +3,7 @@ package com.microbox.adapter;
 import java.util.List;
 
 import com.lidroid.xutils.BitmapUtils;
-import com.mircobox.airshow.R;
-import com.mircobox.airshow.R.id;
-import com.mircobox.airshow.R.layout;
-
+import com.microbox.airshow.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

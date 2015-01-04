@@ -1,13 +1,9 @@
 package com.microbox.exhibition;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.microbox.config.ApiUrlConfig;
-import com.microbox.model.HttpGetJsonModelThread;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.webkit.WebSettings.LayoutAlgorithm;
-import android.widget.ListView;
 
 public class IntroductionFragment extends Fragment {
 	private WebView wbContent;

@@ -19,7 +19,7 @@ import com.microbox.adapter.ReportListItem;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.HttpGetJsonModelThread;
 import com.microbox.util.MBFileUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +31,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

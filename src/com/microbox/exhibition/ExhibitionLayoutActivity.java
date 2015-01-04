@@ -1,6 +1,6 @@
 package com.microbox.exhibition;
 
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;

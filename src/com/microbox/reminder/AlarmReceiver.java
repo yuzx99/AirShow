@@ -1,6 +1,6 @@
 package com.microbox.reminder;
 
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;

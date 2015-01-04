@@ -1,21 +1,14 @@
 package com.microbox.airshow;
 
-import java.io.IOException;
+import cn.jpush.android.api.JPushInterface;
 
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.microbox.config.ApiUrlConfig;
 import com.microbox.model.SubmitMessageModelThread;
-import com.microbox.util.MBHttpUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -52,7 +45,7 @@ public class LeaveMessageActivity extends Activity {
 			if (result != null) {
 				Toast.makeText(LeaveMessageActivity.this, "提交成功",
 						Toast.LENGTH_SHORT).show();
-				Intent resultIntent= new Intent();
+				Intent resultIntent = new Intent();
 				resultIntent.putExtra("leave_message", true);
 				setResult(RESULT_OK, resultIntent);
 				finish();

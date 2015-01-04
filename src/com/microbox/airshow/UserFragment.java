@@ -1,11 +1,7 @@
 package com.microbox.airshow;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.lidroid.xutils.BitmapUtils;
-import com.microbox.model.UpdateProfileMolelThread;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

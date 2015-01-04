@@ -1,6 +1,6 @@
 package com.artifex.mupdf;
 
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

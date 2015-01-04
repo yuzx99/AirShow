@@ -3,8 +3,10 @@ package com.microbox.airshow;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.microbox.util.Utility;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +17,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class CategoryActivity extends Activity {
 
@@ -34,12 +35,12 @@ public class CategoryActivity extends Activity {
 		initInfo();
 	}
 
-	private void initTitleBar(){
-		TextView title = (TextView)findViewById(R.id.pageTitle);
+	private void initTitleBar() {
+		TextView title = (TextView) findViewById(R.id.pageTitle);
 		title.setText("专题");
 		RelativeLayout back = (RelativeLayout) findViewById(R.id.pageBack);
 		back.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -47,7 +48,7 @@ public class CategoryActivity extends Activity {
 			}
 		});
 	}
-	
+
 	private void initInfo() {
 		cateInfoList = (ListView) findViewById(R.id.cateInfoList);
 		SimpleAdapter adapter = new SimpleAdapter(this, getDate(),
@@ -85,4 +86,5 @@ public class CategoryActivity extends Activity {
 	public void onBackPressed() {
 		finish();
 	}
+
 }

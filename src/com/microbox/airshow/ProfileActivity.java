@@ -10,7 +10,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.lidroid.xutils.BitmapUtils;
+import cn.jpush.android.api.JPushInterface;
+
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -25,7 +26,7 @@ import com.microbox.model.UpdateProfileAllModelThread;
 import com.microbox.model.UpdateProfileMolelThread;
 import com.microbox.model.UpdateUserHeaderModelThread;
 import com.microbox.util.MBFileUtils;
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,7 +42,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -244,7 +244,8 @@ public class ProfileActivity extends Activity {
 						if (spUserInfo.getBoolean("ISMODIFIED", false)) {
 							finish();
 						} else {
-							spUserInfo.edit().putBoolean("ISMODIFIED", true).commit();
+							spUserInfo.edit().putBoolean("ISMODIFIED", true)
+									.commit();
 							Intent intent = new Intent(ProfileActivity.this,
 									MainActivity.class);
 							startActivity(intent);

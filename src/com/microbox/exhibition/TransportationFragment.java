@@ -1,6 +1,6 @@
 package com.microbox.exhibition;
 
-import com.mircobox.airshow.R;
+import com.microbox.airshow.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
