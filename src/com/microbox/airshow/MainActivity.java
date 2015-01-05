@@ -89,8 +89,7 @@ public class MainActivity extends ActionBarActivity implements
 		}else{
 			tv.setText(getResources().getString(R.string.visitor));
 			iv.setBackgroundResource(R.drawable.pic_default_face);
-		}
-		
+		}		
 	}
 
 	@Override
