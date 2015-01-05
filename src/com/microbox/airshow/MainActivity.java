@@ -78,11 +78,10 @@ public class MainActivity extends ActionBarActivity implements
 
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
-		if(hasAccessRight()){
-			spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		if(hasAccessRight()){			
 			String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
-			String name = spData.getString("NAME", "");
-			
+			String name = spData.getString("NAME", "");			
 			BitmapUtils bitmapUtils = new BitmapUtils(this);
 			bitmapUtils.display(iv, urlHeaderSmall);
 			tv.setText(name);
