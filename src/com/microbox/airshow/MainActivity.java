@@ -76,14 +76,21 @@ public class MainActivity extends ActionBarActivity implements
 
 		getActionBar().hide();
 
-		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
-		String name = spData.getString("NAME", "");
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
-		BitmapUtils bitmapUtils = new BitmapUtils(this);
-		bitmapUtils.display(iv, urlHeaderSmall);
-		tv.setText(name);
+		if(hasAccessRight()){
+			spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+			String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
+			String name = spData.getString("NAME", "");
+			
+			BitmapUtils bitmapUtils = new BitmapUtils(this);
+			bitmapUtils.display(iv, urlHeaderSmall);
+			tv.setText(name);
+		}else{
+			tv.setText(getResources().getString(R.string.visitor));
+			iv.setBackgroundResource(R.drawable.pic_default_face);
+		}
+		
 	}
 
 	@Override
