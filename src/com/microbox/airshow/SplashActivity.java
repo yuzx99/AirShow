@@ -26,6 +26,7 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.microbox.config.ApiUrlConfig;
+import com.microbox.model.HttpGetJsonModelThread;
 import com.microbox.model.LoginModelThread;
 import com.microbox.push.ExitApplication;
 import com.microbox.util.ConnectionDetector;
@@ -58,20 +59,7 @@ public class SplashActivity extends Activity {
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		llbg = (LinearLayout) findViewById(R.id.splash);
-		BitmapUtils bitmapUtils = new BitmapUtils(this);
-		bitmapUtils.display(llbg, ApiUrlConfig.URL_ADVERTISING_IMAGE);
-		llbg.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				// TODO Auto-generated method stub
-				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT)
-						.show();
-//				openNextpage();
-				return false;
-			}
-		});
+		loadAd();
 		startTimer();
 	}
 
@@ -91,6 +79,48 @@ public class SplashActivity extends Activity {
 		}
 
 	}
+
+	private void loadAd() {
+		llbg = (LinearLayout) findViewById(R.id.splash);
+		llbg.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				// TODO Auto-generated method stub
+				Toast.makeText(SplashActivity.this, "touch",
+						Toast.LENGTH_SHORT).show();
+				// openNextpage();
+				return false;
+			}
+		});
+		HttpGetJsonModelThread adThread = new HttpGetJsonModelThread(adHandler,
+				ApiUrlConfig.URL_ADVERTISING_IMAGE);
+		adThread.start();
+	}
+
+	private final Handler adHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			Bundle data = msg.getData();
+			String result = data.getString("result");
+			if (null != result) {
+				try {
+					JSONObject obj = new JSONObject(result);
+					String url = obj.getString("url");
+					BitmapUtils bitmapUtils = new BitmapUtils(
+							SplashActivity.this);
+					bitmapUtils.display(llbg, url);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			super.handleMessage(msg);
+		}
+
+	};
 
 	Handler handlerLogin = new Handler() {
 		@Override
@@ -172,8 +202,8 @@ public class SplashActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
-//			finish();
-//			System.exit(0);
+			// finish();
+			// System.exit(0);
 			ExitApplication.getInstance().exit();
 		}
 	}
