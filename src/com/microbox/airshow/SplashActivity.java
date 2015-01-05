@@ -68,7 +68,7 @@ public class SplashActivity extends Activity {
 				// TODO Auto-generated method stub
 				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT)
 						.show();
-				// openNextpage();
+//				openNextpage();
 				return false;
 			}
 		});

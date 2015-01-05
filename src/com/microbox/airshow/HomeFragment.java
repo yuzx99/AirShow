@@ -27,6 +27,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard2 = null;
 	private TextView noticeBoard3 = null;
 
-//	private SharedPreferences spConfigure;
+	private SharedPreferences spConfigure;
 	private HomeCallbacks mCallbacks;
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
@@ -96,7 +97,8 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-//		spConfigure = getActivity().getSharedPreferences("configure",Context.MODE_PRIVATE);
+		spConfigure = getActivity().getSharedPreferences("configure",
+				Context.MODE_PRIVATE);
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -140,6 +142,7 @@ public class HomeFragment extends Fragment {
 							"yyyy-MM-dd HH:mm:ss");
 					TextView notice = (TextView) getView().findViewById(
 							R.id.noticeBoard);
+					String noticeContent = null;
 					try {
 						Date startDate = sdf.parse(startTime);
 						Date curDate = new Date(System.currentTimeMillis());
@@ -148,11 +151,12 @@ public class HomeFragment extends Fragment {
 								- curDate.getTime() / 86400000;
 						System.out.println(startDate);
 						if (days > 0) {
-							notice.setText("距" + conf + "开幕还有"
-									+ String.valueOf(days) + "天");
+							noticeContent = "距" + conf + "开幕还有"
+									+ String.valueOf(days) + "天";
+							notice.setText(noticeContent);
 						}
-						
-//						 setRepeatingAlarm();
+						long startDays = startDate.getTime() / 86400000;
+						setRepeatingAlarm(days, conf, startDays);
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -515,21 +519,32 @@ public class HomeFragment extends Fragment {
 		}
 	};
 
-	private void setRepeatingAlarm() {
+	private void setRepeatingAlarm(long differs, String conf, long start) {
 		AlarmManager alarmManager = (AlarmManager) getActivity()
 				.getSystemService(Context.ALARM_SERVICE);
 		int alarmType = AlarmManager.ELAPSED_REALTIME_WAKEUP;
-		long lengthofWait = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+		long lengthofWait = AlarmManager.INTERVAL_DAY;
 		Intent intent = new Intent();
 		intent.setAction(NEW_ALARM);
+		intent.putExtra("notice_conf", conf);
+		intent.putExtra("notice_startDays", start);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity(),
-				0, intent, 0);
+				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		// alarmManager.setInexactRepeating(alarmType, lengthofWait,
 		// lengthofWait,
 		// alarmIntent);
-		alarmManager.setRepeating(alarmType, SystemClock.elapsedRealtime(),
-				10 * 1000, alarmIntent);
-		// alarmManager.cancel(alarmIntent);
+		if (differs > 0) {
+			if (!spConfigure.getBoolean("reminder_set", false)) {
+				alarmManager.setRepeating(alarmType,
+						SystemClock.elapsedRealtime(), lengthofWait,
+						alarmIntent);
+				spConfigure.edit().putBoolean("reminder_set", true).commit();
+			}
+
+		} else {
+			alarmManager.cancel(alarmIntent);
+		}
+
 	}
 
 	// private final Handler cateHandler = new Handler() {
