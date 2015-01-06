@@ -41,6 +41,7 @@ public class SplashActivity extends Activity {
 	private LinearLayout llbg = null;
 	private SharedPreferences spUserInfo;
 	private SharedPreferences spData;
+	private SharedPreferences spConfigure;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class SplashActivity extends Activity {
 		spUserInfo = this
 				.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+		spConfigure = this.getSharedPreferences("configure",
+				Context.MODE_PRIVATE);
+
 		loadAd();
 		startTimer();
 	}
@@ -87,8 +91,8 @@ public class SplashActivity extends Activity {
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				Toast.makeText(SplashActivity.this, "touch",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT)
+						.show();
 				// openNextpage();
 				return false;
 			}
@@ -149,6 +153,7 @@ public class SplashActivity extends Activity {
 					editorData.putString("NICKNAME", nickname);
 					editorData.putString("ID", id);
 					editorData.commit();
+					spConfigure.edit().putBoolean("ISVISITOR", false).commit();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -167,18 +172,24 @@ public class SplashActivity extends Activity {
 			} else {
 				Toast.makeText(SplashActivity.this, "登录失败", Toast.LENGTH_SHORT)
 						.show();
+				Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+				startActivity(intent);
+				finish();
 			}
 		}
 	};
 
 	private void openNextpage() {
 		// 判断自动登录
-		if (spUserInfo.getBoolean("ISCHECK", false)) {
-			String userId = spUserInfo.getString("USER_ID", "");
-			String password = spUserInfo.getString("PASSWORD", "");
+		String userId = spUserInfo.getString("USER_ID", "");
+		String password = spUserInfo.getString("PASSWORD", "");
+		if (spUserInfo.getBoolean("ISCHECK", false) && null != userId
+				&& null != password) {
+
 			LoginModelThread lmt = new LoginModelThread(userId, password,
 					handlerLogin);
 			lmt.start();
+
 		} else {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);

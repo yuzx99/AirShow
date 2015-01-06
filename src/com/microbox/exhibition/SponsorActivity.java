@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class SponsorActivity extends Activity {
 	private WebView wbContent;
-	private SharedPreferences spData;
+	private SharedPreferences spInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,8 @@ public class SponsorActivity extends Activity {
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		wbContent = (WebView) findViewById(R.id.sponsor);
-		spData = getSharedPreferences("data", Context.MODE_PRIVATE);
-		String content = spData.getString("group_content", "");
+		spInfo = getSharedPreferences("loaded_info", Context.MODE_PRIVATE);
+		String content = spInfo.getString("group_content", "");
 		wbContent
 				.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 		wbContent.setVerticalScrollBarEnabled(false);

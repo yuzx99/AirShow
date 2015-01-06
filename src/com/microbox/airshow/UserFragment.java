@@ -91,9 +91,8 @@ public class UserFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Editor editorUserInfo = spUserInfo.edit();
 				// editorUserInfo.remove("USER_ID");
-				editorUserInfo.remove("PASSWORD");
-				editorUserInfo.putBoolean("ISCHECK", false);
-				editorUserInfo.commit();
+				editorUserInfo.remove("PASSWORD").commit();
+				editorUserInfo.putBoolean("ISCHECK", false).commit();
 				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
 				getActivity().finish();

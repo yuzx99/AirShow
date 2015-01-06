@@ -79,16 +79,16 @@ public class MainActivity extends ActionBarActivity implements
 		TextView tv = (TextView) findViewById(R.id.userName);
 		ImageView iv = (ImageView) findViewById(R.id.headIcon);
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
-		if(hasAccessRight()){			
+		if (hasAccessRight()) {
 			String urlHeaderSmall = spData.getString("HEADER_SMALL", "");
-			String name = spData.getString("NAME", "");			
+			String name = spData.getString("NAME", "");
 			BitmapUtils bitmapUtils = new BitmapUtils(this);
 			bitmapUtils.display(iv, urlHeaderSmall);
 			tv.setText(name);
-		}else{
+		} else {
 			tv.setText(getResources().getString(R.string.visitor));
 			iv.setBackgroundResource(R.drawable.pic_default_face);
-		}		
+		}
 	}
 
 	@Override
@@ -96,60 +96,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction tx = fm.beginTransaction();
-		// switch (position) {
-		// case 0:
-		// if (mUserFragment == null) {
-		// mUserFragment = (UserFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mUserFragment);
-		// break;
-		// case 1:
-		// if (mHomeFragment == null) {
-		// mHomeFragment = (HomeFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mHomeFragment);
-		// break;
-		// case 2:
-		// if (mInfoFragment == null) {
-		// mInfoFragment = (InfoFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mInfoFragment);
-		// break;
-		// case 3:
-		// if (mExhibitionFragment == null) {
-		// // mExhibitionFragment = (ExhibitionFragment) ExhibitionFragment
-		// // .newInstance(MainActivity.this);
-		// mExhibitionFragment = (ExhibitionFragment) Fragment
-		// .instantiate(MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mExhibitionFragment);
-		// break;
-		// case 4:
-		// if (mMessageFragment == null) {
-		// mMessageFragment = (MessageFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mMessageFragment);
-		// break;
-		// case 5:
-		// if (mAboutusFragment == null) {
-		// mAboutusFragment = (AboutusFragment) Fragment.instantiate(
-		// MainActivity.this, fragments[position]);
-		// }
-		// tx.replace(R.id.container, mAboutusFragment);
-		// break;
-		// default:
-		// break;
-		// }
-
-		// tx.replace(R.id.container, Fragment.instantiate(MainActivity.this,
-		// fragments[position]));
-		// tx.commit();
-		// onSectionAttached(position);
-
+		
 		if (hasAccessRight()) {
 			tx.replace(R.id.container, Fragment.instantiate(MainActivity.this,
 					fragments[position]));
@@ -158,7 +105,8 @@ public class MainActivity extends ActionBarActivity implements
 		} else {
 			switch (position) {
 			case 0:
-				Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+				Intent intent = new Intent(MainActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 				break;
 			case 4:
@@ -209,9 +157,16 @@ public class MainActivity extends ActionBarActivity implements
 		boolean authorized = true;
 		SharedPreferences spConfigure = this.getSharedPreferences("configure",
 				Context.MODE_PRIVATE);
-		if (spConfigure.getBoolean("ISVISITOR", false)) {
-			authorized = false;
+		SharedPreferences spUserInfo = this.getSharedPreferences("userInfo",
+				Context.MODE_PRIVATE);
+		if (spUserInfo.getBoolean("ISCHECK", false)) {
+			authorized = true;
+		}else{
+			if (spConfigure.getBoolean("ISVISITOR", true)) {
+				authorized = false;
+			}
 		}
+
 		return authorized;
 	}
 
@@ -249,9 +204,12 @@ public class MainActivity extends ActionBarActivity implements
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
-			spData.edit().clear().commit();
-//			finish();
-//			System.exit(0);
+			//spData.edit().clear().commit();
+			SharedPreferences spConfigure = this.getSharedPreferences(
+					"configure", Context.MODE_PRIVATE);
+			spConfigure.edit().putBoolean("ISVISITOR", true).commit();
+			// finish();
+			// System.exit(0);
 			ExitApplication.getInstance().exit();
 		}
 	}

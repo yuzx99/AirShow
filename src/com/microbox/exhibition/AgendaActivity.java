@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class AgendaActivity extends Activity {
 
 	private WebView wbContent;
-	private SharedPreferences spData;
+	private SharedPreferences spInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class AgendaActivity extends Activity {
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		wbContent = (WebView) findViewById(R.id.agenda);
-		spData = getSharedPreferences("data",
+		spInfo = getSharedPreferences("loaded_info",
 				Context.MODE_PRIVATE);
-		String content = spData.getString("agenda_content", "");
+		String content = spInfo.getString("agenda_content", "");
 		wbContent
 				.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 		wbContent.setVerticalScrollBarEnabled(false);

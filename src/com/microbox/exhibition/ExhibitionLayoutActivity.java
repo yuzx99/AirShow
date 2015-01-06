@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class ExhibitionLayoutActivity extends Activity {
 	
 	private WebView wbContent;
-	private SharedPreferences spData;
+	private SharedPreferences spInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,9 @@ public class ExhibitionLayoutActivity extends Activity {
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		wbContent = (WebView) findViewById(R.id.exhibition_layout);
-		spData = getSharedPreferences("data",
+		spInfo = getSharedPreferences("data",
 				Context.MODE_PRIVATE);
-		String content = spData.getString("layout_content", "");
+		String content = spInfo.getString("layout_content", "");
 		wbContent
 				.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
 		wbContent.setVerticalScrollBarEnabled(false);

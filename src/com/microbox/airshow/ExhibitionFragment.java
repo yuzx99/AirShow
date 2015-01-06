@@ -51,7 +51,7 @@ public class ExhibitionFragment extends Fragment {
 	private ExhiCallbacks mCallbacks;
 	private List<Fragment> fragmentList;
 	private List<String> titleList;
-	private SharedPreferences spData;
+	private SharedPreferences spInfo;
 	private SharedPreferences spConfigure;
 
 	public static Fragment newInstance(Context context) {
@@ -71,11 +71,11 @@ public class ExhibitionFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		spData = getActivity().getSharedPreferences("data",
+		spInfo = getActivity().getSharedPreferences("loaded_info",
 				Context.MODE_PRIVATE);
 		spConfigure = getActivity().getSharedPreferences("configure",
 				Context.MODE_PRIVATE);
-		if (spData.getBoolean("is_loaded", false)) {
+		if (spInfo.getBoolean("is_loaded", false)) {
 			initTitleBar();
 			initViewCompoent();
 			// initViewPager();
@@ -100,7 +100,7 @@ public class ExhibitionFragment extends Fragment {
 				String group_content = joObject.getString("group_content");
 				String agenda_content = joObject.getString("agenda_content");
 				String layout_content = joObject.getString("layout_content");
-				Editor editorData = spData.edit();
+				Editor editorData = spInfo.edit();
 				editorData.putString("intro_content", intro_content);
 				editorData.putString("logistics_content", logistics_content);
 				editorData.putString("group_content", group_content);

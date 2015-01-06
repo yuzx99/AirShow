@@ -1,14 +1,13 @@
 package com.microbox.push;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.microbox.airshow.MainActivity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
 
@@ -24,6 +23,7 @@ public class MyReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+	
         Bundle bundle = intent.getExtras();
 		Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 		
@@ -77,7 +77,7 @@ public class MyReceiver extends BroadcastReceiver {
 			}
 		}
 		return sb.toString();
-	}
+	}	
 	
 //	//send msg to MainActivity
 //	private void processCustomMessage(Context context, Bundle bundle) {
