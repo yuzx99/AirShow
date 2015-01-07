@@ -15,7 +15,7 @@ public class ApiUrlConfig {
 	public static final String URL_GET_CATEGORY = BASE_URL + "news/topics";
 	public static final String CONFERENCE_ID = "1";
 	public static final String URL_GET_REPORT = BASE_URL + "news/conferences/"
-			+ CONFERENCE_ID + "/get_file/REPORT";
+			+ CONFERENCE_ID + "/get_file/PDF";
 	public static final String URL_GET_AD_IMAGES = BASE_URL
 			+ "news/mainpage_images";
 	public static final String URL_GET_NOTICE = BASE_URL + "news/placard/all";
