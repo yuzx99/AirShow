@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
 	private SharedPreferences spData;
 	private SharedPreferences spConfigure;
 
+	private Boolean isAutoLogin = false;
 	private long waitTime = 3000;
 	private long touchTime = 0;
 
@@ -65,6 +66,7 @@ public class LoginActivity extends Activity {
 		etUserID.setText(spUserInfo.getString("USER_ID", ""));
 		// etPassword.setText(spUserInfo.getString("PASSWORD", ""));
 
+		isAutoLogin = spUserInfo.getBoolean("ISCHECK", false);
 		tgbtnShowPwd = (ToggleButton) findViewById(R.id.tgbtnShowPwd);
 		tgbtnShowPwd.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -98,11 +100,13 @@ public class LoginActivity extends Activity {
 				if (arg1) {
 					tgbtnSavePwd
 							.setBackgroundResource(R.drawable.ic_checked_normal);
-					spUserInfo.edit().putBoolean("ISCHECK", true).commit();
+					//spUserInfo.edit().putBoolean("ISCHECK", true).commit();
+					isAutoLogin = true;
 				} else {
 					tgbtnSavePwd
 							.setBackgroundResource(R.drawable.ic_unchecked_normal);
-					spUserInfo.edit().putBoolean("ISCHECK", false).commit();
+					//spUserInfo.edit().putBoolean("ISCHECK", false).commit();
+					isAutoLogin = false;
 				}
 			}
 		});
@@ -153,6 +157,7 @@ public class LoginActivity extends Activity {
 				editorUserInfo.putString("PASSWORD", password);
 				editorUserInfo.commit();
 				spConfigure.edit().putBoolean("ISVISITOR", false).commit();
+				spUserInfo.edit().putBoolean("ISCHECK", isAutoLogin).commit();
 				try {
 					Editor editorData = spData.edit();
 					JSONObject jObject = new JSONObject(result);
