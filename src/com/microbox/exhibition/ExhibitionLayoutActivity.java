@@ -51,7 +51,7 @@ public class ExhibitionLayoutActivity extends Activity {
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		wbContent = (WebView) findViewById(R.id.exhibition_layout);
-		spInfo = getSharedPreferences("data",
+		spInfo = getSharedPreferences("loaded_info",
 				Context.MODE_PRIVATE);
 		String content = spInfo.getString("layout_content", "");
 		wbContent
