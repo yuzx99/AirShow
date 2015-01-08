@@ -12,6 +12,7 @@ import com.lidroid.xutils.BitmapUtils;
 import com.microbox.adapter.InfoListAdapter;
 import com.microbox.adapter.InfoListItem;
 import com.microbox.model.HttpGetJsonModelThread;
+import com.microbox.util.Utility;
 import com.microbox.config.ApiUrlConfig;
 import com.microbox.airshow.R;
 

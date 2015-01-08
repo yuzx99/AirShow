@@ -69,7 +69,7 @@ public class InfoListAdapter extends BaseAdapter {
 		itemId.setText(item.getId());
 		if(item.getHasVideo()){
 			itemVideo.setVisibility(ImageView.VISIBLE);
-		}	
+		}
 		return convertView;
 	}
 
