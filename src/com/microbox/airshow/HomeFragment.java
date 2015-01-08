@@ -479,7 +479,7 @@ public class HomeFragment extends Fragment {
 						JSONObject temp = (JSONObject) arr.get(i);
 						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
-						String date = temp.getString("create_time");
+						String date = temp.getString("create_time").replace("T", " ");
 						String id = temp.getString("id");
 						Boolean hasVideo = temp.getBoolean("has_video");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,
