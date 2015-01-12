@@ -21,23 +21,22 @@
                 android:id="@+id/noticeBoard"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="#4169E1"
                 android:textSize="16sp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" >
+                android:layout_height="wrap_content" >
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
-                    android:layout_width="360dp"
-                    android:layout_height="184dp" >
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp" >
                 </android.support.v4.view.ViewPager>
 
                 <LinearLayout
@@ -51,7 +50,6 @@
                 </LinearLayout>
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="38dp"
@@ -64,7 +62,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:alpha="0.5"
+                    android:alpha="0.95"
                     android:text="通告"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -140,7 +138,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
-                    android:alpha="0.5"
+                    android:alpha="0.95"
                     android:text="资讯"
                     android:textColor="#000000"
                     android:textSize="18sp" />

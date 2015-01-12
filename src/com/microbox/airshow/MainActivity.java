@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,12 @@ public class MainActivity extends ActionBarActivity implements
 				startActivity(intent);
 				break;
 			case 4:
-				Toast.makeText(
+				Toast toast = Toast.makeText(
 						MainActivity.this,
 						getResources().getString(R.string.have_no_access_right),
-						Toast.LENGTH_SHORT).show();
+						Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
 				break;
 			default:
 				tx.replace(R.id.container, Fragment.instantiate(

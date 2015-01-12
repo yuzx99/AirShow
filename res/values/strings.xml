@@ -48,7 +48,8 @@
         
     <string name="not_connection">未连接网络</string>
     <string name="login_as_visitor">以游客身份登录</string>
-    <string name="have_no_access_right">没有访问权限</string>
+    <string name="have_no_access_right">没有访问权限，请联系管理员</string>
     <string name="company_title">公司</string>
     <string name="visitor">游客(点击登录)</string>
+    <string name="title_discuss">讨论区</string>
 </resources>

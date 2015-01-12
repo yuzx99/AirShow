@@ -32,12 +32,14 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MessageFragment extends Fragment {
 
+//	private ProgressBar progressBar;
 	private ListView messageList = null;
 	private int[] msgItems = new int[] { R.id.msgImageItem, R.id.msgNameItem,
 			R.id.msgContentItem, R.id.msgDateItem };
@@ -73,12 +75,13 @@ public class MessageFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		initTitleBar();
+//		initProgressBar();
 		initLeaveMessage();
 	}
 
 	private void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
-		title.setText("留言");
+		title.setText(getResources().getString(R.string.title_discuss));
 		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
 				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
@@ -91,6 +94,13 @@ public class MessageFragment extends Fragment {
 		});
 	}
 
+//	private void initProgressBar(){
+//		progressBar = (ProgressBar) getView().findViewById(R.id.progress);
+//		progressBar.setProgress(0);
+//		progressBar.setVisibility(ProgressBar.VISIBLE);
+//		progressBar.setIndeterminate(true);
+//	}
+	
 	public static interface MsgCallbacks {
 		public void openDrawerMsg();
 	}
@@ -203,6 +213,9 @@ public class MessageFragment extends Fragment {
 								publisher, header_small, dateItem);
 						info.add(mli);
 					}
+//					if(progressBar!=null){
+//						progressBar.setVisibility(ProgressBar.GONE);
+//					}
 					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 					MessageShowListAdapter mslAdapter = new MessageShowListAdapter(
 							getActivity(), info, bitmapUtils);
