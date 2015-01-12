@@ -22,6 +22,7 @@ import com.microbox.model.HttpGetJsonModelThread;
 import com.microbox.util.Utility;
 import com.microbox.airshow.R;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -44,6 +45,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
@@ -76,6 +78,7 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard3 = null;
 
 	private SharedPreferences spConfigure;
+	private SharedPreferences spData;
 	private HomeCallbacks mCallbacks;
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
@@ -98,6 +101,8 @@ public class HomeFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		spConfigure = getActivity().getSharedPreferences("configure",
+				Context.MODE_PRIVATE);
+		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
 		initTitleBar();
 		initViewPager();
@@ -140,6 +145,7 @@ public class HomeFragment extends Fragment {
 					String conf = obj.getString("title");
 					SimpleDateFormat sdf = new SimpleDateFormat(
 							"yyyy-MM-dd HH:mm:ss");
+					spData.edit().putString("conference", conf).commit();
 					TextView notice = (TextView) getView().findViewById(
 							R.id.noticeBoard);
 					String noticeContent = null;
@@ -190,6 +196,13 @@ public class HomeFragment extends Fragment {
 		vPager = (ViewPager) getView().findViewById(R.id.viewpager);
 		vGroup = (ViewGroup) getView().findViewById(R.id.viewGroup);
 		lPics = new ArrayList<View>();
+
+		WindowManager wm = getActivity().getWindowManager();
+		int width = wm.getDefaultDisplay().getWidth();
+		int height = 3 * width / 5;
+		vPager.getLayoutParams().height = height;
+		vPager.getLayoutParams().width = width;
+		vPager.requestLayout();
 
 		new GetDataModelThread(adHandler, ApiUrlConfig.URL_GET_AD_IMAGES)
 				.start();
@@ -479,7 +492,8 @@ public class HomeFragment extends Fragment {
 						JSONObject temp = (JSONObject) arr.get(i);
 						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
-						String date = temp.getString("create_time").replace("T", " ");
+						String date = temp.getString("create_time").replace(
+								"T", " ");
 						String id = temp.getString("id");
 						Boolean hasVideo = temp.getBoolean("has_video");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,

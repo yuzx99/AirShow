@@ -54,6 +54,7 @@ public class ExhibitionFragment extends Fragment {
 	private List<String> titleList;
 	private SharedPreferences spInfo;
 	private SharedPreferences spConfigure;
+	private SharedPreferences spData;
 
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
@@ -76,6 +77,9 @@ public class ExhibitionFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		spConfigure = getActivity().getSharedPreferences("configure",
 				Context.MODE_PRIVATE);
+		spData = getActivity().getSharedPreferences("data",
+				Context.MODE_PRIVATE);
+
 		if (spInfo.getBoolean("is_loaded", false)) {
 			initTitleBar();
 			initViewCompoent();
@@ -121,7 +125,11 @@ public class ExhibitionFragment extends Fragment {
 
 	private void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
-		title.setText("第十届中国航空博览会");
+		String conf = spData.getString("conference",
+				getResources().getString(R.string.title_exhi));
+
+		title.setText(conf);
+
 		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
 				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
@@ -188,10 +196,8 @@ public class ExhibitionFragment extends Fragment {
 							AgendaActivity.class);
 					startActivity(intent);
 				} else {
-					Toast toast = Toast.makeText(
-							getActivity(),
-							getResources().getString(
-									R.string.have_no_access_right),
+					Toast toast = Toast.makeText(getActivity(), getResources()
+							.getString(R.string.have_no_access_right),
 							Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
@@ -228,10 +234,8 @@ public class ExhibitionFragment extends Fragment {
 							ReportActivity.class);
 					startActivity(intent);
 				} else {
-					Toast toast = Toast.makeText(
-							getActivity(),
-							getResources().getString(
-									R.string.have_no_access_right),
+					Toast toast = Toast.makeText(getActivity(), getResources()
+							.getString(R.string.have_no_access_right),
 							Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
