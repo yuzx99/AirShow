@@ -45,8 +45,8 @@ public class InfoDetailActivity extends Activity {
 		setContentView(R.layout.info_detail);
 		Intent intent = getIntent();
 		infoId = intent.getStringExtra("INFO_ID");
-		Toast.makeText(InfoDetailActivity.this, "id:" + infoId,
-				Toast.LENGTH_SHORT).show();
+		// Toast.makeText(InfoDetailActivity.this, "id:" + infoId,
+		// Toast.LENGTH_SHORT).show();
 		initViewCompoent();
 	}
 
