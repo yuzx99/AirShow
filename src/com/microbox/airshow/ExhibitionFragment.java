@@ -35,6 +35,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -187,11 +188,13 @@ public class ExhibitionFragment extends Fragment {
 							AgendaActivity.class);
 					startActivity(intent);
 				} else {
-					Toast.makeText(
+					Toast toast = Toast.makeText(
 							getActivity(),
 							getResources().getString(
 									R.string.have_no_access_right),
-							Toast.LENGTH_SHORT).show();
+							Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
 				}
 
 			}
@@ -225,11 +228,13 @@ public class ExhibitionFragment extends Fragment {
 							ReportActivity.class);
 					startActivity(intent);
 				} else {
-					Toast.makeText(
+					Toast toast = Toast.makeText(
 							getActivity(),
 							getResources().getString(
 									R.string.have_no_access_right),
-							Toast.LENGTH_SHORT).show();
+							Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
 				}
 			}
 		});
