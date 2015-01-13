@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard1 = null;
 	private TextView noticeBoard2 = null;
 	private TextView noticeBoard3 = null;
-	
+
 	private TextView notice = null;
 
 	private SharedPreferences spConfigure;
@@ -106,8 +106,7 @@ public class HomeFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
-		notice = (TextView) getView().findViewById(
-				R.id.noticeBoard);
+		notice = (TextView) getView().findViewById(R.id.noticeBoard);
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -150,7 +149,7 @@ public class HomeFragment extends Fragment {
 					SimpleDateFormat sdf = new SimpleDateFormat(
 							"yyyy-MM-dd HH:mm:ss");
 					spData.edit().putString("conference", conf).commit();
-					
+
 					String noticeContent = null;
 					try {
 						Date startDate = sdf.parse(startTime);
@@ -163,7 +162,7 @@ public class HomeFragment extends Fragment {
 							noticeContent = "距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天";
 							notice.setText(noticeContent);
-						}else{
+						} else {
 							notice.setVisibility(TextView.GONE);
 						}
 						long startDays = startDate.getTime() / 86400000;
@@ -539,31 +538,40 @@ public class HomeFragment extends Fragment {
 	};
 
 	private void setRepeatingAlarm(long differs, String conf, long start) {
-		AlarmManager alarmManager = (AlarmManager) getActivity()
-				.getSystemService(Context.ALARM_SERVICE);
-		int alarmType = AlarmManager.ELAPSED_REALTIME_WAKEUP;
-		long lengthofWait = AlarmManager.INTERVAL_DAY;
-		Intent intent = new Intent();
-		intent.setAction(NEW_ALARM);
-		intent.putExtra("notice_conf", conf);
-		intent.putExtra("notice_startDays", start);
-		PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity(),
-				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		// alarmManager.setInexactRepeating(alarmType, lengthofWait,
-		// lengthofWait,
-		// alarmIntent);
-		if (differs > 0) {
-			if (!spConfigure.getBoolean("reminder_set", false)) {
-				alarmManager.setRepeating(alarmType,
-						SystemClock.elapsedRealtime(), lengthofWait,
-						alarmIntent);
-				spConfigure.edit().putBoolean("reminder_set", true).commit();
-			}
-
-		} else {
-			alarmManager.cancel(alarmIntent);
+		AlarmManager alarmManager;
+		try {
+			alarmManager = (AlarmManager) getActivity().getSystemService(
+					Context.ALARM_SERVICE);
+		} catch (Exception e) {
+			return;
 		}
 
+		if (alarmManager != null) {
+			int alarmType = AlarmManager.ELAPSED_REALTIME_WAKEUP;
+			long lengthofWait = AlarmManager.INTERVAL_DAY;
+			Intent intent = new Intent();
+			intent.setAction(NEW_ALARM);
+			intent.putExtra("notice_conf", conf);
+			intent.putExtra("notice_startDays", start);
+			PendingIntent alarmIntent = PendingIntent
+					.getBroadcast(getActivity(), 0, intent,
+							PendingIntent.FLAG_UPDATE_CURRENT);
+			// alarmManager.setInexactRepeating(alarmType, lengthofWait,
+			// lengthofWait,
+			// alarmIntent);
+			if (differs > 0) {
+				if (!spConfigure.getBoolean("reminder_set", false)) {
+					alarmManager.setRepeating(alarmType,
+							SystemClock.elapsedRealtime(), lengthofWait,
+							alarmIntent);
+					spConfigure.edit().putBoolean("reminder_set", true)
+							.commit();
+				}
+
+			} else {
+				alarmManager.cancel(alarmIntent);
+			}
+		}
 	}
 
 	// private final Handler cateHandler = new Handler() {
