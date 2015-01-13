@@ -39,13 +39,10 @@ import android.widget.Toast;
 
 public class MessageFragment extends Fragment {
 
-//	private ProgressBar progressBar;
+	// private ProgressBar progressBar;
 	private ListView messageList = null;
-	private int[] msgItems = new int[] { R.id.msgImageItem, R.id.msgNameItem,
-			R.id.msgContentItem, R.id.msgDateItem };
-	private String[] msgMapping = new String[] { "user_photo", "user_name",
-			"msg_content", "msg_date" };
-
+	private List<MessageListInfo> info;
+	private MessageShowListAdapter mslAdapter;
 	private MsgCallbacks mCallbacks;
 
 	private BitmapUtils bitmapUtils;
@@ -77,7 +74,7 @@ public class MessageFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		bitmapUtils = new BitmapUtils(getActivity());
 		initTitleBar();
-//		initProgressBar();
+		// initProgressBar();
 		initLeaveMessage();
 	}
 
@@ -96,13 +93,41 @@ public class MessageFragment extends Fragment {
 		});
 	}
 
-//	private void initProgressBar(){
-//		progressBar = (ProgressBar) getView().findViewById(R.id.progress);
-//		progressBar.setProgress(0);
-//		progressBar.setVisibility(ProgressBar.VISIBLE);
-//		progressBar.setIndeterminate(true);
-//	}
-	
+	// private void initProgressBar(){
+	// progressBar = (ProgressBar) getView().findViewById(R.id.progress);
+	// progressBar.setProgress(0);
+	// progressBar.setVisibility(ProgressBar.VISIBLE);
+	// progressBar.setIndeterminate(true);
+	// }
+
+	private void initLeaveMessage() {
+		messageList = (ListView) getView().findViewById(R.id.msgList);
+
+		info = new ArrayList<MessageListInfo>();
+		mslAdapter = new MessageShowListAdapter(getActivity(), info,
+				bitmapUtils);
+		messageList.setAdapter(mslAdapter);
+		messageList.setDividerHeight(0);
+		
+		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(
+				R.id.ibtnLeaveMsg);
+
+		ibtnLeaveMsg.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						LeaveMessageActivity.class);
+				startActivityForResult(intent, LEAVE_MESSAGE);
+			}
+		});
+
+		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
+				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
+		gmmt.start();
+	}
+
 	public static interface MsgCallbacks {
 		public void openDrawerMsg();
 	}
@@ -140,38 +165,16 @@ public class MessageFragment extends Fragment {
 
 	}
 
-	private void initLeaveMessage() {
-
-		messageList = (ListView) getView().findViewById(R.id.msgList);
-
-		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(
-				R.id.ibtnLeaveMsg);
-
-		ibtnLeaveMsg.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),
-						LeaveMessageActivity.class);
-				startActivityForResult(intent, LEAVE_MESSAGE);
-			}
-		});
-
-		HttpGetJsonModelThread gmmt = new HttpGetJsonModelThread(
-				handlerMessage, ApiUrlConfig.URL_GET_MESSAGE);
-		gmmt.start();
-	}
-
 	Handler handlerMessage = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
-			List<MessageListInfo> info = new ArrayList<MessageListInfo>();
+
 			if (result != null) {
 				try {
+					info.clear();
 					JSONArray arr = new JSONArray(result);
 					for (int i = 0; i < arr.length(); i++) {
 						JSONObject temp = (JSONObject) arr.get(i);
@@ -215,14 +218,10 @@ public class MessageFragment extends Fragment {
 								publisher, header_small, dateItem);
 						info.add(mli);
 					}
-//					if(progressBar!=null){
-//						progressBar.setVisibility(ProgressBar.GONE);
-//					}
-					
-					MessageShowListAdapter mslAdapter = new MessageShowListAdapter(
-							getActivity(), info, bitmapUtils);
-					messageList.setAdapter(mslAdapter);
-					messageList.setDividerHeight(0);
+					// if(progressBar!=null){
+					// progressBar.setVisibility(ProgressBar.GONE);
+					// }
+					mslAdapter.notifyDataSetChanged();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

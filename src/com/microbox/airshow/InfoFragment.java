@@ -36,6 +36,8 @@ import android.widget.Toast;
 
 public class InfoFragment extends Fragment {
 	private ListView infoList = null;
+	private List<InfoListItem> newsList;
+	private InfoListAdapter ilAdapter;
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle",
 			"infoDate" };
 	private int[] itemMapping = new int[] { R.id.infoPicItem,
@@ -44,7 +46,7 @@ public class InfoFragment extends Fragment {
 	private InfoCallbacks mCallbacks;
 
 	private BitmapUtils bitmapUtils;
-	
+
 	public static Fragment newInstance(Context context) {
 		InfoFragment f = new InfoFragment();
 
@@ -103,40 +105,23 @@ public class InfoFragment extends Fragment {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
-			List<InfoListItem> newsList = new ArrayList<InfoListItem>();
 			if (result != null) {
+				newsList.clear();
 				try {
 					JSONArray arr = new JSONArray(result);
 					for (int i = 0; i < arr.length(); i++) {
 						JSONObject temp = (JSONObject) arr.get(i);
 						String iconUrl = temp.getString("icon");
 						String title = temp.getString("title");
-						String date = temp.getString("create_time").replace("T", " ");
+						String date = temp.getString("create_time").replace(
+								"T", " ");
 						String id = temp.getString("id");
 						Boolean hasVideo = temp.getBoolean("has_video");
 						InfoListItem ilt = new InfoListItem(iconUrl, title,
 								date, id, hasVideo);
 						newsList.add(ilt);
 					}
-					InfoListAdapter ilAdapter = new InfoListAdapter(
-							getActivity(), newsList, bitmapUtils);
-					infoList.setAdapter(ilAdapter);
-					infoList.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent(getActivity(),
-									InfoDetailActivity.class);
-							TextView tvId = (TextView) arg1
-									.findViewById(R.id.infoIdItem);
-							Bundle bundle = new Bundle();
-							bundle.putString("INFO_ID", tvId.getText().toString());
-							intent.putExtras(bundle);
-							startActivity(intent);
-						}
-					});
+					ilAdapter.notifyDataSetChanged();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -150,6 +135,24 @@ public class InfoFragment extends Fragment {
 
 	private void initInfo() {
 		infoList = (ListView) getView().findViewById(R.id.infoPageList);
+		newsList = new ArrayList<InfoListItem>();
+		ilAdapter = new InfoListAdapter(getActivity(), newsList, bitmapUtils);
+		infoList.setAdapter(ilAdapter);
+		infoList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						InfoDetailActivity.class);
+				TextView tvId = (TextView) arg1.findViewById(R.id.infoIdItem);
+				Bundle bundle = new Bundle();
+				bundle.putString("INFO_ID", tvId.getText().toString());
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
+
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(handlerNews,
 				ApiUrlConfig.URL_GET_SIMPLE_NEWS);
 		hgjmt.start();

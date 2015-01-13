@@ -68,6 +68,8 @@ public class HomeFragment extends Fragment {
 
 	// private ListView categoryList = null;
 	private ListView infoList = null;
+	private List<InfoListItem> newsList;
+	private InfoListAdapter ilAdapter;
 	private String[] infoMapping = new String[] { "infoPic", "infoTitle" };
 	private int[] itemMapping = new int[] { R.id.catePicItem, R.id.cateTitle };
 
@@ -86,6 +88,7 @@ public class HomeFragment extends Fragment {
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
 
 	private BitmapUtils bitmapUtils;
+
 	public static Fragment newInstance(Context context) {
 		HomeFragment f = new HomeFragment();
 
@@ -463,6 +466,27 @@ public class HomeFragment extends Fragment {
 	private void initInfoList() {
 
 		infoList = (ListView) getView().findViewById(R.id.infoList);
+		newsList = new ArrayList<InfoListItem>();
+		ilAdapter = new InfoListAdapter(getActivity(),
+				newsList, bitmapUtils);
+		infoList.setAdapter(ilAdapter);
+
+		infoList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(),
+						InfoDetailActivity.class);
+				TextView tvId = (TextView) arg1.findViewById(R.id.infoIdItem);
+				Bundle bundle = new Bundle();
+				bundle.putString("INFO_ID", tvId.getText().toString());
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
+
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(infoHandler,
 				ApiUrlConfig.URL_GET_SIMPLE_NEWS);
 		hgjmt.start();
@@ -489,8 +513,8 @@ public class HomeFragment extends Fragment {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
 			String result = data.getString("result");
-			List<InfoListItem> newsList = new ArrayList<InfoListItem>();
 			if (result != null) {
+				newsList.clear();
 				try {
 					JSONArray arr = new JSONArray(result);
 					int maxLength = (arr.length() > 4 ? 4 : arr.length());
@@ -506,28 +530,8 @@ public class HomeFragment extends Fragment {
 								date, id, hasVideo);
 						newsList.add(ilt);
 					}
-					
-					InfoListAdapter ilAdapter = new InfoListAdapter(
-							getActivity(), newsList, bitmapUtils);
-					infoList.setAdapter(ilAdapter);
+					ilAdapter.notifyDataSetChanged();
 					Utility.setListViewHeightBasedOnChildren(infoList);
-					infoList.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent(getActivity(),
-									InfoDetailActivity.class);
-							TextView tvId = (TextView) arg1
-									.findViewById(R.id.infoIdItem);
-							Bundle bundle = new Bundle();
-							bundle.putString("INFO_ID", tvId.getText()
-									.toString());
-							intent.putExtras(bundle);
-							startActivity(intent);
-						}
-					});
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
