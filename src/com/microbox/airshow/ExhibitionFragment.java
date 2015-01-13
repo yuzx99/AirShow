@@ -80,15 +80,16 @@ public class ExhibitionFragment extends Fragment {
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
 
-		if (spInfo.getBoolean("is_loaded", false)) {
-			initTitleBar();
-			initViewCompoent();
-			// initViewPager();
-		} else {
-			HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
-					handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
-			hgjmt.start();
-		}
+		// if (spInfo.getBoolean("is_loaded", false)) {
+		// initTitleBar();
+		// initViewCompoent();
+		// // initViewPager();
+		// } else {
+		initTitleBar();
+		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
+				handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
+		hgjmt.start();
+		// }
 	}
 
 	Handler handlerContent = new Handler() {
@@ -113,7 +114,6 @@ public class ExhibitionFragment extends Fragment {
 				editorData.putString("layout_content", layout_content);
 				editorData.putBoolean("is_loaded", true);
 				editorData.commit();
-				initTitleBar();
 				initViewCompoent();
 				// initViewPager();
 			} catch (JSONException e) {
@@ -191,9 +191,8 @@ public class ExhibitionFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-					Intent intent = new Intent(getActivity(),
-							AgendaActivity.class);
-					startActivity(intent);
+				Intent intent = new Intent(getActivity(), AgendaActivity.class);
+				startActivity(intent);
 			}
 		});
 		exhiAgenda.setOnTouchListener(new PicOnTouchListener());
