@@ -76,6 +76,8 @@ public class HomeFragment extends Fragment {
 	private TextView noticeBoard1 = null;
 	private TextView noticeBoard2 = null;
 	private TextView noticeBoard3 = null;
+	
+	private TextView notice = null;
 
 	private SharedPreferences spConfigure;
 	private SharedPreferences spData;
@@ -104,6 +106,8 @@ public class HomeFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
+		notice = (TextView) getView().findViewById(
+				R.id.noticeBoard);
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -146,8 +150,7 @@ public class HomeFragment extends Fragment {
 					SimpleDateFormat sdf = new SimpleDateFormat(
 							"yyyy-MM-dd HH:mm:ss");
 					spData.edit().putString("conference", conf).commit();
-					TextView notice = (TextView) getView().findViewById(
-							R.id.noticeBoard);
+					
 					String noticeContent = null;
 					try {
 						Date startDate = sdf.parse(startTime);
