@@ -28,7 +28,7 @@ public class CategoryDetailActivity extends Activity {
 	private String mCateId;
 	private String mCateTitle;
 	private ListView cateDetList;
-
+	private BitmapUtils bitmapUtils;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,7 +39,8 @@ public class CategoryDetailActivity extends Activity {
 		if (data != null) {
 			mCateId = data.getString("CATE_ID");
 		}
-
+		bitmapUtils = new BitmapUtils(this);
+		
 		cateDetList = (ListView) findViewById(R.id.cateDetList);
 		String url = "http://10.60.43.10:5000/news/topic/" + mCateId;
 		new GetDataModelThread(cateDetHandler, url).start();
@@ -69,9 +70,7 @@ public class CategoryDetailActivity extends Activity {
 								date, id, hasVideo);
 						list.add(item);
 					}
-
-					BitmapUtils bitmapUtils = new BitmapUtils(
-							CategoryDetailActivity.this);
+					
 					InfoListAdapter adapter = new InfoListAdapter(
 							CategoryDetailActivity.this, list, bitmapUtils);
 					cateDetList.setAdapter(adapter);

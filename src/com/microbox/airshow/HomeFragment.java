@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment {
 
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
 
+	private BitmapUtils bitmapUtils;
 	public static Fragment newInstance(Context context) {
 		HomeFragment f = new HomeFragment();
 
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment {
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
 		notice = (TextView) getView().findViewById(R.id.noticeBoard);
+		bitmapUtils = new BitmapUtils(getActivity());
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -504,7 +506,7 @@ public class HomeFragment extends Fragment {
 								date, id, hasVideo);
 						newsList.add(ilt);
 					}
-					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+					
 					InfoListAdapter ilAdapter = new InfoListAdapter(
 							getActivity(), newsList, bitmapUtils);
 					infoList.setAdapter(ilAdapter);

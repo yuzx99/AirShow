@@ -43,6 +43,8 @@ public class InfoFragment extends Fragment {
 
 	private InfoCallbacks mCallbacks;
 
+	private BitmapUtils bitmapUtils;
+	
 	public static Fragment newInstance(Context context) {
 		InfoFragment f = new InfoFragment();
 
@@ -60,6 +62,7 @@ public class InfoFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		bitmapUtils = new BitmapUtils(getActivity());
 		initTitleBar();
 		initInfo();
 	}
@@ -115,7 +118,6 @@ public class InfoFragment extends Fragment {
 								date, id, hasVideo);
 						newsList.add(ilt);
 					}
-					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 					InfoListAdapter ilAdapter = new InfoListAdapter(
 							getActivity(), newsList, bitmapUtils);
 					infoList.setAdapter(ilAdapter);

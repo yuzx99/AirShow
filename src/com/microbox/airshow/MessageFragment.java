@@ -48,6 +48,7 @@ public class MessageFragment extends Fragment {
 
 	private MsgCallbacks mCallbacks;
 
+	private BitmapUtils bitmapUtils;
 	private final static int LEAVE_MESSAGE = 100;
 
 	public static Fragment newInstance(Context context) {
@@ -74,6 +75,7 @@ public class MessageFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		bitmapUtils = new BitmapUtils(getActivity());
 		initTitleBar();
 //		initProgressBar();
 		initLeaveMessage();
@@ -216,7 +218,7 @@ public class MessageFragment extends Fragment {
 //					if(progressBar!=null){
 //						progressBar.setVisibility(ProgressBar.GONE);
 //					}
-					BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+					
 					MessageShowListAdapter mslAdapter = new MessageShowListAdapter(
 							getActivity(), info, bitmapUtils);
 					messageList.setAdapter(mslAdapter);

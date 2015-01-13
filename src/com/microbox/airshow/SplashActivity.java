@@ -42,7 +42,8 @@ public class SplashActivity extends Activity {
 	private SharedPreferences spUserInfo;
 	private SharedPreferences spData;
 	private SharedPreferences spConfigure;
-
+	private BitmapUtils bitmapUtils;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class SplashActivity extends Activity {
 		spData = this.getSharedPreferences("data", Context.MODE_PRIVATE);
 		spConfigure = this.getSharedPreferences("configure",
 				Context.MODE_PRIVATE);
-
+		bitmapUtils = new BitmapUtils(this);
 		loadAd();
 		startTimer();
 	}
@@ -110,9 +111,7 @@ public class SplashActivity extends Activity {
 			if (null != result) {
 				try {
 					JSONObject obj = new JSONObject(result);
-					String url = obj.getString("url");
-					BitmapUtils bitmapUtils = new BitmapUtils(
-							SplashActivity.this);
+					String url = obj.getString("url");					
 					bitmapUtils.display(llbg, url);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -121,7 +120,6 @@ public class SplashActivity extends Activity {
 			}
 			super.handleMessage(msg);
 		}
-
 	};
 
 	Handler handlerLogin = new Handler() {

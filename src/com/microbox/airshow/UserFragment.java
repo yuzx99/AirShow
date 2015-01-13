@@ -29,6 +29,7 @@ public class UserFragment extends Fragment {
 	private TextView etRealName;
 	private TextView etUserName;
 
+	private BitmapUtils bitmapUtils;
 	private static final int EDIT_PROFILE = 1;
 
 	public static Fragment newInstance(Context context) {
@@ -52,6 +53,7 @@ public class UserFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		spData = getActivity().getSharedPreferences("data",
 				Context.MODE_PRIVATE);
+		bitmapUtils = new BitmapUtils(getActivity());
 		initTitleBar();
 		initViewCompoent();
 	}
@@ -77,7 +79,6 @@ public class UserFragment extends Fragment {
 		String nickName = spData.getString("NICKNAME", "");
 
 		ivUserPhoto = (ImageView) getView().findViewById(R.id.userPhoto);
-		BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 		bitmapUtils.display(ivUserPhoto, urlHeaderSmall);
 		etRealName = (TextView) getView().findViewById(R.id.userRealName);
 		etRealName.setText(name);
@@ -120,8 +121,7 @@ public class UserFragment extends Fragment {
 			String newname = data.getExtras().getString("new_name");
 			String nickname = data.getExtras().getString("new_nickname");
 			String photourl = data.getExtras().getString("new_photo");
-			if (isEdit) {
-				BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+			if (isEdit) {				
 				bitmapUtils.display(ivUserPhoto, photourl);
 				etRealName.setText(newname);
 				etUserName.setText(nickname);
