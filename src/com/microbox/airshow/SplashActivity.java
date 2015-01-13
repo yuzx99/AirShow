@@ -91,8 +91,6 @@ public class SplashActivity extends Activity {
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				Toast.makeText(SplashActivity.this, "touch", Toast.LENGTH_SHORT)
-						.show();
 				// openNextpage();
 				return false;
 			}

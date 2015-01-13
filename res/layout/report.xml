@@ -6,12 +6,29 @@
 
     <include layout="@layout/titlebar" />
 
-    <ListView
-        android:id="@+id/reportList"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="#c0c0c0"
-        android:dividerHeight="0.5dp"
-        android:scrollbars="none" />
+        android:layout_height="match_parent" >
+
+        <ProgressBar
+            android:id="@+id/progressDownload"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="50"
+            android:secondaryProgress="70"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/reportList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#c0c0c0"
+            android:dividerHeight="0.5dp"
+            android:scrollbars="none" />
+    </RelativeLayout>
 
 </LinearLayout>

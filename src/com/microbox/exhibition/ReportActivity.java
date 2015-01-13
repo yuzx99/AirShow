@@ -32,6 +32,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class ReportActivity extends Activity {
 	private ListView reportList;
-
+	private ProgressBar progressBar; 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,6 +69,9 @@ public class ReportActivity extends Activity {
 
 	private void initList() {
 		reportList = (ListView) findViewById(R.id.reportList);
+		progressBar = (ProgressBar)findViewById(R.id.progressDownload);
+
+		
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
 				handlerReport, ApiUrlConfig.URL_GET_REPORT);
 		hgjmt.start();
@@ -135,6 +140,7 @@ public class ReportActivity extends Activity {
 														ResponseInfo<File> arg0) {
 													// TODO Auto-generated
 													// method stub
+													progressBar.setVisibility(ProgressBar.GONE);
 													Uri uri = Uri.parse(target);
 													Intent intent = new Intent(
 															ReportActivity.this,
@@ -143,6 +149,15 @@ public class ReportActivity extends Activity {
 													intent.setData(uri);
 													startActivity(intent);
 
+												}
+
+												@Override
+												public void onStart() {
+													// TODO Auto-generated method stub
+													progressBar.setProgress(0);
+													progressBar.setVisibility(ProgressBar.VISIBLE);
+													progressBar.setIndeterminate(true);
+													super.onStart();
 												}
 
 											});
