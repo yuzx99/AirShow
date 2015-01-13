@@ -61,7 +61,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:alpha="0.5"
-        android:text="@string/tel"
+        android:text="@string/phone"
         android:textColor="#ffffff"
         android:textSize="17sp" />
 

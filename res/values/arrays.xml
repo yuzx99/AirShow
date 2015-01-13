@@ -5,7 +5,7 @@
         <item>主页</item>
         <item>资讯</item>
         <item>会展</item>
-        <item>留言</item>
+        <item>讨论区</item>
         <item>关于我们</item>
     </string-array>
     <string-array name="exhi_pager_title">
@@ -14,7 +14,7 @@
         <item>赞助商</item>
         <item>会议日程</item>
         <item>会场布局</item>
-        <item>历届会展报告</item>
+        <item>相关资料下载</item>
     </string-array>
 
 </resources>

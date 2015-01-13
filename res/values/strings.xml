@@ -45,7 +45,7 @@
     <string name="title_exhi_agenda">会议日程</string>
     <string name="title_exhi_sponsor">组委会</string>
     <string name="title_exhi_layout">会展布局</string>
-    <string name="title_exhi_report">历届会议报告</string>
+    <string name="title_exhi_report">相关资料下载</string>
         
     <string name="not_connection">未连接网络</string>
     <string name="login_as_visitor">以游客身份登录</string>

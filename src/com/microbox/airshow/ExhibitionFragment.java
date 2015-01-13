@@ -191,18 +191,9 @@ public class ExhibitionFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if (hasAccessRight()) {
 					Intent intent = new Intent(getActivity(),
 							AgendaActivity.class);
 					startActivity(intent);
-				} else {
-					Toast toast = Toast.makeText(getActivity(), getResources()
-							.getString(R.string.have_no_access_right),
-							Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-				}
-
 			}
 		});
 		exhiAgenda.setOnTouchListener(new PicOnTouchListener());
