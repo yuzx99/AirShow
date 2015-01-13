@@ -56,6 +56,13 @@ public class ExhibitionFragment extends Fragment {
 	private SharedPreferences spConfigure;
 	private SharedPreferences spData;
 
+	private ImageView exhiIntro;
+	private ImageView exhiTrans;
+	private ImageView exhiSponsor;
+	private ImageView exhiAgenda;
+	private ImageView exhiLayout;
+	private ImageView exhiReport;
+
 	public static Fragment newInstance(Context context) {
 		ExhibitionFragment f = new ExhibitionFragment();
 
@@ -86,6 +93,7 @@ public class ExhibitionFragment extends Fragment {
 		// // initViewPager();
 		// } else {
 		initTitleBar();
+		initViewCompoent();
 		HttpGetJsonModelThread hgjmt = new HttpGetJsonModelThread(
 				handlerContent, ApiUrlConfig.URL_CONFERENCE_CONTENT);
 		hgjmt.start();
@@ -114,7 +122,7 @@ public class ExhibitionFragment extends Fragment {
 				editorData.putString("layout_content", layout_content);
 				editorData.putBoolean("is_loaded", true);
 				editorData.commit();
-				initViewCompoent();
+				initListener();
 				// initViewPager();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -143,8 +151,15 @@ public class ExhibitionFragment extends Fragment {
 	}
 
 	private void initViewCompoent() {
-		ImageView exhiIntro = (ImageView) getView()
-				.findViewById(R.id.exhiIntro);
+		exhiIntro = (ImageView) getView().findViewById(R.id.exhiIntro);
+		exhiTrans = (ImageView) getView().findViewById(R.id.exhiTrans);
+		exhiSponsor = (ImageView) getView().findViewById(R.id.exhiSponsor);
+		exhiAgenda = (ImageView) getView().findViewById(R.id.exhiAgenda);
+		exhiLayout = (ImageView) getView().findViewById(R.id.exhiLayout);
+		exhiReport = (ImageView) getView().findViewById(R.id.exhiReport);
+	}
+
+	private void initListener() {
 		exhiIntro.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -157,8 +172,6 @@ public class ExhibitionFragment extends Fragment {
 		});
 		exhiIntro.setOnTouchListener(new PicOnTouchListener());
 
-		ImageView exhiTrans = (ImageView) getView()
-				.findViewById(R.id.exhiTrans);
 		exhiTrans.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -171,8 +184,6 @@ public class ExhibitionFragment extends Fragment {
 		});
 		exhiTrans.setOnTouchListener(new PicOnTouchListener());
 
-		ImageView exhiSponsor = (ImageView) getView().findViewById(
-				R.id.exhiSponsor);
 		exhiSponsor.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -184,8 +195,6 @@ public class ExhibitionFragment extends Fragment {
 		});
 		exhiSponsor.setOnTouchListener(new PicOnTouchListener());
 
-		ImageView exhiAgenda = (ImageView) getView().findViewById(
-				R.id.exhiAgenda);
 		exhiAgenda.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -197,8 +206,6 @@ public class ExhibitionFragment extends Fragment {
 		});
 		exhiAgenda.setOnTouchListener(new PicOnTouchListener());
 
-		ImageView exhiLayout = (ImageView) getView().findViewById(
-				R.id.exhiLayout);
 		exhiLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -211,8 +218,6 @@ public class ExhibitionFragment extends Fragment {
 		});
 		exhiLayout.setOnTouchListener(new PicOnTouchListener());
 
-		ImageView exhiReport = (ImageView) getView().findViewById(
-				R.id.exhiReport);
 		exhiReport.setOnClickListener(new OnClickListener() {
 
 			@Override
