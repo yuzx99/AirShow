@@ -163,6 +163,8 @@ public class HomeFragment extends Fragment {
 							noticeContent = "距" + conf + "开幕还有"
 									+ String.valueOf(days) + "天";
 							notice.setText(noticeContent);
+						}else{
+							notice.setVisibility(TextView.GONE);
 						}
 						long startDays = startDate.getTime() / 86400000;
 						setRepeatingAlarm(days, conf, startDays);
