@@ -290,7 +290,7 @@ public class HomeFragment extends Fragment {
 									// whatOption();
 									what.incrementAndGet();
 									if (what.get() > imageViews.length - 1) {
-										what.getAndAdd(-4);
+										what.getAndAdd(-imageViews.length);
 									}
 									try {
 										Thread.sleep(5000);
@@ -574,61 +574,6 @@ public class HomeFragment extends Fragment {
 			}
 		}
 	}
-
-	// private final Handler cateHandler = new Handler() {
-	//
-	// @Override
-	// public void handleMessage(Message msg) {
-	// // TODO Auto-generated method stub
-	// super.handleMessage(msg);
-	// Bundle data = msg.getData();
-	// String result = data.getString("result");
-	// List<CategoryListItem> list = new ArrayList<CategoryListItem>();
-	// if (result != null) {
-	// try {
-	// JSONArray array = new JSONArray(result);
-	// for (int i = 0; i < array.length(); i++) {
-	// JSONObject temp = (JSONObject) array.get(i);
-	// String title = temp.getString("title");
-	// String imageurl = temp.getString("images");
-	// String id = temp.getString("id");
-	// CategoryListItem item = new CategoryListItem(imageurl,
-	// title, id);
-	// list.add(item);
-	// }
-	// BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
-	// CategoryListAdapter adapter = new CategoryListAdapter(
-	// getActivity(), list, bitmapUtils);
-	// infoList.setAdapter(adapter);
-	// com.microbox.util.Utility
-	// .setListViewHeightBasedOnChildren(infoList);
-	// infoList
-	// .setOnItemClickListener(new OnItemClickListener() {
-	//
-	// @Override
-	// public void onItemClick(AdapterView<?> arg0,
-	// View arg1, int arg2, long arg3) {
-	// // TODO Auto-generated method stub
-	// TextView tvID = (TextView)arg1.findViewById(R.id.cateId);
-	// Toast.makeText(getActivity(), tvID.getText(), Toast.LENGTH_SHORT).show();
-	// Intent intent = new Intent();
-	// intent.setClass(getActivity(), CategoryDetailActivity.class);
-	// Bundle data = new Bundle();
-	// data.putString("CATE_ID", tvID.getText().toString());
-	// intent.putExtras(data);
-	// startActivity(intent);
-	// }
-	// });
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// }
-	// } else {
-	// Toast.makeText(getActivity(), "获取信息失败", Toast.LENGTH_SHORT)
-	// .show();
-	// }
-	// }
-	//
-	// };
 
 	private ArrayList<HashMap<String, Object>> getCategory() {
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
