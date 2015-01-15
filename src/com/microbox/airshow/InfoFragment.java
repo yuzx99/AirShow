@@ -122,6 +122,7 @@ public class InfoFragment extends Fragment {
 						newsList.add(ilt);
 					}
 					ilAdapter.notifyDataSetChanged();
+					Utility.setListViewHeightBasedOnChildren(infoList);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

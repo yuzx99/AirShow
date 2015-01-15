@@ -88,6 +88,7 @@ public class HomeFragment extends Fragment {
 	private static final String NEW_ALARM = "com.microbox.airshow.action.NEW_ALARM";
 
 	private BitmapUtils bitmapUtils;
+	private AlarmManager alarmManager;
 
 	public static Fragment newInstance(Context context) {
 		HomeFragment f = new HomeFragment();
@@ -112,6 +113,9 @@ public class HomeFragment extends Fragment {
 				Context.MODE_PRIVATE);
 		notice = (TextView) getView().findViewById(R.id.noticeBoard);
 		bitmapUtils = new BitmapUtils(getActivity());
+		alarmManager = (AlarmManager) getActivity().getSystemService(
+				Context.ALARM_SERVICE);
+
 		initTitleBar();
 		initViewPager();
 		initInfoList();
@@ -467,8 +471,7 @@ public class HomeFragment extends Fragment {
 
 		infoList = (ListView) getView().findViewById(R.id.infoList);
 		newsList = new ArrayList<InfoListItem>();
-		ilAdapter = new InfoListAdapter(getActivity(),
-				newsList, bitmapUtils);
+		ilAdapter = new InfoListAdapter(getActivity(), newsList, bitmapUtils);
 		infoList.setAdapter(ilAdapter);
 
 		infoList.setOnItemClickListener(new OnItemClickListener() {
@@ -544,14 +547,6 @@ public class HomeFragment extends Fragment {
 	};
 
 	private void setRepeatingAlarm(long differs, String conf, long start) {
-		AlarmManager alarmManager;
-		try {
-			alarmManager = (AlarmManager) getActivity().getSystemService(
-					Context.ALARM_SERVICE);
-		} catch (Exception e) {
-			return;
-		}
-
 		if (alarmManager != null) {
 			int alarmType = AlarmManager.ELAPSED_REALTIME_WAKEUP;
 			long lengthofWait = AlarmManager.INTERVAL_DAY;
