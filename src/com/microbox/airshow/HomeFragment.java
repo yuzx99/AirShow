@@ -354,10 +354,8 @@ public class HomeFragment extends Fragment {
 
 		public AdvAdapter(List<ImageItem> list) {
 			this.imageList = list;
-			BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 			views = new ArrayList<View>();
 			for (int i = 0; i < imageList.size(); i++) {
-
 				ImageView image = new ImageView(getActivity());
 				bitmapUtils.display(image, imageList.get(i).getImageUrl());
 				this.views.add(image);
