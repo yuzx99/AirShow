@@ -32,7 +32,7 @@
                 android:alpha="0.85"
                 android:background="@drawable/selector_input_box"
                 android:gravity="center_vertical"
-                android:hint="请在此输入您的账号 "
+                android:hint="@string/input_id"
                 android:inputType="text"
                 android:paddingLeft="74dp"
                 android:textColor="#ffffff"
@@ -46,7 +46,7 @@
                 android:layout_marginLeft="23dp"
                 android:alpha="0.6"
                 android:gravity="center_vertical"
-                android:text="账号"
+                android:text="@string/id"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -64,7 +64,7 @@
                 android:alpha="0.85"
                 android:background="@drawable/selector_input_box"
                 android:gravity="center_vertical"
-                android:hint="请在此输入您的密码"
+                android:hint="@string/input_password"
                 android:inputType="textPassword"
                 android:paddingLeft="74dp"
                 android:textColor="#ffffff"
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="23dp"
                 android:alpha="0.6"
                 android:gravity="center_vertical"
-                android:text="密码"
+                android:text="@string/password"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
@@ -115,7 +115,7 @@
                 android:layout_marginLeft="5dp"
                 android:alpha="0.6"
                 android:gravity="center_vertical"
-                android:text="下次自动登陆"
+                android:text="@string/auto_login"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_centerHorizontal="true"
                 android:alpha="0.85"
                 android:background="@drawable/selector_button"
-                android:text="登录"
+                android:text="@string/login"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
             
@@ -146,7 +146,7 @@
                 android:alpha="0.6"
                 android:textSize="14sp"
                 android:textColor="#ffffff"
-                android:text="游客登录" />
+                android:text="@string/visitor_login" />
         </RelativeLayout>
     </LinearLayout>
 

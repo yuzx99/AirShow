@@ -49,7 +49,7 @@
             android:layout_marginTop="30dp"
             android:alpha="0.85"
             android:background="@drawable/selector_button"
-            android:text="修改用户信息"
+            android:text="@string/edit_profile"
             android:textColor="#ffffff"
             android:textSize="17sp" />
 
@@ -61,7 +61,7 @@
             android:layout_marginTop="20dp"
             android:alpha="0.85"
             android:background="@drawable/selector_button"
-            android:text="注销登陆"
+            android:text="@string/sign_out"
             android:textColor="#ffffff"
             android:textSize="17sp" />
     </LinearLayout>

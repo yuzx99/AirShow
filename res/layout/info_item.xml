@@ -45,7 +45,6 @@
             android:layout_marginRight="10dp"
             android:alpha="0.85"
             android:singleLine="true"
-            android:text="访谈中国"
             android:textColor="#000000"
             android:textSize="16sp" />
 

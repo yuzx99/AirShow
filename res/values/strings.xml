@@ -53,4 +53,18 @@
     <string name="company_title">公司</string>
     <string name="visitor">游客(点击登录)</string>
     <string name="title_discuss">讨论区</string>
+    <string name="notice">通告</string>
+    <string name="headline">新闻头条</string>
+    <string name="edit_profile">修改用户信息</string>
+    <string name="msg_submit">提交</string>
+    <string name="login">登陆</string>
+    <string name="visitor_login">游客登录</string>
+    <string name="auto_login">下次自动登陆</string>
+    <string name="password">密码</string>
+    <string name="input_password">请在此输入您的密码</string>
+    <string name="id">账号</string>
+    <string name="input_id">请在此输入您的账号</string>
+    <string name="real_name">实名</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_ok">确定</string>
 </resources>
