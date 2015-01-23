@@ -129,7 +129,10 @@ public class ProfileActivity extends Activity {
 				}
 
 			} else {
-				Toast.makeText(ProfileActivity.this, "信息修改失败",
+				Toast.makeText(
+						ProfileActivity.this,
+						getResources().getString(
+								R.string.toast_user_changed_fail),
 						Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -407,8 +410,8 @@ public class ProfileActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				touchTime = currentTime;
 			} else {
-//				finish();
-//				System.exit(0);
+				// finish();
+				// System.exit(0);
 				ExitApplication.getInstance().exit();
 			}
 		}

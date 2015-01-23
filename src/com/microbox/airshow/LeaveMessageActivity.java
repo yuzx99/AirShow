@@ -43,14 +43,20 @@ public class LeaveMessageActivity extends Activity {
 			Bundle data = msg.getData();
 			String result = data.getString("result");
 			if (result != null) {
-				Toast.makeText(LeaveMessageActivity.this, "提交成功",
+				Toast.makeText(
+						LeaveMessageActivity.this,
+						getResources().getString(
+								R.string.toast_leave_message_success),
 						Toast.LENGTH_SHORT).show();
 				Intent resultIntent = new Intent();
 				resultIntent.putExtra("leave_message", true);
 				setResult(RESULT_OK, resultIntent);
 				finish();
 			} else {
-				Toast.makeText(LeaveMessageActivity.this, "提交留言失败",
+				Toast.makeText(
+						LeaveMessageActivity.this,
+						getResources().getString(
+								R.string.toast_leave_message_fail),
 						Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -58,7 +64,7 @@ public class LeaveMessageActivity extends Activity {
 
 	private void initViewCompoent() {
 		TextView title = (TextView) findViewById(R.id.pageTitle);
-		title.setText("撰写留言");
+		title.setText(getResources().getString(R.string.title_message_create));
 
 		RelativeLayout back = (RelativeLayout) findViewById(R.id.pageBack);
 		back.setOnClickListener(new OnClickListener() {
@@ -81,7 +87,10 @@ public class LeaveMessageActivity extends Activity {
 				String token = spData.getString("TOKEN", "");
 				String content = etMessage.getText().toString();
 				if (content.isEmpty()) {
-					Toast.makeText(LeaveMessageActivity.this, "留言不能为空",
+					Toast.makeText(
+							LeaveMessageActivity.this,
+							getResources().getString(
+									R.string.toast_leave_message_empty),
 							Toast.LENGTH_SHORT).show();
 				} else {
 					SubmitMessageModelThread smmt = new SubmitMessageModelThread(

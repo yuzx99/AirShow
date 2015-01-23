@@ -71,7 +71,8 @@ public class InfoFragment extends Fragment {
 
 	private void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
-		title.setText("资讯");
+		title.setText(getActivity().getResources().getString(
+				R.string.title_info));
 		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
 				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
