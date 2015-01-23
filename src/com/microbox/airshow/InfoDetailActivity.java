@@ -52,7 +52,7 @@ public class InfoDetailActivity extends Activity {
 
 	private void initViewCompoent() {
 		TextView title = (TextView) findViewById(R.id.pageTitle);
-		title.setText("资讯");
+		title.setText(this.getResources().getString(R.string.title_info));
 		RelativeLayout back = (RelativeLayout) findViewById(R.id.pageBack);
 		back.setOnClickListener(new OnClickListener() {
 

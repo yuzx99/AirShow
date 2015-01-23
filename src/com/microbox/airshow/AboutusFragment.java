@@ -38,11 +38,13 @@ public class AboutusFragment extends Fragment {
 	}
 
 	private void initTitleBar() {
-		TextView title = (TextView)getView().findViewById(R.id.mainTitle);
-		title.setText("关于我们");
-		RelativeLayout drawer = (RelativeLayout) getView().findViewById(R.id.mainDrawer);
+		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
+		title.setText(getActivity().getResources().getString(
+				R.string.title_about));
+		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
+				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -54,13 +56,13 @@ public class AboutusFragment extends Fragment {
 	public static interface AboutCallbacks {
 		public void openDrawerAbout();
 	}
-	
+
 	@Override
-	public void onAttach(Activity activity){
+	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		try{
-			mCallbacks = (AboutCallbacks)activity;
-		}catch(ClassCastException e){
+		try {
+			mCallbacks = (AboutCallbacks) activity;
+		} catch (ClassCastException e) {
 			throw new ClassCastException(
 					"Activity must implement AboutCallbacks.");
 		}

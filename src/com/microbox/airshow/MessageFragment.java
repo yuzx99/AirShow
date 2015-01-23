@@ -108,7 +108,7 @@ public class MessageFragment extends Fragment {
 				bitmapUtils);
 		messageList.setAdapter(mslAdapter);
 		messageList.setDividerHeight(0);
-		
+
 		ImageButton ibtnLeaveMsg = (ImageButton) getView().findViewById(
 				R.id.ibtnLeaveMsg);
 
@@ -227,8 +227,11 @@ public class MessageFragment extends Fragment {
 					e.printStackTrace();
 				}
 			} else {
-				Toast.makeText(getActivity(), "获取留言失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(
+						getActivity(),
+						getActivity().getResources().getString(
+								R.string.toast_request_fail),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	};

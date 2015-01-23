@@ -100,12 +100,12 @@ public class LoginActivity extends Activity {
 				if (arg1) {
 					tgbtnSavePwd
 							.setBackgroundResource(R.drawable.ic_checked_normal);
-					//spUserInfo.edit().putBoolean("ISCHECK", true).commit();
+					// spUserInfo.edit().putBoolean("ISCHECK", true).commit();
 					isAutoLogin = true;
 				} else {
 					tgbtnSavePwd
 							.setBackgroundResource(R.drawable.ic_unchecked_normal);
-					//spUserInfo.edit().putBoolean("ISCHECK", false).commit();
+					// spUserInfo.edit().putBoolean("ISCHECK", false).commit();
 					isAutoLogin = false;
 				}
 			}
@@ -150,8 +150,9 @@ public class LoginActivity extends Activity {
 			String userId = data.getString("userId");
 			String password = data.getString("password");
 			if (result != null) {
-				Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(LoginActivity.this,
+						getResources().getString(R.string.toast_login_success),
+						Toast.LENGTH_SHORT).show();
 				Editor editorUserInfo = spUserInfo.edit();
 				editorUserInfo.putString("USER_ID", userId);
 				editorUserInfo.putString("PASSWORD", password);
@@ -191,8 +192,9 @@ public class LoginActivity extends Activity {
 					finish();
 				}
 			} else {
-				Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(LoginActivity.this,
+						getResources().getString(R.string.toast_login_fail),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
@@ -211,8 +213,8 @@ public class LoginActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 			touchTime = currentTime;
 		} else {
-//			finish();
-//			System.exit(0);
+			// finish();
+			// System.exit(0);
 			ExitApplication.getInstance().exit();
 		}
 	}

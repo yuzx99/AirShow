@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
 	private SharedPreferences spData;
 	private SharedPreferences spConfigure;
 	private BitmapUtils bitmapUtils;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,7 +111,7 @@ public class SplashActivity extends Activity {
 			if (null != result) {
 				try {
 					JSONObject obj = new JSONObject(result);
-					String url = obj.getString("url");					
+					String url = obj.getString("url");
 					bitmapUtils.display(llbg, url);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -131,8 +131,9 @@ public class SplashActivity extends Activity {
 			String userId = data.getString("userId");
 			String password = data.getString("password");
 			if (result != null) {
-				Toast.makeText(SplashActivity.this, "登录成功", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(SplashActivity.this,
+						getResources().getString(R.string.toast_login_success),
+						Toast.LENGTH_SHORT).show();
 				try {
 					Editor editorData = spData.edit();
 					JSONObject jObject = new JSONObject(result);
@@ -166,9 +167,11 @@ public class SplashActivity extends Activity {
 					finish();
 				}
 			} else {
-				Toast.makeText(SplashActivity.this, "登录失败", Toast.LENGTH_SHORT)
-						.show();
-				Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+				Toast.makeText(SplashActivity.this,
+						getResources().getString(R.string.toast_login_fail),
+						Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(SplashActivity.this,
+						LoginActivity.class);
 				startActivity(intent);
 				finish();
 			}

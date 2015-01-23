@@ -124,7 +124,8 @@ public class HomeFragment extends Fragment {
 
 	public void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
-		title.setText("主页");
+		title.setText(getActivity().getResources().getString(
+				R.string.title_home));
 		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
 				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
@@ -538,8 +539,11 @@ public class HomeFragment extends Fragment {
 					e.printStackTrace();
 				}
 			} else {
-				Toast.makeText(getActivity(), "获取资讯失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(
+						getActivity(),
+						getActivity().getResources().getString(
+								R.string.toast_request_fail),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
