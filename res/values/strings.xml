@@ -77,5 +77,6 @@
     <string name="toast_login_success">登录成功</string>
     <string name="toast_login_fail">登录失败</string>
     <string name="toast_user_changed_fail">信息修改失败</string>
+    <string name="title_user_info">用户信息</string>
 
 </resources>

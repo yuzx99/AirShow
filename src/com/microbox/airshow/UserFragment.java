@@ -60,7 +60,8 @@ public class UserFragment extends Fragment {
 
 	private void initTitleBar() {
 		TextView title = (TextView) getView().findViewById(R.id.mainTitle);
-		title.setText("用户信息");
+		title.setText(getActivity().getResources().getString(
+				R.string.title_user_info));
 		RelativeLayout drawer = (RelativeLayout) getView().findViewById(
 				R.id.mainDrawer);
 		drawer.setOnClickListener(new OnClickListener() {
@@ -115,13 +116,12 @@ public class UserFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if (resultCode == Activity.RESULT_OK
-				&& requestCode == EDIT_PROFILE) {
+		if (resultCode == Activity.RESULT_OK && requestCode == EDIT_PROFILE) {
 			Boolean isEdit = data.getExtras().getBoolean("profile_modified");
 			String newname = data.getExtras().getString("new_name");
 			String nickname = data.getExtras().getString("new_nickname");
 			String photourl = data.getExtras().getString("new_photo");
-			if (isEdit) {				
+			if (isEdit) {
 				bitmapUtils.display(ivUserPhoto, photourl);
 				etRealName.setText(newname);
 				etUserName.setText(nickname);
